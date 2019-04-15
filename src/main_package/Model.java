@@ -9,7 +9,7 @@ public class Model {
 	Timer myTimer;
 	ArrayList<Element> list;
 	Bird bird;
-	Bird birdNH;
+	//Bird birdNH;
 	boolean quizing;
 	Type curState;
 	Quiz quiz;
