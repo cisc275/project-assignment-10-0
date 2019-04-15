@@ -109,7 +109,7 @@ public class Model {
 	// the method will generate a quiz
 	// and set quizing boolean to be true
 	public void startQuiz() {
-		
+		this.quizing = false;
 	}
 	
 	// for OP Game
@@ -118,7 +118,7 @@ public class Model {
 	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
-		
+		this.quizing = false;
 	}
 	
 	// set curState to be End
@@ -128,7 +128,7 @@ public class Model {
 	
 	// set curState to be Win 
 	public void winGame() {
-	
+		curState = Type.WIN;
 	}
 	
 	// for NH game
@@ -157,7 +157,7 @@ public class Model {
 	// set the quizing boolean to be false
 	// set curState to be NH2
 	public void submitQuiz() {
-		
+		this.quizing = false;
 	}
 	
 	// for NH game
@@ -166,7 +166,10 @@ public class Model {
 	// if the fox has collision with bird, call the move method of the fox
 	// check the number of eggs left. if it is zero, call gameOver()
 	public void collisionNH2(HitItem ht) {
-		
+		eggs--;
+		if(eggs == 0) {
+			this.curState = Type.GAMEOVER;
+		}
 	}
 	
 	// getter setter for create test
