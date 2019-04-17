@@ -27,6 +27,7 @@ public class View extends JPanel{
 	
 	JButton OPButton;
 	JButton NHButton;
+	JButton backButton;
 	
 	BufferedImage curImg;
 	Model model;
@@ -51,10 +52,18 @@ public class View extends JPanel{
 		
 		OPButton = new JButton("start Osprey Game");
 		OPButton.setOpaque(true);
+		//OPButton.setVisible(false);
 		add(OPButton);
+		
 		NHButton = new JButton("start Northen Harrier Game");
 		NHButton.setOpaque(true);
+		//NHButton.setVisible(false);
 		add(NHButton);
+		
+		backButton = new JButton("back");
+		backButton.setOpaque(true);
+		backButton.setVisible(false);
+		add(backButton);
 		
 		
 		frame = new JFrame();

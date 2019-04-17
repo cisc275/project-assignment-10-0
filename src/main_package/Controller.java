@@ -24,7 +24,8 @@ public class Controller {
 		//
 		view.OPButton.addActionListener(new OPButtonListener());
 		view.NHButton.addActionListener(new NHButtonListener());
-		view.OPButton.addKeyListener(new CustomKeyListener());
+		view.backButton.addActionListener(new RestartButtonListener());
+		view.addKeyListener(new CustomKeyListener());
 		
 		
 		
@@ -36,7 +37,11 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			model.setCurState(Type.MAINMENU);
+			System.out.println("mainmenu");
+			view.backButton.setVisible(false);
+			view.OPButton.setVisible(true);
+			view.NHButton.setVisible(true);
 		}
 		
 	}
@@ -47,7 +52,6 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if (model.getCurState() != Type.NH1) {
 				model.setCurState(Type.NH1);
 				model.setList(new ArrayList<>());
 				model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
@@ -55,9 +59,12 @@ public class Controller {
 				model.setUpdateL();
 				model.setBird(new Bird(300, 400,0,BirdType.NH));
 				
-				view.NHButton.addKeyListener(new CustomKeyListener());
 				System.out.println(model.getCurState());
-			}
+				view.backButton.setVisible(true);
+				view.OPButton.setVisible(false);
+				view.NHButton.setVisible(false);
+				view.requestFocusInWindow();
+				
 			
 		}
 		
@@ -68,8 +75,6 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//view.remove(view.OPButton);
-			if (model.getCurState() != Type.OP) {
 				model.setCurState(Type.OP);
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
@@ -78,8 +83,12 @@ public class Controller {
 				model.setUpdateL();
 			
 				System.out.println(model.getCurState());
+				view.backButton.setVisible(true);
+				view.OPButton.setVisible(false);
+				view.NHButton.setVisible(false);
+				view.requestFocusInWindow();
+				
 			
-			}
 		}
 		
 	}
