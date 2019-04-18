@@ -94,13 +94,26 @@ public class Model {
 	// check if the bird has collision with the final flag
 	// if it is call winGame()
 	public boolean checkCollision(Element ht) {
-		startQuiz();
 		boolean xC = ht.getX() - imgW/2 <= bird.getX() + imgW/2 && ht.getX() - imgW/2 >= bird.getX() - imgW/2;
 		boolean yC1 = ht.getY() - imgH/2 <= bird.getY() + imgH/2 && ht.getY() - imgH/2 >= bird.getY() - imgH/2;
 		boolean yC2 = ht.getY() + imgH/2 <= bird.getY() + imgH/2 && ht.getY() + imgH/2 >= bird.getY() - imgH/2;
 		if (xC && yC1 || xC && yC2) {
 			System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			gameOver();
+			if(ht instanceof HitItem) {
+				HitItem h = (HitItem)ht;
+				if(h.getType().equals(ItemType.FISH)) {
+					System.out.println(bird.getLife());
+					bird.eat();
+					
+				} else if(h.getType().equals(ItemType.AIRPLANE)) {
+					System.out.println(bird.getLife());
+					bird.collision();
+				} else if(h.getType().equals(ItemType.WINFLAG)) {
+					this.curState = Type.WIN;
+				}
+			}
+			//gameOver();
+			startQuiz();
 			return true;
 		}
 		return false;
@@ -109,7 +122,7 @@ public class Model {
 	// the method will generate a quiz
 	// and set quizing boolean to be true
 	public void startQuiz() {
-		this.quizing = false;
+		this.quizing = true;
 	}
 	
 	// for OP Game
@@ -145,6 +158,8 @@ public class Model {
 			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
 			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
 				bird.setLife(bird.getLife() + 1);
+				CollectedItem c = (CollectedItem)cur;
+				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
@@ -167,7 +182,7 @@ public class Model {
 	// check the number of eggs left. if it is zero, call gameOver()
 	public void collisionNH2(HitItem ht) {
 		eggs--;
-		if(eggs == 0) {
+		if(eggs <= 0) {
 			this.curState = Type.GAMEOVER;
 		}
 	}

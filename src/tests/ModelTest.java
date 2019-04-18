@@ -41,6 +41,12 @@ class ModelTest {
 		m.updatePosition();
 		assertEquals(50 - Math.abs(Model.xIncr), m.getList().get(0).getX());
 		assertEquals(50, m.getList().get(0).getY());
+		assertEquals(true,m.getUpdateL());
+	}
+	
+	@Test
+	void updateList() {
+		
 	}
 	
 	@Test
@@ -89,8 +95,9 @@ class ModelTest {
 	@Test
 	void testCheckCollision() {
 		Model m = new Model(600, 500, 32, 32);
-		m.setBird(50, 50, 2, BirdType.OSPREY);
+		m.setBird(50, 50, 3, BirdType.OSPREY);
 		m.checkCollision(new HitItem(50,50,ItemType.AIRPLANE));
+		assertEquals(2, m.getBird().getLife());
 		assertEquals(true, m.getQuizing());
 		
 		m.checkCollision(new HitItem(50,50,ItemType.FISH));
@@ -99,6 +106,14 @@ class ModelTest {
 		m.checkCollision(new HitItem(50,50,ItemType.WINFLAG));
 		assertEquals(Type.WIN, m.getCurState());
 		
+	}
+	
+	@Test
+	void testNoCollision() {
+		Model m = new Model(600, 500, 32, 32);
+		m.setBird(50, 50, 2, BirdType.OSPREY);
+		//m.checkCollision(new HitItem(50,80,ItemType.AIRPLANE));
+		assertEquals(false, m.checkCollision(new HitItem(60,80,ItemType.AIRPLANE)));
 	}
 	
 	@Test

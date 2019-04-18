@@ -106,25 +106,30 @@ public class View extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g) {
-		if (model.getCurState() == Type.OP) {
-			g.drawImage(curImg, x, y, Color.gray, this);
-		
-			if (model.getList().size() != 0) {
-				for(Element each: model.getList()) {
-					g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
-				}
-			}
-		}
-		else if (model.getCurState() == Type.NH1) {
-			g.drawImage(curImg, x, y, Color.gray, this);
-			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-			g.drawString(String.valueOf(model.getBird().getLife()), 500, 20);
+		try {
+			if (model.getCurState() == Type.OP) {
+				g.drawImage(curImg, x, y, Color.gray, this);
 			
-			if (model.getList().size() != 0) {
-				for(Element each: model.getList()) {
-					g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+					}
 				}
 			}
+			else if (model.getCurState() == Type.NH1) {
+				g.drawImage(curImg, x, y, Color.gray, this);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+				g.drawString(String.valueOf(model.getBird().getLife()), 500, 20);
+				
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
+					}
+				}
+			} 
+		
+		}catch(NullPointerException n) {
+			
 		}
 		
 		
