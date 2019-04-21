@@ -89,6 +89,7 @@ public class Model {
 	public void updateBirdPosition(int incX, int incY) {
 		if (!outOfFrame(incX, incY)) {
 			bird.move(incX, incY);
+			System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
 			}
