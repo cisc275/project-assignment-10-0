@@ -147,6 +147,9 @@ public class Model {
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
 		this.quizing = false;
+		if(!quiz.checkAnswer()) {
+			bird.collision();
+		}
 	}
 	
 	// set curState to be End
