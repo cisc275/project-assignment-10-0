@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import main_package.Bird;
 import main_package.BirdType;
 import main_package.CollectedItem;
 import main_package.Element;
@@ -112,8 +113,8 @@ class ModelTest {
 	void testNoCollision() {
 		Model m = new Model(600, 500, 32, 32);
 		m.setBird(50, 50, 2, BirdType.OSPREY);
-		//m.checkCollision(new HitItem(50,80,ItemType.AIRPLANE));
-		assertEquals(false, m.checkCollision(new HitItem(60,80,ItemType.AIRPLANE)));
+		assertEquals(false, m.checkCollision(new HitItem(80,100,ItemType.AIRPLANE)));
+		assertEquals(false, m.checkCollision(new HitItem(80,100,ItemType.WINFLAG)));
 	}
 	
 	@Test
@@ -145,12 +146,24 @@ class ModelTest {
 		ArrayList<Element> list = new ArrayList<>();
 		list.add(egg);
 		m.setList(list);
+		assertEquals(list, m.getList());
 		m.setEgg(1);
 		m.collisionNH2(fox);
 		assertEquals(0, m.getEggs());
 		assertEquals(Type.GAMEOVER, m.getCurState());
 		
 		
+	}
+	
+	@Test
+	void testGettersAndSetters() {
+		Model m = new Model(600, 500, 32, 32);
+		m.setBird(50, 50, -1, BirdType.NH);
+		Bird b = new Bird(66,64,0,BirdType.OSPREY);
+		m.setBird(b);
+		assertEquals(b,m.getBird());
+		assertEquals(600,m.getFrameW());
+		assertEquals(500,m.getFrameH());
 	}
 
 }
