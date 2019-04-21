@@ -18,8 +18,8 @@ import main_package.Controller.CustomKeyListener;
 public class View extends JPanel{
 	//
 	HashMap<String, BufferedImage> imgs;
-	final int frameHeight = 500;
-	final int frameWidth = 600;
+	final int frameHeight = 643;    //500
+	final int frameWidth = 1024;     //600
 	final int imageH = 32;
 	final int imageW = 32;
 	JFrame frame;
@@ -36,13 +36,14 @@ public class View extends JPanel{
 	
 	
 	
+	
 	// initialize the frameHeight, frameWidth
 	// initialize the images by calling createImage method
 	// initialize the frame and button
 	// add button to the JPanel
 	public View() {
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		String[] imgName = {"bird", "hitItem", "collectedItem"};
+		String[] imgName = {"bird", "hitItem", "collectedItem","background"};
 		imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -108,6 +109,10 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		try {
 			if (model.getCurState() == Type.OP) {
+				g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+				//System.out.println("first: " + model.groundX % frameWidth);
+				g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+				//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 				g.drawImage(curImg, x, y, Color.gray, this);
 			
 				if (model.getList().size() != 0) {
@@ -147,6 +152,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("collectedItem")) {
 				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
+			}
+			else if (x.equals("background")) {
+				bi = ImageIO.read(new File("imgs/background.jpg"));
 			}
 			else {
 				bi = null;

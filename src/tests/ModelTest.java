@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import main_package.Bird;
 import main_package.BirdType;
 import main_package.CollectedItem;
 import main_package.Element;
@@ -35,18 +36,28 @@ class ModelTest {
 		Model m = new Model(600, 500, 32, 32);
 		m.setCurState(Type.OP);
 		ArrayList<Element> e = new ArrayList<Element>();
-		Element e1 = new HitItem(50, 50, ItemType.FISH);
+		Element e1 = new HitItem(-12, 50, ItemType.FISH);
+		Element e2 = new HitItem(16,100, ItemType.FISH);
 		e.add(e1);
+		e.add(e2);
 		m.setList(e);
+		m.setBird(16,100,3,BirdType.OSPREY);
 		m.updatePosition();
-		assertEquals(50 - Math.abs(Model.xIncr), m.getList().get(0).getX());
-		assertEquals(50, m.getList().get(0).getY());
+		//assertEquals(-17, m.getList().get(0).getX());
+		//assertEquals(50, m.getList().get(0).getY());
+		//assertEquals(0, m.getList().size());
 		assertEquals(true,m.getUpdateL());
 	}
 	
 	@Test
 	void updateList() {
-		
+		Model m = new Model(600, 500, 32, 32);
+		m.setUpdateL();
+		ArrayList<Element> e = new ArrayList<Element>();
+		m.setList(e);
+		m.updateList();
+		assertEquals(false, m.getUpdateL());
+		assertEquals(e.size()!=0, e.size());
 	}
 	
 	@Test
@@ -57,6 +68,7 @@ class ModelTest {
 		m.updateBirdPosition(Model.xIncr, Model.yIncr);
 		assertEquals(Model.xIncr, m.getBird().getX());
 		assertEquals(Model.yIncr, m.getBird().getY());
+		
 	}
 	
 	@Test

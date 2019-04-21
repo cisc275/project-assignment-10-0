@@ -17,12 +17,16 @@ public class Model {
 	int numTrueAns;
 	public static int xIncr = 5;
 	public static int xDec = -5;
+	public static int xDec2 = -3;
 	public static int yIncr = 5;
 	int frameW;
 	int frameH;
 	int imgH;
 	int imgW;
 	boolean updateL;
+	// for move background
+	int groundX;
+	int groundY; 
 	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
@@ -47,6 +51,9 @@ public class Model {
 	// if the curState is NH2 call collisionNH2()
 	// if the curState is OP call checkCollision
 	public void updatePosition() {
+		// for background
+		groundX = groundX + xDec2;
+		// for element
 		if (updateL) {
 			updateList();
 		}
@@ -80,10 +87,17 @@ public class Model {
 	// update the bird position by calling the move method
 	// if the curState is NH1 call collisionNH1()
 	public void updateBirdPosition(int incX, int incY) {
-		bird.move(incX, incY);
-		if (curState == Type.NH1) {
-			collisionNH1();
+		if (!outOfFrame(incX, incY)) {
+			bird.move(incX, incY);
+			if (curState == Type.NH1) {
+				collisionNH1();
+			}
 		}
+	}
+	
+	// helper function for updateBirdPosition to prevent bird go out of screen
+	public boolean outOfFrame(int incX, int incY) {
+		return false;
 	}
 	
 	//for OP game
@@ -122,6 +136,7 @@ public class Model {
 	// the method will generate a quiz
 	// and set quizing boolean to be true
 	public void startQuiz() {
+		System.out.println("quiz");
 		this.quizing = true;
 	}
 	

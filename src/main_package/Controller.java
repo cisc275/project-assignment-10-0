@@ -75,6 +75,8 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+				model.groundX = 0;
+				model.groundY = 0;
 				model.setCurState(Type.OP);
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
