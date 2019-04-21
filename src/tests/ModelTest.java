@@ -37,7 +37,7 @@ class ModelTest {
 		m.setCurState(Type.OP);
 		ArrayList<Element> e = new ArrayList<Element>();
 		Element e1 = new HitItem(-12, 50, ItemType.FISH);
-		Element e2 = new HitItem(16,100, ItemType.FISH);
+		Element e2 = new HitItem(21,100, ItemType.FISH);
 		e.add(e1);
 		e.add(e2);
 		m.setList(e);
@@ -47,6 +47,8 @@ class ModelTest {
 		//assertEquals(50, m.getList().get(0).getY());
 		//assertEquals(0, m.getList().size());
 		assertEquals(true,m.getUpdateL());
+		m.updatePosition();
+		assertEquals(false,m.getUpdateL());
 	}
 	
 	@Test
