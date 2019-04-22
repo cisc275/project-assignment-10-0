@@ -2,11 +2,14 @@ package main_package;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.management.timer.Timer;
+
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian
 public class Model {
 	Timer myTimer;
+	int timeCount;
 	ArrayList<Element> list;
 	Bird bird;
 	//Bird birdNH;
@@ -46,6 +49,33 @@ public class Model {
 	public int getNumAns() {return this.numTrueAns;};
 	//getter for quizing
 	public boolean getQuizing() {return this.quizing;};
+	
+	public void createTimer() {
+		myTimer = new Timer();
+		switch(curState) {
+		case OP:
+			break;
+		case NH1:
+			timeCount = 10;
+			myTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					//t++;
+					System.out.println("time count :" + --timeCount);
+					if (timeCount == 0) {
+						myTimer.cancel();
+						quizing = true;
+						System.out.println("start quiz");
+					}
+				}
+				
+			}, 0, 1000);
+			break;
+		case NH2:
+			break;
+		}
+	}
 	
 	// loop through the collection list update their position by calling the move method
 	// if the curState is NH2 call collisionNH2()
@@ -273,4 +303,9 @@ public class Model {
 	public int getFrameH() {
 		return frameH;
 	}
+	
+	public int getTimeCount() {
+		return timeCount;
+	}
+	
 }

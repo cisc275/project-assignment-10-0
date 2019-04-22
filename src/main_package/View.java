@@ -149,6 +149,8 @@ public class View extends JPanel{
 				g.drawImage(curImg, x, y, Color.gray, this);
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 				g.drawString(String.valueOf(model.getBird().getLife()), 1000, 20);
+				g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+				
 				
 				if (model.getList().size() != 0) {
 					for(Element each: model.getList()) {

@@ -6,9 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Timer;
+
 //author Sicheng Tian
 public class Controller {
 	Model model;
@@ -59,6 +61,7 @@ public class Controller {
 				model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
 				model.setUpdateL();
 				model.setBird(new Bird(300, 400,0,BirdType.NH));
+				model.createTimer();
 				
 				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
@@ -105,8 +108,18 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			model.quizing = false;
-			view.submitButton.setVisible(false);
+			switch (model.getCurState()) {
+			case OP:
+				model.quizing = false;
+				view.submitButton.setVisible(false);
+				break;
+			case NH1:
+				model.quizing = false;
+				System.out.println("check answer and go to NH2");
+				view.submitButton.setVisible(false);
+				break;
+				
+			}
 			view.requestFocusInWindow();
 		}
 		
