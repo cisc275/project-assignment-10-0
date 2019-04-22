@@ -3,6 +3,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,14 +13,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.Dimension;
 
 import main_package.Controller.CustomKeyListener;
 // author Sicheng Tian
 public class View extends JPanel{
 	//
 	HashMap<String, BufferedImage> imgs;
-	final int frameHeight = 643;    //500
-	final int frameWidth = 1024;     //600
+	//final int frameHeight = 643;    //500
+	//final int frameWidth = 1024;     //600
+	int frameHeight = 643;    //500
+	int frameWidth = 1024;     //600
 	final int imageH = 32;
 	final int imageW = 32;
 	JFrame frame;
@@ -76,8 +80,11 @@ public class View extends JPanel{
         frame.getContentPane().add(this);
 		frame.setBackground(Color.gray);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-    	//frame.setSize(frameWidth,frameHeight);
+    	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    	frame.setVisible(true);
+    	frameWidth = frame.getWidth();
+    	frameHeight = frame.getHeight()-40;
+    	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
     	frame.setVisible(true);
     	
     	
