@@ -28,6 +28,7 @@ public class View extends JPanel{
 	JButton OPButton;
 	JButton NHButton;
 	JButton backButton;
+	JButton submitButton;
 	
 	BufferedImage curImg;
 	Model model;
@@ -43,7 +44,7 @@ public class View extends JPanel{
 	// add button to the JPanel
 	public View() {
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		String[] imgName = {"bird", "hitItem", "collectedItem","background"};
+		String[] imgName = {"bird", "hitItem", "collectedItem","background", "background2"};
 		imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -66,6 +67,10 @@ public class View extends JPanel{
 		backButton.setVisible(false);
 		add(backButton);
 		
+		submitButton = new JButton("submit");
+		submitButton.setOpaque(true);
+		submitButton.setVisible(false);
+		add(submitButton);
 		
 		frame = new JFrame();
         frame.getContentPane().add(this);
@@ -85,6 +90,10 @@ public class View extends JPanel{
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
 	public void update(Model model) {
+		if (model.getQuizing()) {
+			submitButton.setVisible(true);
+		}
+		
 		if (model.getCurState() == Type.MAINMENU) {
 			
 		}
@@ -108,11 +117,18 @@ public class View extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 		try {
+			if (model.getQuizing()) {
+				
+			}
+			else {
 			if (model.getCurState() == Type.OP) {
 				g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
 				//System.out.println("first: " + model.groundX % frameWidth);
 				g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
 				//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
+				//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
+				//System.out.println("first: " + model.groundX % frameWidth);
+				//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
 				g.drawImage(curImg, x, y, Color.gray, this);
 			
 				if (model.getList().size() != 0) {
@@ -124,14 +140,15 @@ public class View extends JPanel{
 			else if (model.getCurState() == Type.NH1) {
 				g.drawImage(curImg, x, y, Color.gray, this);
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-				g.drawString(String.valueOf(model.getBird().getLife()), 500, 20);
+				g.drawString(String.valueOf(model.getBird().getLife()), 1000, 20);
 				
 				if (model.getList().size() != 0) {
 					for(Element each: model.getList()) {
 						g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
 					}
 				}
-			} 
+			}
+			}
 		
 		}catch(NullPointerException n) {
 			
@@ -155,6 +172,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("background")) {
 				bi = ImageIO.read(new File("imgs/background.jpg"));
+			}
+			else if (x.equals("background2")) {
+				bi = ImageIO.read(new File("imgs/background2.jpg"));
 			}
 			else {
 				bi = null;

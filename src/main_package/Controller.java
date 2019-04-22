@@ -25,6 +25,7 @@ public class Controller {
 		view.OPButton.addActionListener(new OPButtonListener());
 		view.NHButton.addActionListener(new NHButtonListener());
 		view.backButton.addActionListener(new RestartButtonListener());
+		view.submitButton.addActionListener(new QuizButtonListener());
 		view.addKeyListener(new CustomKeyListener());
 		
 		
@@ -104,7 +105,9 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+			model.quizing = false;
+			view.submitButton.setVisible(false);
+			view.requestFocusInWindow();
 		}
 		
 	}
@@ -196,7 +199,9 @@ public class Controller {
     				view.update(model);
     				break;
     			case OP:
+    				if (!model.getQuizing()) {
     				model.updatePosition();
+    				}
     				view.update(model);
     				break;
     			case NH1:

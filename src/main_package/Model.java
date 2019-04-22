@@ -98,6 +98,19 @@ public class Model {
 	
 	// helper function for updateBirdPosition to prevent bird go out of screen
 	public boolean outOfFrame(int incX, int incY) {
+		switch (curState) {
+		case OP:
+			if (bird.getY() + incY < 0|| bird.getY() + imgH + incY > frameH) {
+				return true;
+			}
+			break;
+		case NH1:
+			if (bird.getY() + incY < 0 || bird.getY() + imgH + incY > frameH || 
+					bird.getX() + incX < 0 || bird.getX() + imgW + incX > frameW) {
+				return true;
+			}
+			break;
+		}
 		return false;
 	}
 	
@@ -148,6 +161,7 @@ public class Model {
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
 		this.quizing = false;
+		System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
 		}
@@ -155,7 +169,7 @@ public class Model {
 	
 	// set curState to be End
 	public void gameOver() {
-	 curState = Type.GAMEOVER;
+	    curState = Type.GAMEOVER;
 	}
 	
 	// set curState to be Win 
