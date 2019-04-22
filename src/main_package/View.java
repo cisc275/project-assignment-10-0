@@ -76,7 +76,8 @@ public class View extends JPanel{
         frame.getContentPane().add(this);
 		frame.setBackground(Color.gray);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(frameWidth,frameHeight);
+    	frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+    	//frame.setSize(frameWidth,frameHeight);
     	frame.setVisible(true);
     	
     	
