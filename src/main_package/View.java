@@ -87,11 +87,6 @@ public class View extends JPanel{
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
     	frame.setVisible(true);
     	
-    	
-    	
-    	
-		
-       
 	}
 	
 	
@@ -116,8 +111,11 @@ public class View extends JPanel{
 			y = model.getBird().getY();
 			curImg = imgs.get("bird");
 		}
+		else if (model.getCurState() == Type.NH2) {
+			
+		}
 		else if (model.getCurState() == Type.GAMEOVER) {
-			System.out.println("game over image");
+			
 		}
 		this.model = model;
 		frame.repaint();
@@ -129,37 +127,48 @@ public class View extends JPanel{
 				
 			}
 			else {
-			if (model.getCurState() == Type.OP) {
-				g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
-				//System.out.println("first: " + model.groundX % frameWidth);
-				g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
-				//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
-				//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
-				//System.out.println("first: " + model.groundX % frameWidth);
-				//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
-				g.drawImage(curImg, x, y, Color.gray, this);
+				switch (model.getCurState()) {
+				case OP:
+					//g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+					//System.out.println("first: " + model.groundX % frameWidth);
+					//g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
+					
+					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
+					//System.out.println("first: " + model.groundX % frameWidth);
+					//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
+					g.drawImage(curImg, x, y, Color.gray, this);
+					//life bar
+					g.setColor(Color.black);
+					g.drawRect(10, 2, model.defaultTime*10, 20);
+					g.setColor(Color.yellow);
+					g.fillRect(10, 2, model.getTimeCount()*10, 20);
 			
-				if (model.getList().size() != 0) {
-					for(Element each: model.getList()) {
-						g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+					if (model.getList().size() != 0) {
+						for(Element each: model.getList()) {
+							g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+						}
 					}
-				}
-			}
-			else if (model.getCurState() == Type.NH1) {
-				g.drawImage(curImg, x, y, Color.gray, this);
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-				g.drawString(String.valueOf(model.getBird().getLife()), 1000, 20);
-				g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					break;
+				case NH1:
+					g.drawImage(curImg, x, y, Color.gray, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString(String.valueOf(model.getBird().getLife()), 1000, 20);
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 				
 				
-				if (model.getList().size() != 0) {
-					for(Element each: model.getList()) {
-						g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
+					if (model.getList().size() != 0) {
+						for(Element each: model.getList()) {
+							g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
+						}
 					}
+					break;
+				case NH2:
+					break;
+				case GAMEOVER:
+					break;
 				}
 			}
-			}
-		
 		}catch(NullPointerException n) {
 			
 		}

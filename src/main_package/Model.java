@@ -9,6 +9,7 @@ import java.util.TimerTask;
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian
 public class Model {
 	Timer myTimer;
+	final int defaultTime = 30;
 	int timeCount;
 	ArrayList<Element> list;
 	Bird bird;
@@ -50,10 +51,28 @@ public class Model {
 	//getter for quizing
 	public boolean getQuizing() {return this.quizing;};
 	
+	// create timer and task depends on curState
 	public void createTimer() {
 		myTimer = new Timer();
 		switch(curState) {
 		case OP:
+			timeCount = defaultTime;
+			myTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					//t++;
+					if (!quizing) {
+						System.out.println("time count :" + --timeCount);
+					}
+					if (timeCount == 0) {
+						gameOver();
+						System.out.println(curState);
+						myTimer.cancel();
+					}
+				}
+				
+			}, 0, 1000);
 			break;
 		case NH1:
 			timeCount = 10;
@@ -65,8 +84,7 @@ public class Model {
 					System.out.println("time count :" + --timeCount);
 					if (timeCount == 0) {
 						myTimer.cancel();
-						quizing = true;
-						System.out.println("start quiz");
+						startQuiz();
 					}
 				}
 				
@@ -180,7 +198,7 @@ public class Model {
 	// the method will generate a quiz
 	// and set quizing boolean to be true
 	public void startQuiz() {
-		System.out.println("quiz");
+		System.out.println("start quiz");
 		this.quizing = true;
 	}
 	

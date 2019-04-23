@@ -41,6 +41,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			model.setCurState(Type.MAINMENU);
+			model.myTimer.cancel();
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
 			view.OPButton.setVisible(true);
@@ -87,6 +88,7 @@ public class Controller {
 				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
 				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
 				model.setUpdateL();
+				model.createTimer();
 			
 				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
@@ -110,12 +112,16 @@ public class Controller {
 			// TODO Auto-generated method stub
 			switch (model.getCurState()) {
 			case OP:
+				// call checkQuiz
 				model.quizing = false;
 				view.submitButton.setVisible(false);
 				break;
 			case NH1:
+				// call submitQuiz
 				model.quizing = false;
 				System.out.println("check answer and go to NH2");
+				model.curState = Type.NH2;
+				System.out.println(model.getCurState());
 				view.submitButton.setVisible(false);
 				break;
 				
