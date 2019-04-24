@@ -75,7 +75,7 @@ public class Model {
 			}, 0, 1000);
 			break;
 		case NH1:
-			timeCount = 10;
+			timeCount = 20;
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -244,6 +244,16 @@ public class Model {
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
+		}
+		boolean moreCollectedItems = false;
+		for(Element e: list) {
+			if(e instanceof CollectedItem) {
+				moreCollectedItems = true;
+			}
+		}
+		if(!moreCollectedItems) {
+			System.out.println("NH1 Complete");
+			curState= Type.NH2;
 		}
 	}
 	
