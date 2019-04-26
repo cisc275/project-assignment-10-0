@@ -63,14 +63,14 @@ public class Controller {
 				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
 				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(view.frameWidth), rand.nextInt(view.frameHeight), ItemType.STICK));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.STICK));
 				}
 				// Created rats for NH Game but don't know how to show them in the view
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(view.frameWidth), rand.nextInt(view.frameHeight), ItemType.RAT));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.RAT));
 				}
 				model.setUpdateL();
-				model.setBird(new Bird(view.frameWidth/2, view.frameHeight/2,0,BirdType.NH));
+				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
 				model.createTimer();
 				
 				System.out.println(model.getCurState());

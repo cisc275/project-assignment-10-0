@@ -7,6 +7,8 @@ public class Bird extends Element{
 	// represent the type of bird
 	BirdType bt;
 	
+	int itemsCollected;
+	
 	public Bird (int x, int y, int l, BirdType b) {
 		super(x,y);
 		life = l;
@@ -40,5 +42,13 @@ public class Bird extends Element{
 	// add one to the life
 	public void eat() {
 		life++;
+	}
+	
+	public int getItemsCollected() {
+		return itemsCollected;
+	}
+	
+	public void setItemsCollected(int ic) {
+		this.itemsCollected = ic;
 	}
 }

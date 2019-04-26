@@ -48,7 +48,7 @@ public class View extends JPanel{
 	// add button to the JPanel
 	public View() {
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		String[] imgName = {"bird", "hitItem", "collectedItem","background", "background2"};
+		String[] imgName = {"bird", "hitItem", "collectedItem", "nest", "background", "background2"};
 		imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -153,9 +153,9 @@ public class View extends JPanel{
 				case NH1:
 					g.drawImage(curImg, x, y, Color.gray, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString(String.valueOf(model.getBird().getLife()), 1000, 20);
+					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-				
+					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
 				
 					if (model.getList().size() != 0) {
 						for(Element each: model.getList()) {
@@ -164,6 +164,8 @@ public class View extends JPanel{
 					}
 					break;
 				case NH2:
+					g.drawImage(curImg, x, y, Color.gray, this);
+					g.drawString("You Win NH1", 1000, 20);
 					break;
 				case GAMEOVER:
 					break;
@@ -188,6 +190,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("collectedItem")) {
 				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
+			}
+			else if (x.equals("nest")) {
+				bi = ImageIO.read(new File("imgs/IMG_0692.png"));
 			}
 			else if (x.equals("background")) {
 				bi = ImageIO.read(new File("imgs/background.jpg"));

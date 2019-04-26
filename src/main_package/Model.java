@@ -32,6 +32,9 @@ public class Model {
 	int groundX;
 	int groundY; 
 	
+	//Boolean for NH1 Game
+	boolean moreCollectedItems;
+	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
 	// set curState to be the main menu
@@ -75,16 +78,18 @@ public class Model {
 			}, 0, 1000);
 			break;
 		case NH1:
-			timeCount = 20;
+			timeCount = 40;
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					//t++;
 					System.out.println("time count :" + --timeCount);
-					if (timeCount == 0) {
+					if (timeCount == 0 && curState == Type.NH1) {
 						myTimer.cancel();
 						startQuiz();
+					} else if(curState != Type.NH1) {
+						myTimer.cancel();
 					}
 				}
 				
@@ -140,6 +145,10 @@ public class Model {
 			System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
+			}
+			if(!moreCollectedItems && bird.getX() == this.getFrameW()/2 && bird.getY() == this.getFrameH()/2) {
+				System.out.println("NH1 Complete");
+				curState= Type.NH2;
 			}
 		}
 	}
@@ -238,23 +247,23 @@ public class Model {
 			boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
 			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
 			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-				bird.setLife(bird.getLife() + 1);
+				bird.setItemsCollected(bird.getItemsCollected() + 1);
 				CollectedItem c = (CollectedItem)cur;
 				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
 		}
-		boolean moreCollectedItems = false;
+		moreCollectedItems = false;
 		for(Element e: list) {
 			if(e instanceof CollectedItem) {
 				moreCollectedItems = true;
 			}
 		}
-		if(!moreCollectedItems) {
+		/*if(!moreCollectedItems) {
 			System.out.println("NH1 Complete");
 			curState= Type.NH2;
-		}
+		}*/
 	}
 	
 	// for NH game
