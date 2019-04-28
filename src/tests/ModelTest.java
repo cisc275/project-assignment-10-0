@@ -100,7 +100,7 @@ class ModelTest {
 	@Test
 	void testCheckQuiz() {
 		Model m = new Model(600, 500, 32, 32);
-		m.setQuiz("1111?", "yes");
+		m.setQuiz("1111?", "yes", new String[4]);
 		m.getQuiz().setChosenAnser("yes");
 		m.checkQuiz();
 		assertEquals(false, m.getQuizing());

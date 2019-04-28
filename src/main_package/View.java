@@ -3,6 +3,8 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,11 +30,16 @@ public class View extends JPanel{
 	final int imageW = 32;
 	JFrame frame;
 	ArrayList<Button> list;
-	
+	// for operation
 	JButton OPButton;
 	JButton NHButton;
 	JButton backButton;
 	JButton submitButton;
+	// for quiz
+	JButton choice1;
+	JButton choice2;
+	JButton choice3;
+	JButton choice4;
 	
 	BufferedImage curImg;
 	Model model;
@@ -48,6 +55,7 @@ public class View extends JPanel{
 	// add button to the JPanel
 	public View() {
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		//super(new GridBagLayout());
 		String[] imgName = {"bird", "hitItem", "collectedItem", "nest", "background", "background2"};
 		imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -75,6 +83,32 @@ public class View extends JPanel{
 		submitButton.setVisible(false);
 		add(submitButton);
 		
+		//GridBagConstraints gbc = new GridBagConstraints();
+		choice1 = new JButton("A");
+		choice1.setOpaque(true);
+		choice1.setVisible(false);
+		choice1.setActionCommand("A");
+		add(choice1);
+		
+		choice2 = new JButton("B");
+		choice2.setOpaque(true);
+		choice2.setVisible(false);
+		choice2.setActionCommand("B");
+		add(choice2);
+		
+		choice3 = new JButton("C");
+		choice3.setOpaque(true);
+		choice3.setVisible(false);
+		choice3.setActionCommand("C");
+		add(choice3);
+		
+		choice4 = new JButton("D");
+		choice4.setOpaque(true);
+		choice4.setVisible(false);
+		choice4.setActionCommand("D");
+		add(choice4);
+		
+		
 		frame = new JFrame();
         frame.getContentPane().add(this);
 		frame.setBackground(Color.gray);
@@ -94,6 +128,10 @@ public class View extends JPanel{
 	public void update(Model model) {
 		if (model.getQuizing()) {
 			submitButton.setVisible(true);
+			choice1.setVisible(true);
+			choice2.setVisible(true);
+			choice3.setVisible(true);
+			choice4.setVisible(true);
 		}
 		
 		if (model.getCurState() == Type.MAINMENU) {
@@ -123,6 +161,13 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		try {
 			if (model.getQuizing()) {
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/2, 100);
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/2, 300);
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/2, 380);
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/2, 420);
 				
 			}
 			else {

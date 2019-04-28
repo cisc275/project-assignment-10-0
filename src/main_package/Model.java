@@ -1,7 +1,10 @@
 package main_package;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +20,7 @@ public class Model {
 	boolean quizing;
 	Type curState;
 	Quiz quiz;
+	ArrayList<Quiz> quizs;
 	int eggs;
 	int numTrueAns;
 	public static int xIncr = 5;
@@ -45,6 +49,7 @@ public class Model {
 		imgW = iW;
 		imgH = iH;
 		curState = Type.MAINMENU;
+		quizs = new ArrayList<>();
 	}
 	
 	//getter for eggs
@@ -142,7 +147,7 @@ public class Model {
 	public void updateBirdPosition() {
 		if (!outOfFrame()) {
 			bird.move();
-			System.out.println("here1");
+			//System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
 			}
@@ -209,6 +214,11 @@ public class Model {
 	public void startQuiz() {
 		System.out.println("start quiz");
 		this.quizing = true;
+		Random r = new Random();
+		if (quizs.size() != 0) {
+			quiz = quizs.get(r.nextInt(quizs.size()));
+			System.out.println(quiz);
+		}
 	}
 	
 	// for OP Game
@@ -287,6 +297,25 @@ public class Model {
 		}
 	}
 	
+	public void createQuizs() throws Exception{
+		Scanner scan;
+		switch(curState) {
+		case OP:
+			File file = new File("OPquiz.txt");
+			scan = new Scanner(file);
+			while(scan.hasNextLine()) {
+				String[] infos = scan.nextLine().split(";", -1);
+//				System.out.println(infos.length);
+//				for(int i = 0; i < infos.length; i++) {
+//					System.out.println(infos[i]);
+//				}
+				String[] choices = {infos[1],infos[2],infos[3],infos[4]};
+				quizs.add(new Quiz(infos[0], infos[5], choices));
+			}
+			scan.close();
+		}
+	}
+	
 	// getter setter for create test
 	public Type getCurState() {
 		return curState;
@@ -296,8 +325,8 @@ public class Model {
 		this.list = list;
 	}
 	
-	public void setQuiz(String question, String answer) {
-		quiz = new Quiz(question, answer);
+	public void setQuiz(String question, String answer, String[] choice) {
+		quiz = new Quiz(question, answer, choice);
 	}
 	
 	public Quiz getQuiz() {

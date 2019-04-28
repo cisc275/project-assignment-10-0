@@ -29,6 +29,11 @@ public class Controller {
 		view.NHButton.addActionListener(new NHButtonListener());
 		view.backButton.addActionListener(new RestartButtonListener());
 		view.submitButton.addActionListener(new QuizButtonListener());
+		view.choice1.addActionListener(new ChoiceButtonListener());
+		view.choice2.addActionListener(new ChoiceButtonListener());
+		view.choice3.addActionListener(new ChoiceButtonListener());
+		view.choice4.addActionListener(new ChoiceButtonListener());
+		
 		view.addKeyListener(new CustomKeyListener());
 		
 		
@@ -97,6 +102,11 @@ public class Controller {
 				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
 				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
 				model.setUpdateL();
+				try {
+					model.createQuizs();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 				model.createTimer();
 			
 				System.out.println(model.getCurState());
@@ -122,7 +132,8 @@ public class Controller {
 			switch (model.getCurState()) {
 			case OP:
 				// call checkQuiz
-				model.quizing = false;
+				model.checkQuiz();
+				//model.quizing = false;
 				view.submitButton.setVisible(false);
 				break;
 			case NH1:
@@ -135,7 +146,21 @@ public class Controller {
 				break;
 				
 			}
+			view.choice1.setVisible(false);
+			view.choice2.setVisible(false);
+			view.choice3.setVisible(false);
+			view.choice4.setVisible(false);
 			view.requestFocusInWindow();
+		}
+		
+	}
+	
+	class ChoiceButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			model.getQuiz().setChosenAnser(e.getActionCommand());
 		}
 		
 	}

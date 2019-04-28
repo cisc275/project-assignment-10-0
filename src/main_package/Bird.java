@@ -39,6 +39,7 @@ public class Bird extends Element{
 	
 	/// losing life after collision with planes, fox
 	public void collision() {
+		System.out.println("lose life");
 		life--;
 	}
 	
