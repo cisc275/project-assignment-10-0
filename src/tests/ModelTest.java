@@ -67,19 +67,23 @@ class ModelTest {
 		Model m = new Model(600, 500, 32, 32);
 		m.setCurState(Type.OP);
 		m.setBird(0,0,3,BirdType.OSPREY);
-		m.updateBirdPosition(Model.xIncr, Model.yIncr);
+		m.getBird().setXVector(5);
+		m.getBird().setYVector(5);
+		m.updateBirdPosition();
 		assertEquals(Model.xIncr, m.getBird().getX());
 		assertEquals(Model.yIncr, m.getBird().getY());
 		
 		m.setCurState(Type.NH1);
 		m.setBird(0,0,3,BirdType.NH);
+		m.getBird().setXVector(5);
+		m.getBird().setYVector(5);
 		ArrayList<Element> e = new ArrayList<Element>();
 		Element e1 = new CollectedItem(12, 50, ItemType.STICK);
 		Element e2 = new CollectedItem(21,100, ItemType.STICK);
 		e.add(e1);
 		e.add(e2);
 		m.setList(e);
-		m.updateBirdPosition(Model.xIncr, Model.yIncr);
+		m.updateBirdPosition();
 	}
 	
 	@Test

@@ -11,13 +11,17 @@ class BirdTest {
 	Bird osprey1 = new Bird(0,0,3,BirdType.NH);
 	@Test
 	void testMove1() {
-		osprey1.move(1,1);
+		osprey1.setXVector(1);
+		osprey1.setYVector(1);
+		osprey1.move();
 		assertEquals(1,osprey1.getX());
 	}
 	
 	@Test
 	void testMove2() {
-		osprey1.move(1,1);
+		osprey1.setXVector(1);
+		osprey1.setYVector(1);
+		osprey1.move();
 		assertEquals(1,osprey1.getY());
 	}
 	

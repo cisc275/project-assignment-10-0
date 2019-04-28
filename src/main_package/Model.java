@@ -32,6 +32,9 @@ public class Model {
 	int groundX;
 	int groundY; 
 	
+	//Boolean for NH1 Game
+	boolean moreCollectedItems;
+	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
 	// set curState to be the main menu
@@ -75,16 +78,18 @@ public class Model {
 			}, 0, 1000);
 			break;
 		case NH1:
-			timeCount = 20;
+			timeCount = 40;
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					//t++;
 					System.out.println("time count :" + --timeCount);
-					if (timeCount == 0) {
+					if (timeCount == 0 && curState == Type.NH1) {
 						myTimer.cancel();
 						startQuiz();
+					} else if(curState != Type.NH1) {
+						myTimer.cancel();
 					}
 				}
 				
@@ -134,27 +139,31 @@ public class Model {
 	
 	// update the bird position by calling the move method
 	// if the curState is NH1 call collisionNH1()
-	public void updateBirdPosition(int incX, int incY) {
-		if (!outOfFrame(incX, incY)) {
-			bird.move(incX, incY);
+	public void updateBirdPosition() {
+		if (!outOfFrame()) {
+			bird.move();
 			System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
+			}
+			if(!moreCollectedItems && bird.getX() == this.getFrameW()/2 && bird.getY() == this.getFrameH()/2) {
+				System.out.println("NH1 Complete");
+				curState= Type.NH2;
 			}
 		}
 	}
 	
 	// helper function for updateBirdPosition to prevent bird go out of screen
-	public boolean outOfFrame(int incX, int incY) {
+	public boolean outOfFrame() {
 		switch (curState) {
 		case OP:
-			if (bird.getY() + incY < 0|| bird.getY() + imgH + incY > frameH) {
+			if (bird.getY() + bird.getYVector() < 0|| bird.getY() + imgH + bird.getYVector() > frameH) {
 				return true;
 			}
 			break;
 		case NH1:
-			if (bird.getY() + incY < 0 || bird.getY() + imgH + incY > frameH || 
-					bird.getX() + incX < 0 || bird.getX() + imgW + incX > frameW) {
+			if (bird.getY() + bird.getYVector() < 0 || bird.getY() + imgH + bird.getYVector() > frameH || 
+					bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW) {
 				return true;
 			}
 			break;
@@ -238,23 +247,23 @@ public class Model {
 			boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
 			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
 			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-				bird.setLife(bird.getLife() + 1);
+				bird.setItemsCollected(bird.getItemsCollected() + 1);
 				CollectedItem c = (CollectedItem)cur;
 				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
 		}
-		boolean moreCollectedItems = false;
+		moreCollectedItems = false;
 		for(Element e: list) {
 			if(e instanceof CollectedItem) {
 				moreCollectedItems = true;
 			}
 		}
-		if(!moreCollectedItems) {
+		/*if(!moreCollectedItems) {
 			System.out.println("NH1 Complete");
 			curState= Type.NH2;
-		}
+		}*/
 	}
 	
 	// for NH game

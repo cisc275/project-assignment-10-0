@@ -6,11 +6,16 @@ public class Bird extends Element{
 	int life;
 	// represent the type of bird
 	BirdType bt;
+	int itemsCollected;
+	int xVector;
+	int yVector;
 	
 	public Bird (int x, int y, int l, BirdType b) {
 		super(x,y);
 		life = l;
 		bt = b;
+		xVector = 0;
+		yVector = 0;
 	}
 	
 	//getter for x
@@ -26,9 +31,9 @@ public class Bird extends Element{
 	}
 	
 	// move the bird, change x and y by adding incX and incY on x and y
-	public void move(int incX, int incY) {
-		 x += incX;
-		 y += incY;
+	public void move() {
+		 x += xVector;
+		 y += yVector;
 		 //System.out.println("Bird Position(" + x + ", " + y + ")");
 	}
 	
@@ -40,5 +45,29 @@ public class Bird extends Element{
 	// add one to the life
 	public void eat() {
 		life++;
+	}
+	
+	public int getItemsCollected() {
+		return itemsCollected;
+	}
+	
+	public void setItemsCollected(int ic) {
+		this.itemsCollected = ic;
+	}
+	
+	public int getXVector() {
+		return xVector;
+	}
+	
+	public int getYVector() {
+		return yVector;
+	}
+	
+	public void setXVector(int x) {
+		xVector = x;
+	}
+	
+	public void setYVector(int y) {
+		yVector = y;
 	}
 }
