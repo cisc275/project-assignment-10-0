@@ -73,7 +73,7 @@ public class Model {
 					if (!quizing) {
 						System.out.println("time count :" + --timeCount);
 					}
-					if (timeCount == 0) {
+					if (timeCount <= 0) {
 						gameOver();
 						System.out.println(curState);
 						myTimer.cancel();
@@ -227,11 +227,14 @@ public class Model {
 	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
-		this.quizing = false;
-		System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
+			timeCount -= 10;
 		}
+		
+		this.quizing = false;
+		System.out.println("submit");
+		
 	}
 	
 	// set curState to be End
@@ -313,6 +316,9 @@ public class Model {
 				quizs.add(new Quiz(infos[0], infos[5], choices));
 			}
 			scan.close();
+			break;
+		case NH1:
+			break;
 		}
 	}
 	

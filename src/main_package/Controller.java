@@ -272,6 +272,7 @@ public class Controller {
 			public void run() {
 				Timer t = new Timer(drawDelay, drawAction);
 				t.start();
+				
 			}
 		});
 		
