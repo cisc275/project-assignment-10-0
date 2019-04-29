@@ -301,8 +301,8 @@ public class Model {
 		Scanner scan;
 		switch(curState) {
 		case OP:
-			File file = new File("OPquiz.txt");
-			scan = new Scanner(file);
+			File fileO = new File("OPquiz.txt");
+			scan = new Scanner(fileO);
 			while(scan.hasNextLine()) {
 				String[] infos = scan.nextLine().split(";", -1);
 //				System.out.println(infos.length);
@@ -313,6 +313,21 @@ public class Model {
 				quizs.add(new Quiz(infos[0], infos[5], choices));
 			}
 			scan.close();
+			break;
+		case NH1:
+			File fileN = new File("NHquiz.txt");
+			scan = new Scanner(fileN);
+			while(scan.hasNextLine()) {
+				String[] infos = scan.nextLine().split(";", -1);
+//				System.out.println(infos.length);
+//				for(int i = 0; i < infos.length; i++) {
+//					System.out.println(infos[i]);
+//				}
+				String[] choices = {infos[1],infos[2],infos[3],infos[4]};
+				quizs.add(new Quiz(infos[0], infos[5], choices));
+			}
+			scan.close();
+			break;
 		}
 	}
 	
