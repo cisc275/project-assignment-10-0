@@ -126,7 +126,7 @@ public class View extends JPanel{
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
 	public void update(Model model) {
-		if (model.getQuizing()) {
+		if (model.getQuizing() && model.delayTimer == null) {
 			submitButton.setVisible(true);
 			choice1.setVisible(true);
 			choice2.setVisible(true);
@@ -168,6 +168,9 @@ public class View extends JPanel{
 				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/2, 380);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/2, 420);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				g.drawString(model.quizOutcomeInfo, frameWidth/2, 200);
 				
 			}
 			else {

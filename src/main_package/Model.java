@@ -12,12 +12,14 @@ import java.util.TimerTask;
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian
 public class Model {
 	Timer myTimer;
+	Timer delayTimer;
 	final int defaultTime = 30;
 	int timeCount;
+	int delayCount;
 	ArrayList<Element> list;
 	Bird bird;
-	//Bird birdNH;
 	boolean quizing;
+	String quizOutcomeInfo = "";
 	Type curState;
 	Quiz quiz;
 	ArrayList<Quiz> quizs;
@@ -227,20 +229,41 @@ public class Model {
 	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
-		this.quizing = false;
+		
 		System.out.println("submit");
 		switch(curState) {
 		case OP:
 			if(!quiz.checkAnswer()) {
 				bird.collision();
 				timeCount -= 10;
+				quizOutcomeInfo = "Oh No!!!  You Are Wrong, Lose Energy!!";
 			}
+			else {
+				quizOutcomeInfo = "Correct!!!   You Saved the Bird!!";
+			}
+			delayTimer = new Timer();
+			delayCount = 0;
+			delayTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("delayCount: " + ++delayCount);
+					if (delayCount >=3) {
+						quizing = false;
+						delayTimer.cancel();
+						delayTimer = null;
+						quizOutcomeInfo = "";
+					}
+				}
+				
+			}, 0, 1000);
 			break;
 		case NH1:
 			if(!quiz.checkAnswer()) {
 				//egg--;
 				System.out.println("reduce the number of egg in NH2");
 			}
+			this.quizing = false;
 			curState = Type.NH2;
 		}
 		

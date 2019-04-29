@@ -16,8 +16,10 @@ import javax.swing.Timer;
 public class Controller {
 	Model model;
 	View view;
-	final int drawDelay = 30;
+	int drawDelay = 30;
 	Action drawAction;
+	Timer t;
+	static int count = 0;
 	
 	// initialize the model and view
 	public Controller() {
@@ -148,6 +150,7 @@ public class Controller {
 				model.checkQuiz();
 				System.out.println(model.getCurState());
 				view.submitButton.setVisible(false);
+				
 				break;
 				
 			}
@@ -275,7 +278,7 @@ public class Controller {
 	public void start() {
 		EventQueue.invokeLater(new Runnable(){
 			public void run() {
-				Timer t = new Timer(drawDelay, drawAction);
+				t = new Timer(drawDelay, drawAction);
 				t.start();
 				
 			}
@@ -284,7 +287,7 @@ public class Controller {
 		drawAction = new AbstractAction(){
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
-    			
+    			//System.out.println(++count);
     			switch(model.getCurState()) {
     			case MAINMENU:
     				view.update(model);

@@ -21,7 +21,6 @@ public class Quiz {
 	}
 	//check if the chosenAnswer matches the correct answer
 	public boolean checkAnswer() {
-		System.out.println("right answer");
 		return answer.equals(chosenAnswer);
 	}
 	
