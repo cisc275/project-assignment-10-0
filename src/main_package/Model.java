@@ -90,12 +90,10 @@ public class Model {
 					// TODO Auto-generated method stub
 					//t++;
 					System.out.println("time count :" + --timeCount);
-					if (timeCount == 0 && curState == Type.NH1) {
+					if (timeCount == 0) {
 						myTimer.cancel();
 						startQuiz();
-					} else if(curState != Type.NH1) {
-						myTimer.cancel();
-					}
+					} 
 				}
 				
 			}, 0, 1000);
@@ -153,7 +151,9 @@ public class Model {
 			}
 			if(!moreCollectedItems && bird.getX() == this.getFrameW()/2 && bird.getY() == this.getFrameH()/2) {
 				System.out.println("NH1 Complete");
-				curState= Type.NH2;
+				startQuiz();
+				myTimer.cancel();
+				//curState= Type.NH2;
 			}
 		}
 	}
@@ -221,19 +221,30 @@ public class Model {
 		}
 	}
 	
-	// for OP Game
+	// for OP and NH Game
 	// check the answer of the quiz
 	// if it is true, set the quizing boolean to be false;
 	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
-		if(!quiz.checkAnswer()) {
-			bird.collision();
-			timeCount -= 10;
-		}
-		
 		this.quizing = false;
 		System.out.println("submit");
+		switch(curState) {
+		case OP:
+			if(!quiz.checkAnswer()) {
+				bird.collision();
+				timeCount -= 10;
+			}
+			break;
+		case NH1:
+			if(!quiz.checkAnswer()) {
+				//egg--;
+				System.out.println("reduce the number of egg in NH2");
+			}
+			curState = Type.NH2;
+		}
+		
+		
 		
 	}
 	
@@ -284,6 +295,7 @@ public class Model {
 	// set the number of egg to be the number of right answers
 	// set the quizing boolean to be false
 	// set curState to be NH2
+	// NO NEED FOR THIS ONE !!!!!!!!!!!!!   ALL USE CHECKQUIZ
 	public void submitQuiz() {
 		this.quizing = false;
 	}

@@ -76,6 +76,11 @@ public class Controller {
 				}
 				model.setUpdateL();
 				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
+				try {
+					model.createQuizs();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 				model.createTimer();
 				
 				System.out.println(model.getCurState());
@@ -138,9 +143,9 @@ public class Controller {
 				break;
 			case NH1:
 				// call submitQuiz
-				model.quizing = false;
-				System.out.println("check answer and go to NH2");
-				model.curState = Type.NH2;
+				//model.quizing = false;
+				//model.curState = Type.NH2;
+				model.checkQuiz();
 				System.out.println(model.getCurState());
 				view.submitButton.setVisible(false);
 				break;
@@ -294,6 +299,8 @@ public class Controller {
     			case NH1:
     				view.update(model);
     				model.updateBirdPosition();
+    			case NH2:
+    				view.update(model);
     			case GAMEOVER:
     				view.update(model);
     				break;

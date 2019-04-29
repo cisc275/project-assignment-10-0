@@ -209,7 +209,7 @@ public class View extends JPanel{
 					break;
 				case NH2:
 					g.drawImage(curImg, x, y, Color.gray, this);
-					g.drawString("You Win NH1", 1000, 20);
+					//g.drawString("You Win NH1", 1000, 20);
 					break;
 				case GAMEOVER:
 					break;
