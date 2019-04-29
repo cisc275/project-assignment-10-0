@@ -15,7 +15,7 @@ public class CollectedItem extends Element{
 	
 	// call when the item is collected, change boolean collected to true
 	public void isCollected() {
-		
+		collected = true;
 	}
 	
 	public boolean getCollected() {

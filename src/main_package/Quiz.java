@@ -21,4 +21,6 @@ public class Quiz {
 	public boolean checkAnswer() {
 		return answer.equals(chosenAnswer);
 	}
+	
+	
 }

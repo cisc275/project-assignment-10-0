@@ -34,11 +34,11 @@ public class Bird extends Element{
 	
 	/// losing life after collision with planes, fox
 	public void collision() {
-		
+		life--;
 	}
 	
 	// add one to the life
 	public void eat() {
-		
+		life++;
 	}
 }

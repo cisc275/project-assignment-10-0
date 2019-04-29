@@ -2,11 +2,15 @@ package main_package;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.management.timer.Timer;
+
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian
 public class Model {
 	Timer myTimer;
+	final int defaultTime = 30;
+	int timeCount;
 	ArrayList<Element> list;
 	Bird bird;
 	//Bird birdNH;
@@ -17,12 +21,16 @@ public class Model {
 	int numTrueAns;
 	public static int xIncr = 5;
 	public static int xDec = -5;
+	public static int xDec2 = -3;
 	public static int yIncr = 5;
 	int frameW;
 	int frameH;
 	int imgH;
 	int imgW;
 	boolean updateL;
+	// for move background
+	int groundX;
+	int groundY; 
 	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
@@ -43,10 +51,57 @@ public class Model {
 	//getter for quizing
 	public boolean getQuizing() {return this.quizing;};
 	
+	// create timer and task depends on curState
+	public void createTimer() {
+		myTimer = new Timer();
+		switch(curState) {
+		case OP:
+			timeCount = defaultTime;
+			myTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					//t++;
+					if (!quizing) {
+						System.out.println("time count :" + --timeCount);
+					}
+					if (timeCount == 0) {
+						gameOver();
+						System.out.println(curState);
+						myTimer.cancel();
+					}
+				}
+				
+			}, 0, 1000);
+			break;
+		case NH1:
+			timeCount = 10;
+			myTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					//t++;
+					System.out.println("time count :" + --timeCount);
+					if (timeCount == 0) {
+						myTimer.cancel();
+						startQuiz();
+					}
+				}
+				
+			}, 0, 1000);
+			break;
+		case NH2:
+			break;
+		}
+	}
+	
 	// loop through the collection list update their position by calling the move method
 	// if the curState is NH2 call collisionNH2()
 	// if the curState is OP call checkCollision
 	public void updatePosition() {
+		// for background
+		groundX = groundX + xDec2;
+		// for element
 		if (updateL) {
 			updateList();
 		}
@@ -80,10 +135,31 @@ public class Model {
 	// update the bird position by calling the move method
 	// if the curState is NH1 call collisionNH1()
 	public void updateBirdPosition(int incX, int incY) {
-		bird.move(incX, incY);
-		if (curState == Type.NH1) {
-			collisionNH1();
+		if (!outOfFrame(incX, incY)) {
+			bird.move(incX, incY);
+			System.out.println("here1");
+			if (curState == Type.NH1) {
+				collisionNH1();
+			}
 		}
+	}
+	
+	// helper function for updateBirdPosition to prevent bird go out of screen
+	public boolean outOfFrame(int incX, int incY) {
+		switch (curState) {
+		case OP:
+			if (bird.getY() + incY < 0|| bird.getY() + imgH + incY > frameH) {
+				return true;
+			}
+			break;
+		case NH1:
+			if (bird.getY() + incY < 0 || bird.getY() + imgH + incY > frameH || 
+					bird.getX() + incX < 0 || bird.getX() + imgW + incX > frameW) {
+				return true;
+			}
+			break;
+		}
+		return false;
 	}
 	
 	//for OP game
@@ -94,13 +170,26 @@ public class Model {
 	// check if the bird has collision with the final flag
 	// if it is call winGame()
 	public boolean checkCollision(Element ht) {
-		startQuiz();
 		boolean xC = ht.getX() - imgW/2 <= bird.getX() + imgW/2 && ht.getX() - imgW/2 >= bird.getX() - imgW/2;
 		boolean yC1 = ht.getY() - imgH/2 <= bird.getY() + imgH/2 && ht.getY() - imgH/2 >= bird.getY() - imgH/2;
 		boolean yC2 = ht.getY() + imgH/2 <= bird.getY() + imgH/2 && ht.getY() + imgH/2 >= bird.getY() - imgH/2;
 		if (xC && yC1 || xC && yC2) {
 			System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			gameOver();
+			if(ht instanceof HitItem) {
+				HitItem h = (HitItem)ht;
+				if(h.getType().equals(ItemType.FISH)) {
+					System.out.println(bird.getLife());
+					bird.eat();
+					
+				} else if(h.getType().equals(ItemType.AIRPLANE)) {
+					System.out.println(bird.getLife());
+					bird.collision();
+				} else if(h.getType().equals(ItemType.WINFLAG)) {
+					this.curState = Type.WIN;
+				}
+			}
+			//gameOver();
+			startQuiz();
 			return true;
 		}
 		return false;
@@ -109,7 +198,8 @@ public class Model {
 	// the method will generate a quiz
 	// and set quizing boolean to be true
 	public void startQuiz() {
-		
+		System.out.println("start quiz");
+		this.quizing = true;
 	}
 	
 	// for OP Game
@@ -118,17 +208,21 @@ public class Model {
 	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
 	// and check the remaining life of bird, if it is zero call gameOver()
 	public void checkQuiz() {
-		
+		this.quizing = false;
+		System.out.println("submit");
+		if(!quiz.checkAnswer()) {
+			bird.collision();
+		}
 	}
 	
 	// set curState to be End
 	public void gameOver() {
-	 curState = Type.GAMEOVER;
+	    curState = Type.GAMEOVER;
 	}
 	
 	// set curState to be Win 
 	public void winGame() {
-	
+		curState = Type.WIN;
 	}
 	
 	// for NH game
@@ -145,6 +239,8 @@ public class Model {
 			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
 			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
 				bird.setLife(bird.getLife() + 1);
+				CollectedItem c = (CollectedItem)cur;
+				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
@@ -157,7 +253,7 @@ public class Model {
 	// set the quizing boolean to be false
 	// set curState to be NH2
 	public void submitQuiz() {
-		
+		this.quizing = false;
 	}
 	
 	// for NH game
@@ -166,7 +262,10 @@ public class Model {
 	// if the fox has collision with bird, call the move method of the fox
 	// check the number of eggs left. if it is zero, call gameOver()
 	public void collisionNH2(HitItem ht) {
-		
+		eggs--;
+		if(eggs <= 0) {
+			this.curState = Type.GAMEOVER;
+		}
 	}
 	
 	// getter setter for create test
@@ -222,4 +321,9 @@ public class Model {
 	public int getFrameH() {
 		return frameH;
 	}
+	
+	public int getTimeCount() {
+		return timeCount;
+	}
+	
 }
