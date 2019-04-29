@@ -1,8 +1,8 @@
 package main_package;
 //author Sicheng Tian
 public enum Type {
-	NH1("NHGgame"),
-	NH2("NHGame"),
+	NH1("NH1Game"),
+	NH2("NH2Game"),
 	OP("OPgame"),
 	MAINMENU("MainMenu"),
 	GAMEOVER("GameOver"),

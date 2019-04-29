@@ -11,7 +11,8 @@ class QuizTest {
 	
 	@Test
 	void testCheckAnswer() {
-		Quiz q = new Quiz("question", "answer");
+		String[] choice = {"answer", "a", "b","c"};
+		Quiz q = new Quiz("question", "answer", choice);
 		q.setChosenAnser("231234");
 		assertEquals(false, q.checkAnswer());
 		q.setChosenAnser("answer");

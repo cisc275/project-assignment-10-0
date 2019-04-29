@@ -1,7 +1,10 @@
 package main_package;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +20,7 @@ public class Model {
 	boolean quizing;
 	Type curState;
 	Quiz quiz;
+	ArrayList<Quiz> quizs;
 	int eggs;
 	int numTrueAns;
 	public static int xIncr = 5;
@@ -32,6 +36,9 @@ public class Model {
 	int groundX;
 	int groundY; 
 	
+	//Boolean for NH1 Game
+	boolean moreCollectedItems;
+	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
 	// set curState to be the main menu
@@ -42,6 +49,7 @@ public class Model {
 		imgW = iW;
 		imgH = iH;
 		curState = Type.MAINMENU;
+		quizs = new ArrayList<>();
 	}
 	
 	//getter for eggs
@@ -75,16 +83,18 @@ public class Model {
 			}, 0, 1000);
 			break;
 		case NH1:
-			timeCount = 10;
+			timeCount = 40;
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
 					//t++;
 					System.out.println("time count :" + --timeCount);
-					if (timeCount == 0) {
+					if (timeCount == 0 && curState == Type.NH1) {
 						myTimer.cancel();
 						startQuiz();
+					} else if(curState != Type.NH1) {
+						myTimer.cancel();
 					}
 				}
 				
@@ -134,27 +144,31 @@ public class Model {
 	
 	// update the bird position by calling the move method
 	// if the curState is NH1 call collisionNH1()
-	public void updateBirdPosition(int incX, int incY) {
-		if (!outOfFrame(incX, incY)) {
-			bird.move(incX, incY);
-			System.out.println("here1");
+	public void updateBirdPosition() {
+		if (!outOfFrame()) {
+			bird.move();
+			//System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
+			}
+			if(!moreCollectedItems && bird.getX() == this.getFrameW()/2 && bird.getY() == this.getFrameH()/2) {
+				System.out.println("NH1 Complete");
+				curState= Type.NH2;
 			}
 		}
 	}
 	
 	// helper function for updateBirdPosition to prevent bird go out of screen
-	public boolean outOfFrame(int incX, int incY) {
+	public boolean outOfFrame() {
 		switch (curState) {
 		case OP:
-			if (bird.getY() + incY < 0|| bird.getY() + imgH + incY > frameH) {
+			if (bird.getY() + bird.getYVector() < 0|| bird.getY() + imgH + bird.getYVector() > frameH) {
 				return true;
 			}
 			break;
 		case NH1:
-			if (bird.getY() + incY < 0 || bird.getY() + imgH + incY > frameH || 
-					bird.getX() + incX < 0 || bird.getX() + imgW + incX > frameW) {
+			if (bird.getY() + bird.getYVector() < 0 || bird.getY() + imgH + bird.getYVector() > frameH || 
+					bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW) {
 				return true;
 			}
 			break;
@@ -200,6 +214,11 @@ public class Model {
 	public void startQuiz() {
 		System.out.println("start quiz");
 		this.quizing = true;
+		Random r = new Random();
+		if (quizs.size() != 0) {
+			quiz = quizs.get(r.nextInt(quizs.size()));
+			System.out.println(quiz);
+		}
 	}
 	
 	// for OP Game
@@ -238,13 +257,23 @@ public class Model {
 			boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
 			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
 			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-				bird.setLife(bird.getLife() + 1);
+				bird.setItemsCollected(bird.getItemsCollected() + 1);
 				CollectedItem c = (CollectedItem)cur;
 				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 			}
 		}
+		moreCollectedItems = false;
+		for(Element e: list) {
+			if(e instanceof CollectedItem) {
+				moreCollectedItems = true;
+			}
+		}
+		/*if(!moreCollectedItems) {
+			System.out.println("NH1 Complete");
+			curState= Type.NH2;
+		}*/
 	}
 	
 	// for NH game
@@ -268,6 +297,25 @@ public class Model {
 		}
 	}
 	
+	public void createQuizs() throws Exception{
+		Scanner scan;
+		switch(curState) {
+		case OP:
+			File file = new File("OPquiz.txt");
+			scan = new Scanner(file);
+			while(scan.hasNextLine()) {
+				String[] infos = scan.nextLine().split(";", -1);
+//				System.out.println(infos.length);
+//				for(int i = 0; i < infos.length; i++) {
+//					System.out.println(infos[i]);
+//				}
+				String[] choices = {infos[1],infos[2],infos[3],infos[4]};
+				quizs.add(new Quiz(infos[0], infos[5], choices));
+			}
+			scan.close();
+		}
+	}
+	
 	// getter setter for create test
 	public Type getCurState() {
 		return curState;
@@ -277,8 +325,8 @@ public class Model {
 		this.list = list;
 	}
 	
-	public void setQuiz(String question, String answer) {
-		quiz = new Quiz(question, answer);
+	public void setQuiz(String question, String answer, String[] choice) {
+		quiz = new Quiz(question, answer, choice);
 	}
 	
 	public Quiz getQuiz() {

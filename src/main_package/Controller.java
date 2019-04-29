@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Random; 
 
 
 import javax.swing.AbstractAction;
@@ -28,6 +29,11 @@ public class Controller {
 		view.NHButton.addActionListener(new NHButtonListener());
 		view.backButton.addActionListener(new RestartButtonListener());
 		view.submitButton.addActionListener(new QuizButtonListener());
+		view.choice1.addActionListener(new ChoiceButtonListener());
+		view.choice2.addActionListener(new ChoiceButtonListener());
+		view.choice3.addActionListener(new ChoiceButtonListener());
+		view.choice4.addActionListener(new ChoiceButtonListener());
+		
 		view.addKeyListener(new CustomKeyListener());
 		
 		
@@ -56,12 +62,20 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+				Random rand = new Random(); 
 				model.setCurState(Type.NH1);
 				model.setList(new ArrayList<>());
-				model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
-				model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
+				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
+				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
+				for(int i = 0; i<5; i++) {
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.STICK));
+				}
+				// Created rats for NH Game but don't know how to show them in the view
+				for(int i = 0; i<5; i++) {
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.RAT));
+				}
 				model.setUpdateL();
-				model.setBird(new Bird(300, 400,0,BirdType.NH));
+				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
 				model.createTimer();
 				
 				System.out.println(model.getCurState());
@@ -88,6 +102,11 @@ public class Controller {
 				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
 				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
 				model.setUpdateL();
+				try {
+					model.createQuizs();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 				model.createTimer();
 			
 				System.out.println(model.getCurState());
@@ -113,7 +132,8 @@ public class Controller {
 			switch (model.getCurState()) {
 			case OP:
 				// call checkQuiz
-				model.quizing = false;
+				model.checkQuiz();
+				//model.quizing = false;
 				view.submitButton.setVisible(false);
 				break;
 			case NH1:
@@ -126,7 +146,21 @@ public class Controller {
 				break;
 				
 			}
+			view.choice1.setVisible(false);
+			view.choice2.setVisible(false);
+			view.choice3.setVisible(false);
+			view.choice4.setVisible(false);
 			view.requestFocusInWindow();
+		}
+		
+	}
+	
+	class ChoiceButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			model.getQuiz().setChosenAnser(e.getActionCommand());
 		}
 		
 	}
@@ -147,10 +181,10 @@ public class Controller {
 				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					model.updateBirdPosition(0, -10);
+					model.getBird().setYVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.updateBirdPosition(0, 10);
+					model.getBird().setYVector(10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 					//model.updateBirdPosition(-10, 0);
@@ -161,16 +195,16 @@ public class Controller {
 				break;
 			case NH1:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.updateBirdPosition(0, -10);
+					model.getBird().setYVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.updateBirdPosition(0, 10);
+					model.getBird().setYVector(10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.updateBirdPosition(-10, 0);
+					model.getBird().setXVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.updateBirdPosition(10, 0);
+					model.getBird().setXVector(10);
 				}
 			default:
 				break;
@@ -178,9 +212,41 @@ public class Controller {
 		}
 
 		@Override
-		public void keyReleased(KeyEvent arg0) {
+		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+			switch (model.getCurState()) {
+			case OP:
+				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					//model.updateBirdPosition(-10, 0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					//model.updateBirdPosition(10, 0);
+				}
+				break;
+			case NH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(0);
+				}
+			default:
+				break;
+			}
 		}
 
 		@Override
@@ -220,12 +286,15 @@ public class Controller {
     			case OP:
     				if (!model.getQuizing()) {
     				model.updatePosition();
+    				model.updateBirdPosition();
     				}
     				view.update(model);
     				break;
     			case NH1:
     				view.update(model);
+    				model.updateBirdPosition();
     			case GAMEOVER:
+    				view.update(model);
     				break;
 				default:
 					break;

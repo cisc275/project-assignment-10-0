@@ -6,11 +6,13 @@ public class Quiz {
 	// matched answer to the question
 	String answer;
 	// the answer which the player has chosen
-	String chosenAnswer;
+	String chosenAnswer = "";
+	String[] choice;
 	
-	public Quiz(String question, String answer) {
+	public Quiz(String question, String answer, String[] choice) {
 		this.answer = answer;
 		this.question = question;
+		this.choice = choice;
 	}
 	
 	// record player's choice for one quiz question
@@ -19,7 +21,32 @@ public class Quiz {
 	}
 	//check if the chosenAnswer matches the correct answer
 	public boolean checkAnswer() {
+		System.out.println("right answer");
 		return answer.equals(chosenAnswer);
+	}
+	
+	public String getChosenAnswer() {
+		return chosenAnswer;
+	}
+	
+	public String getQuestion() {
+		return question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public String[] getChoice() {
+		return choice;
+	}
+
+	public String toString() {
+		String x = "";
+		for (int i = 0; i < choice.length;i++) {
+			x += choice[i] + ", ";
+		}
+		return question + "; " + x + "; "+ answer;
 	}
 	
 	
