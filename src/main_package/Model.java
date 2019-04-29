@@ -318,8 +318,6 @@ public class Model {
 			scan.close();
 			break;
 		case NH1:
-<<<<<<< HEAD
-=======
 			File fileN = new File("NHquiz.txt");
 			scan = new Scanner(fileN);
 			while(scan.hasNextLine()) {
@@ -332,7 +330,6 @@ public class Model {
 				quizs.add(new Quiz(infos[0], infos[5], choices));
 			}
 			scan.close();
->>>>>>> 2ca894b67cae19404334bb38b2c51bc4803217bd
 			break;
 		}
 	}
