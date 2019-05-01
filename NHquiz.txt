@@ -1,1 +1,3 @@
-What is my name?;WUYANZU;HUOJIANHUA;PENGYUYAN;WUYIXIONG;D
+What is my name?;WUYANZU;HUOJIANHUA;PENGYUYAN;WUYIXIONG;D;
+What is the bird name?(quiz test);Osprey;Northern Harrier;Red Knot;Clipper;B;
+Think for other quiz;Answer is A;B;C;D;A;
