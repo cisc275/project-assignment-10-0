@@ -11,9 +11,9 @@ class HitItemTest {
 
 	@Test
 	void test() {
-		HitItem h1 = new HitItem(0,0,ItemType.FOX);
+		HitItem h1 = new HitItem(0,0,ItemType.FOX,1,1);
 		
-		h1.move(1, 1);
+		h1.move();
 		
 		assertEquals(1,h1.getX());
 		assertEquals(1,h1.getY());
