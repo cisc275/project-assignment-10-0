@@ -175,7 +175,7 @@ public class Model {
 				System.out.println("NH1 Complete");
 				startQuiz();
 				myTimer.cancel();
-				resetModelNH2();
+				
 				//curState= Type.NH2;
 			}
 		}
@@ -411,6 +411,7 @@ public class Model {
 						else {
 							quizing = false;
 							curState = Type.NH2;
+							resetModelNH2();
 						}
 						quizOutcomeInfo = "";
 						delayTimer.cancel();

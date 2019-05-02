@@ -329,7 +329,9 @@ public class Controller {
     			case NH1:
     				//System.out.println("NH1 controlller");
     				view.update(model);
-    				model.updateBirdPosition();
+    				if (!model.getQuizing()) {
+    					model.updateBirdPosition();
+    				}
     			case NH2:
     				//System.out.println("NH2 controller");
     				view.update(model);
