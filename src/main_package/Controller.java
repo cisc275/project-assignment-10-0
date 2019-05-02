@@ -232,6 +232,7 @@ public class Controller {
 			default:
 				break;
 			}
+			
 		}
 
 		@Override
@@ -267,6 +268,7 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(0);
 				}
+				break;
 			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0);
@@ -280,6 +282,7 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(0);
 				}
+				break;
 			default:
 				break;
 			}
@@ -334,6 +337,7 @@ public class Controller {
     				if (!model.getQuizing()) {
     					model.updateBirdPosition();
     				}
+    				break;
     			case NH2:
     				//System.out.println("NH2 controller");
     				if (!model.getQuizing()) {
@@ -341,6 +345,7 @@ public class Controller {
     				}
     				view.update(model);
     				model.updatePositionNH2();
+    				break;
     			case GAMEOVER:
     				view.update(model);
     				break;

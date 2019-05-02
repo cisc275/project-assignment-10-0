@@ -33,6 +33,8 @@ public class Bird extends Element{
 	
 	// move the bird, change x and y by adding incX and incY on x and y
 	public void move() {
+		//System.out.println(x + " + " + xVector);
+		//System.out.println(y + " + " + yVector);
 		 x += xVector;
 		 y += yVector;
 		 //System.out.println("Bird Position(" + x + ", " + y + ")");

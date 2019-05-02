@@ -264,7 +264,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
 			}
 			else if (x.equals("hitItem")) {
-				bi = ImageIO.read(new File("imgs/fish.png"));
+				bi = ImageIO.read(new File("imgs/IMG_0692.png"));
 			}
 			else if (x.equals("collectedItem")) {
 				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
