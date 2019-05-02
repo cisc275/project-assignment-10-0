@@ -163,6 +163,7 @@ public class Model {
 	public void updateBirdPosition() {
 		if (!outOfFrame()) {
 			bird.move();
+			//System.out.println(bird.getX() + ", " + bird.getY());
 			//System.out.println("here1");
 			if (curState == Type.NH1) {
 				collisionNH1();
@@ -173,7 +174,7 @@ public class Model {
 			boolean xC2 = nestX + imgW/2 <= bird.getX() + imgW/2 && nestX + imgW/2 >= bird.getX() - imgW/2;
 			boolean yC1 = nestY - imgH/2 <= bird.getY() + imgH/2 && nestY - imgH/2 >= bird.getY() - imgH/2;
 			boolean yC2 = nestY + imgH/2 <= bird.getY() + imgH/2 && nestY + imgH/2 >= bird.getY() - imgH/2;
-			if (!moreCollectedItems && (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2)) {
+			if (!moreCollectedItems && (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) && curState == Type.NH1) {
 				System.out.println("NH1 Complete");
 				myTimer.cancel();
 				startQuiz();
