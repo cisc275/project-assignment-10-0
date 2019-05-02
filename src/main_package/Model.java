@@ -198,7 +198,7 @@ public class Model {
 			bird.move();
 			if (curState == Type.NH2) {
 				//collisionNH2();
-				if (timeCount % 2 == 0 && updateL) {
+				if (timeCount % 4 == 0 && updateL) {
 					//System.out.println(timeCount);
 					updateListNH2();
 				}
