@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -63,13 +64,17 @@ public class View extends JPanel{
 			imgs.put(imgName[i], img);
 		}
 		
+		//setLayout(null);
+		
 		OPButton = new JButton("start Osprey Game");
 		OPButton.setOpaque(true);
+		//OPButton.setBounds(100, 100, 400, 50);
 		//OPButton.setVisible(false);
 		add(OPButton);
 		
 		NHButton = new JButton("start Northen Harrier Game");
 		NHButton.setOpaque(true);
+		//NHButton.setBounds(600,100,400,50);
 		//NHButton.setVisible(false);
 		add(NHButton);
 		
@@ -170,17 +175,21 @@ public class View extends JPanel{
 				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/2, 380);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/2, 420);
+				if (model.getCurState() == Type.NH1) {
+					g.drawString(model.quizCount + "/" + 3 + " Quizs", 30, 30);
+				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
 				g.drawString(model.quizOutcomeInfo, frameWidth/2, 200);
+				
 				
 			}
 			else {
 				switch (model.getCurState()) {
 				case OP:
-					//g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), model.groundX % frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
-					//g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 					
 					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);

@@ -77,7 +77,7 @@ public class Controller {
 					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
 				}
 				model.setUpdateL();
-				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
+				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,3,BirdType.NH));
 				try {
 					model.createQuizs();
 				}catch(Exception ex) {

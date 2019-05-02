@@ -19,15 +19,16 @@ public class Model {
 	ArrayList<Element> list;
 	Bird bird;
 	boolean quizing;
+	int quizCount;
 	String quizOutcomeInfo = "";
-	Type curState;
 	Quiz quiz;
 	ArrayList<Quiz> quizs;
+	Type curState;
 	int eggs;
 	int numTrueAns;
 	public static int xIncr = 5;
-	public static int xDec = -5;
-	public static int xDec2 = -3;
+	public static int xDec = -10;
+	public static int xDec2 = -8;
 	public static int yIncr = 5;
 	int frameW;
 	int frameH;
@@ -51,7 +52,6 @@ public class Model {
 		imgW = iW;
 		imgH = iH;
 		curState = Type.MAINMENU;
-		quizs = new ArrayList<>();
 	}
 	
 	//getter for eggs
@@ -337,10 +337,17 @@ public class Model {
 	public void startQuiz() {
 		System.out.println("start quiz");
 		this.quizing = true;
-		Random r = new Random();
-		if (quizs.size() != 0) {
-			quiz = quizs.get(r.nextInt(quizs.size()));
-			System.out.println(quiz);
+		switch (curState) {
+		case OP:
+			Random r = new Random();
+			if (quizs.size() != 0) {
+				quiz = quizs.get(r.nextInt(quizs.size()));
+				System.out.println(quiz);
+			}
+			break;
+		case NH1:
+			quizCount = 0;
+			quiz = quizs.get(quizCount);
 		}
 	}
 	
@@ -381,11 +388,40 @@ public class Model {
 			break;
 		case NH1:
 			if(!quiz.checkAnswer()) {
-				//egg--;
-				System.out.println("reduce the number of egg in NH2");
+				// here represent reduce number of egg in NH2
+				bird.collision();
+				quizOutcomeInfo = "Oh No!!!  You Lose an egg in next game";
 			}
-			this.quizing = false;
-			curState = Type.NH2;
+			else {
+				quizOutcomeInfo = "Correct!!!!!";
+			}
+			quizCount++;
+			delayTimer = new Timer();
+			delayCount = 0;
+			delayTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("delayCount: " + ++delayCount);
+					if (delayCount >=3) {
+						if (quizCount < 3) {
+							quiz = quizs.get(quizCount);
+							
+						}
+						else {
+							quizing = false;
+							curState = Type.NH2;
+						}
+						quizOutcomeInfo = "";
+						delayTimer.cancel();
+						delayTimer = null;
+					}
+				}
+				
+			}, 0, 1000);
+//			this.quizing = false;
+//			curState = Type.NH2;
+			
 		}
 		
 		
@@ -472,6 +508,7 @@ public class Model {
 	
 	public void createQuizs() throws Exception{
 		Scanner scan;
+		quizs = new ArrayList<>();
 		switch(curState) {
 		case OP:
 			File fileO = new File("OPquiz.txt");

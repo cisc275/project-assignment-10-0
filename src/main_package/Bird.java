@@ -3,6 +3,7 @@ package main_package;
 //author: Sicheng Tian
 public class Bird extends Element{
 	// represent how many lives left
+	// could also represent the NUMBER OF EGG in NH2 !!!!
 	int life;
 	// represent the type of bird
 	BirdType bt;
