@@ -1,3 +1,4 @@
-What is my name?;WUYANZU;HUOJIANHUA;PENGYUYAN;WUYIXIONG;D;
-What is the bird name?(quiz test);Osprey;Northern Harrier;Red Knot;Clipper;B;
-Think for other quiz;Answer is A;B;C;D;A;
+What is Northern Harrier's Favorite food?;Small Mammales(rat);Insects;Fruits and Nuts;Fish;A;
+
+What is Northern Harrier's Habitat?;Tundra (vast, flat, treeless Arctic region);Grasslands;Deserts;Urban and Suburban;B;
+Which is Northern Harrier's Nests Type?;Adherent Nests (stick to buildings, like Swallows's nests);Platform Nests (Very high, one the tree, cliff);Ground Nests (On the ground);Earth-hole nests (Inside the earth);C;
