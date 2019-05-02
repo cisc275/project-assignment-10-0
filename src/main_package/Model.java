@@ -27,8 +27,8 @@ public class Model {
 	int eggs;
 	int numTrueAns;
 	public static int xIncr = 5;
-	public static int xDec = -5;
-	public static int xDec2 = -3;
+	public static int xDec = -10;
+	public static int xDec2 = -8;
 	public static int yIncr = 5;
 	int frameW;
 	int frameH;
