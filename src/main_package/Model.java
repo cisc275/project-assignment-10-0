@@ -108,6 +108,7 @@ public class Model {
 					// TODO Auto-generated method stub
 					//t++;
 					System.out.println("time count :" + --timeCount);
+					updateL = true;
 					if (timeCount == 0) {
 						myTimer.cancel();
 						gameOver();
@@ -174,9 +175,9 @@ public class Model {
 			boolean yC2 = nestY + imgH/2 <= bird.getY() + imgH/2 && nestY + imgH/2 >= bird.getY() - imgH/2;
 			if (!moreCollectedItems && (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2)) {
 				System.out.println("NH1 Complete");
-				startQuiz();
 				myTimer.cancel();
-				
+				startQuiz();
+				//myTimer.cancel();
 				//curState= Type.NH2;
 			}
 		}
@@ -198,7 +199,7 @@ public class Model {
 			bird.move();
 			if (curState == Type.NH2) {
 				//collisionNH2();
-				if (timeCount % 4 == 0) {
+				if (timeCount % 4 == 0 && updateL) {
 					//System.out.println(timeCount);
 					updateListNH2();
 				}
