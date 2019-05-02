@@ -132,7 +132,8 @@ public class Model {
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
 			Element curE = iter.next();
-			curE.setX(xDec);
+			//curE.setX(xDec);
+			curE.move();
 			if (curE.getX() + imgW / 2 <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 				System.out.println("remove");
 				iter.remove();
@@ -152,7 +153,7 @@ public class Model {
 		Random ran = new Random();
 		int ranH = ran.nextInt(frameH - imgH / 2);
 		//System.out.println(ranH);
-		list.add(new HitItem(frameW, ranH, ItemType.AIRPLANE));
+		list.add(new HitItem(frameW, ranH, ItemType.AIRPLANE, -10, 0));
 		updateL = false;
 	}
 	
@@ -186,7 +187,7 @@ public class Model {
 		setBird(new Bird(getFrameW()/2, getFrameH()/2,0,BirdType.NH));
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE));
+		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
 	}
@@ -205,7 +206,7 @@ public class Model {
 				//System.out.println(list.size());
 				while(iter.hasNext()) {
 					Element curE = iter.next();
-					curE.setX(xDec);
+					curE.move();
 					if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 						System.out.println("removeNH2");
 						iter.remove();
@@ -250,7 +251,7 @@ public class Model {
 			}
 			//System.out.println(height);
 			//System.out.println(width);
-			list.add(new HitItem(frameW-imgW, ran.nextInt((frameH - imgH)), ItemType.AIRPLANE));
+			list.add(new HitItem(frameW-imgW, ran.nextInt((frameH - imgH)), ItemType.AIRPLANE, -10, 0));
 			updateL = false;
 		}
 	

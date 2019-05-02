@@ -106,8 +106,8 @@ public class Controller {
 				model.setCurState(Type.OP);
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
-				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
-				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
+				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
 				model.setUpdateL();
 				try {
 					model.createQuizs();
