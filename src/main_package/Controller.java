@@ -16,8 +16,10 @@ import javax.swing.Timer;
 public class Controller {
 	Model model;
 	View view;
-	final int drawDelay = 30;
+	int drawDelay = 30;
 	Action drawAction;
+	Timer t;
+	static int count = 0;
 	
 	// initialize the model and view
 	public Controller() {
@@ -68,14 +70,19 @@ public class Controller {
 				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
 				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.STICK));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
 				}
 				// Created rats for NH Game but don't know how to show them in the view
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.RAT));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
 				}
 				model.setUpdateL();
-				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
+				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,3,BirdType.NH));
+				try {
+					model.createQuizs();
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 				model.createTimer();
 				
 				System.out.println(model.getCurState());
@@ -99,8 +106,8 @@ public class Controller {
 				model.setCurState(Type.OP);
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
-				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
-				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
+				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
 				model.setUpdateL();
 				try {
 					model.createQuizs();
@@ -138,11 +145,12 @@ public class Controller {
 				break;
 			case NH1:
 				// call submitQuiz
-				model.quizing = false;
-				System.out.println("check answer and go to NH2");
-				model.curState = Type.NH2;
+				//model.quizing = false;
+				//model.curState = Type.NH2;
+				model.checkQuiz();
 				System.out.println(model.getCurState());
 				view.submitButton.setVisible(false);
+				
 				break;
 				
 			}
@@ -206,6 +214,21 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(10);
 				}
+				break;
+			case NH2:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(-10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(-10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(10);
+				}
+				break;
 			default:
 				break;
 			}
@@ -244,6 +267,19 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(0);
 				}
+			case NH2:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(0);
+				}
 			default:
 				break;
 			}
@@ -270,20 +306,22 @@ public class Controller {
 	public void start() {
 		EventQueue.invokeLater(new Runnable(){
 			public void run() {
-				Timer t = new Timer(drawDelay, drawAction);
+				t = new Timer(drawDelay, drawAction);
 				t.start();
+				
 			}
 		});
 		
 		drawAction = new AbstractAction(){
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
-    			
+    			//System.out.println(++count);
     			switch(model.getCurState()) {
     			case MAINMENU:
     				view.update(model);
     				break;
     			case OP:
+    				//System.out.println("OP Controller");
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				model.updateBirdPosition();
@@ -291,8 +329,18 @@ public class Controller {
     				view.update(model);
     				break;
     			case NH1:
+    				//System.out.println("NH1 controlller");
     				view.update(model);
-    				model.updateBirdPosition();
+    				if (!model.getQuizing()) {
+    					model.updateBirdPosition();
+    				}
+    			case NH2:
+    				//System.out.println("NH2 controller");
+    				if (!model.getQuizing()) {
+    					model.updateBirdPosition();
+    				}
+    				view.update(model);
+    				model.updatePositionNH2();
     			case GAMEOVER:
     				view.update(model);
     				break;

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -63,13 +64,17 @@ public class View extends JPanel{
 			imgs.put(imgName[i], img);
 		}
 		
+		//setLayout(null);
+		
 		OPButton = new JButton("start Osprey Game");
 		OPButton.setOpaque(true);
+		//OPButton.setBounds(100, 100, 400, 50);
 		//OPButton.setVisible(false);
 		add(OPButton);
 		
 		NHButton = new JButton("start Northen Harrier Game");
 		NHButton.setOpaque(true);
+		//NHButton.setBounds(600,100,400,50);
 		//NHButton.setVisible(false);
 		add(NHButton);
 		
@@ -126,7 +131,7 @@ public class View extends JPanel{
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
 	public void update(Model model) {
-		if (model.getQuizing()) {
+		if (model.getQuizing() && model.delayTimer == null) {
 			submitButton.setVisible(true);
 			choice1.setVisible(true);
 			choice2.setVisible(true);
@@ -149,7 +154,9 @@ public class View extends JPanel{
 			curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {
-			
+			x = model.getBird().getX();
+			y = model.getBird().getY();
+			curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
 			
@@ -163,19 +170,36 @@ public class View extends JPanel{
 			if (model.getQuizing()) {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/2, 100);
+				//Don't delete this, this is the front changing attempt
+				/*
+				String question = model.getQuiz().getQuestion();
+				String[] questions = question.split(".", -1);
+				for(int i = 0; i < questions.length; i++) {
+					if(i != (questions.length -1)) {
+						g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
+					}
+				}
+				*/
 				g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
 				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/2, 300);
 				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/2, 380);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/2, 420);
+				if (model.getCurState() == Type.NH1) {
+					g.drawString(model.quizCount + "/" + 3 + " Quizs", 30, 30);
+				}
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				g.drawString(model.quizOutcomeInfo, frameWidth/2, 200);
+				
 				
 			}
 			else {
 				switch (model.getCurState()) {
 				case OP:
-					//g.drawImage(imgs.get("background"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), model.groundX % frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
-					//g.drawImage(imgs.get("background"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 					
 					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
@@ -209,7 +233,17 @@ public class View extends JPanel{
 					break;
 				case NH2:
 					g.drawImage(curImg, x, y, Color.gray, this);
-					g.drawString("You Win NH1", 1000, 20);
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					//g.drawString("You Win NH1", 1000, 20);
+					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
+					//System.out.println(model.getList().size());
+					if (model.getList().size() != 0) {
+						//System.out.println("times drawn");
+						for(Element each: model.getList()) {
+							//System.out.println("drawing hit item"+ each.getX());
+							g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+						}
+					}
 					break;
 				case GAMEOVER:
 					break;
