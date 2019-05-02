@@ -169,7 +169,7 @@ public class View extends JPanel{
 		try {
 			if (model.getQuizing()) {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/2, 100);
+				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, 100);
 				//Don't delete this, this is the front changing attempt
 				/*
 				String question = model.getQuiz().getQuestion();
@@ -180,17 +180,17 @@ public class View extends JPanel{
 					}
 				}
 				*/
-				g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
-				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/2, 300);
-				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);
-				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/2, 380);
-				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/2, 420);
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, 260);
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, 300);
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, 340);
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, 380);
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, 420);
 				if (model.getCurState() == Type.NH1) {
 					g.drawString(model.quizCount + "/" + 3 + " Quizs", 30, 30);
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, frameWidth/2, 200);
+				g.drawString(model.quizOutcomeInfo, frameWidth/3, 200);
 				
 				
 			}
