@@ -149,7 +149,9 @@ public class View extends JPanel{
 			curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {
-			
+			x = model.getBird().getX();
+			y = model.getBird().getY();
+			curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
 			
@@ -212,7 +214,17 @@ public class View extends JPanel{
 					break;
 				case NH2:
 					g.drawImage(curImg, x, y, Color.gray, this);
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					//g.drawString("You Win NH1", 1000, 20);
+					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
+					//System.out.println(model.getList().size());
+					if (model.getList().size() != 0) {
+						//System.out.println("times drawn");
+						for(Element each: model.getList()) {
+							//System.out.println("drawing hit item"+ each.getX());
+							g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+						}
+					}
 					break;
 				case GAMEOVER:
 					break;

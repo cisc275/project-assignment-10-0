@@ -70,11 +70,11 @@ public class Controller {
 				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
 				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.STICK));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
 				}
 				// Created rats for NH Game but don't know how to show them in the view
 				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()), rand.nextInt(model.getFrameH()), ItemType.RAT));
+					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
 				}
 				model.setUpdateL();
 				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,0,BirdType.NH));
@@ -203,6 +203,19 @@ public class Controller {
 				break;
 			case NH1:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(-1);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(1);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(-1);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(1);
+				}
+			case NH2:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -240,6 +253,19 @@ public class Controller {
 				}
 				break;
 			case NH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(0);
+				}
+			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0);
 				}
@@ -293,6 +319,7 @@ public class Controller {
     				view.update(model);
     				break;
     			case OP:
+    				//System.out.println("OP Controller");
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				model.updateBirdPosition();
@@ -300,10 +327,13 @@ public class Controller {
     				view.update(model);
     				break;
     			case NH1:
+    				//System.out.println("NH1 controlller");
     				view.update(model);
     				model.updateBirdPosition();
     			case NH2:
+    				//System.out.println("NH2 controller");
     				view.update(model);
+    				model.updatePositionNH2();
     			case GAMEOVER:
     				view.update(model);
     				break;
