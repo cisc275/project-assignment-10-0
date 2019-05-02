@@ -223,7 +223,9 @@ public class View extends JPanel{
 					break;
 				case NH2:
 					g.drawImage(curImg, x, y, Color.gray, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
 					//System.out.println(model.getList().size());
@@ -236,6 +238,12 @@ public class View extends JPanel{
 					}
 					break;
 				case GAMEOVER:
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString("Gameover", this.frameWidth/2, this.frameHeight/2);
+					break;
+				case WIN:
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString("You Win", this.frameWidth/2, this.frameHeight/2);
 					break;
 				}
 			}

@@ -344,6 +344,9 @@ public class Controller {
     			case GAMEOVER:
     				view.update(model);
     				break;
+    			case WIN:
+    				view.update(model);
+    				break;
 				default:
 					break;
     				

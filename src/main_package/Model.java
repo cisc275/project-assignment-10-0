@@ -24,7 +24,7 @@ public class Model {
 	Quiz quiz;
 	ArrayList<Quiz> quizs;
 	Type curState;
-	int eggs;
+	int eggs =0;
 	int numTrueAns;
 	public static int xIncr = 5;
 	public static int xDec = -10;
@@ -111,7 +111,7 @@ public class Model {
 					updateL = true;
 					if (timeCount == 0) {
 						myTimer.cancel();
-						gameOver();
+						winGame();
 					} 
 				}
 				
@@ -209,14 +209,45 @@ public class Model {
 				while(iter.hasNext()) {
 					Element curE = iter.next();
 					curE.move();
-					if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+					//System.out.println(curE.getY());
+					//System.out.println((frameH)/2);
+					int nestX = this.getFrameW()/2;
+					int nestY = this.getFrameH()/2;
+					boolean xC = nestX - imgW/2 <= curE.getX() + imgW/2 && nestX - imgW/2 >= curE.getX() - imgW/2;
+					boolean xC2 = nestX + imgW/2 <= curE.getX() + imgW/2 && nestX + imgW/2 >= curE.getX() - imgW/2;
+					boolean yC1 = nestY - imgH/2 <= curE.getY() + imgH/2 && nestY - imgH/2 >= curE.getY() - imgH/2;
+					boolean yC2 = nestY + imgH/2 <= curE.getY() + imgH/2 && nestY + imgH/2 >= curE.getY() - imgH/2;
+					if(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
+						System.out.println("removeNH2");
+						eggs--;
+						if(eggs <= 0) {
+							this.curState = Type.GAMEOVER;
+						}
+						iter.remove();
+					}
+					/*if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 						System.out.println("removeNH2");
 						iter.remove();
 						//updateL = true;
 						//list.add(new HitItem(frameW, 100, ItemType.AIRPLANE));
-					}
+					}*/
 					else if (collisionNH2(curE)) {
 						System.out.println("remove");
+						HitItem h = (HitItem)curE;
+						if(h.getxVector() == 10 && !h.getDirectionChange()) {
+							h.setxVector(-10);
+							h.changeDirection();
+						} else if(h.getxVector() == -10 && !h.getDirectionChange()) {
+							h.setxVector(10);
+							h.changeDirection();
+						}
+						if(h.getyVector() == 10 && !h.getDirectionChange()) {
+							h.setyVector(-10);
+							h.changeDirection();
+						} else if(h.getyVector() == -10 && !h.getDirectionChange()) {
+							h.setyVector(10);
+							h.changeDirection();
+						}
 						//iter.remove();
 						//updateL = true;
 					}
@@ -229,31 +260,54 @@ public class Model {
 	//helper for updatePosition()
 		public void updateListNH2() {
 			System.out.println("updateLIst");
+			System.out.println(list.size());
 			Random ran = new Random();
-			int ranSide = ran.nextInt(3)+1;
+			int ranSide = ran.nextInt(4);
 			int height = 0;
 			int width = 0;
+			int direction = ran.nextInt(3)+1;
+			System.out.println(ranSide);
 			switch(ranSide) {
-			case 1:
+			case 0:
 				height = (frameH-imgH)/2;
 				width = 0;
+				direction = 'e';
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, 10, 0));
+				System.out.println("move east");
 				// Moving East
-			case 2:
+				break;
+			case 1:
 				height = (frameH - imgH)/2;
 				width = frameW;
+				direction = 'w';
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, -10, 0));
+				System.out.println("move west");
 				// Moving West
-			case 3:
+				break;
+			case 2:
 				height = 0;
 				width = (frameW - imgW)/2;
+				direction = 's';
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, 10));
+				System.out.println("move south");
 				// Moving South
-			case 4:
+				break;
+			case 3:
 				height = frameH;
 				width = (frameW - imgW)/2;
+				direction = 'n';
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, -10));
+				System.out.println("move north");
 				// Moving North
+				break;
 			}
+			
+			System.out.println(list.size());
 			//System.out.println(height);
 			//System.out.println(width);
-			list.add(new HitItem(frameW-imgW, ran.nextInt((frameH - imgH)), ItemType.AIRPLANE, -10, 0));
+			
+			
+			//list.add(new HitItem(frameW-imgW, ran.nextInt((frameH - imgH)), ItemType.AIRPLANE, -10, 0));
 			updateL = false;
 		}
 	
@@ -322,12 +376,7 @@ public class Model {
 		if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
 			System.out.println("Collision");
 			return true;
-				/*if(cur instanceof HitItem) {
-					HitItem h = (HitItem)cur;
-					int temp = h.getX();
-					h.setX(h.getY());
-					h.setY(temp);
-				}*/
+			
 		}
 			
 		
@@ -397,6 +446,7 @@ public class Model {
 			}
 			else {
 				quizOutcomeInfo = "Correct!!!!!";
+				eggs++;
 			}
 			quizCount++;
 			delayTimer = new Timer();
@@ -489,7 +539,7 @@ public class Model {
 	// if it is remove the egg item and the hitItem from list, subtract one from int eggs
 	// if the fox has collision with bird, call the move method of the fox
 	// check the number of eggs left. if it is zero, call gameOver()
-	public void collisionNH2(HitItem ht) {
+	/*public void collisionNH2(HitItem ht) {
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
 			Element cur = iter.next();
@@ -508,7 +558,7 @@ public class Model {
 		if(eggs <= 0) {
 			this.curState = Type.GAMEOVER;
 		}
-	}
+	}*/
 	
 	public void createQuizs() throws Exception{
 		Scanner scan;

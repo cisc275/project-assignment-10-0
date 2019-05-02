@@ -6,6 +6,7 @@ public class HitItem extends Element{
 	ItemType it;
 	int xVector;
 	int yVector;
+	boolean directionChange = false;
 	
 	public HitItem(int x, int y, ItemType i, int xV, int yV) {
 		super(x,y);
@@ -50,5 +51,12 @@ public class HitItem extends Element{
 
 	public void setyVector(int yVector) {
 		this.yVector = yVector;
+	}
+	
+	public void changeDirection() {
+		directionChange = !directionChange;
+	}
+	public boolean getDirectionChange() {
+		return directionChange;
 	}
 }
