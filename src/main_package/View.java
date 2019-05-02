@@ -170,6 +170,16 @@ public class View extends JPanel{
 			if (model.getQuizing()) {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/2, 100);
+				//Don't delete this, this is the front changing attempt
+				/*
+				String question = model.getQuiz().getQuestion();
+				String[] questions = question.split(".", -1);
+				for(int i = 0; i < questions.length; i++) {
+					if(i != (questions.length -1)) {
+						g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
+					}
+				}
+				*/
 				g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
 				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/2, 300);
 				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/2, 340);

@@ -10,8 +10,8 @@ public class Quiz {
 	String[] choice;
 	
 	public Quiz(String question, String answer, String[] choice) {
-		this.answer = answer;
 		this.question = question;
+		this.answer = answer;
 		this.choice = choice;
 	}
 	
