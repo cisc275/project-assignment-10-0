@@ -106,8 +106,8 @@ public class Controller {
 				model.setCurState(Type.OP);
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
-				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE));
-				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE));
+				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
 				model.setUpdateL();
 				try {
 					model.createQuizs();
@@ -203,17 +203,18 @@ public class Controller {
 				break;
 			case NH1:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-1);
+					model.getBird().setYVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(1);
+					model.getBird().setYVector(10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-1);
+					model.getBird().setXVector(-10);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(1);
+					model.getBird().setXVector(10);
 				}
+				break;
 			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(-10);
@@ -227,6 +228,7 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(10);
 				}
+				break;
 			default:
 				break;
 			}
@@ -334,6 +336,9 @@ public class Controller {
     				}
     			case NH2:
     				//System.out.println("NH2 controller");
+    				if (!model.getQuizing()) {
+    					model.updateBirdPosition();
+    				}
     				view.update(model);
     				model.updatePositionNH2();
     			case GAMEOVER:

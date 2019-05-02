@@ -29,4 +29,8 @@ public class Element {
 		y+= yChange;
 	}
 	
+	public void move() {
+		
+	}
+	
 }
