@@ -189,7 +189,7 @@ public class Model {
 		setBird(new Bird(getFrameW()/2, getFrameH()/2,0,BirdType.NH));
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
 	}
@@ -234,7 +234,7 @@ public class Model {
 					else if (collisionNH2(curE)) {
 						System.out.println("remove");
 						HitItem h = (HitItem)curE;
-						if(h.getxVector() == 10 && !h.getDirectionChange()) {
+						/*if(h.getxVector() == 10 && !h.getDirectionChange()) {
 							h.setxVector(-10);
 							h.changeDirection();
 						} else if(h.getxVector() == -10 && !h.getDirectionChange()) {
@@ -247,6 +247,14 @@ public class Model {
 						} else if(h.getyVector() == -10 && !h.getDirectionChange()) {
 							h.setyVector(10);
 							h.changeDirection();
+						}*/
+						
+						if(!h.getDirectionChange()) {
+							int newX = h.getxVector()*-1;
+							int newY = h.getyVector()*-1;
+							h.setyVector(newY);
+							h.setxVector(newX);
+							h.changeDirection();
 						}
 						//iter.remove();
 						//updateL = true;
@@ -257,21 +265,34 @@ public class Model {
 		}
 	}
 	
+	public double calculateUnitVectorMag(int xpos, int ypos){
+		double mag = Math.pow(xpos, 2) + Math.pow(ypos, 2);
+		mag = Math.sqrt(mag);
+		System.out.println(mag);
+		return mag;
+		
+	}
+	
 	//helper for updatePosition()
 		public void updateListNH2() {
 			System.out.println("updateLIst");
 			System.out.println(list.size());
 			Random ran = new Random();
-			int ranSide = ran.nextInt(4);
+			int ranSide = ran.nextInt(8);
 			int height = 0;
 			int width = 0;
-			int direction = ran.nextInt(3)+1;
-			System.out.println(ranSide);
+			// Create vector in the right direction
+			double unitVectorMag = this.calculateUnitVectorMag(frameW/2, frameH/2);
+			double vX = 10*((frameW/2)/unitVectorMag);
+			double vY = 10*((frameH/2)/unitVectorMag);
+			int vectorX = (int) vX;
+			int vectorY = (int) vY;
+			System.out.println(vectorX);
+			System.out.println(vectorY);
 			switch(ranSide) {
 			case 0:
 				height = (frameH-imgH)/2;
 				width = 0;
-				direction = 'e';
 				list.add(new HitItem(width, height, ItemType.AIRPLANE, 10, 0));
 				System.out.println("move east");
 				// Moving East
@@ -279,7 +300,6 @@ public class Model {
 			case 1:
 				height = (frameH - imgH)/2;
 				width = frameW;
-				direction = 'w';
 				list.add(new HitItem(width, height, ItemType.AIRPLANE, -10, 0));
 				System.out.println("move west");
 				// Moving West
@@ -287,7 +307,6 @@ public class Model {
 			case 2:
 				height = 0;
 				width = (frameW - imgW)/2;
-				direction = 's';
 				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, 10));
 				System.out.println("move south");
 				// Moving South
@@ -295,10 +314,38 @@ public class Model {
 			case 3:
 				height = frameH;
 				width = (frameW - imgW)/2;
-				direction = 'n';
 				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, -10));
 				System.out.println("move north");
 				// Moving North
+				break;
+			case 4:
+				height = 0;
+				width = 0;
+				//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, vectorX, vectorY));
+				System.out.println("move southeast");
+				// Moving Southeast
+				break;
+			case 5:
+				height = frameH;
+				width = 0;
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, vectorX, -vectorY));
+				System.out.println("move northeast");
+				// Moving Southeast
+				break;
+			case 6:
+				height = 0;
+				width = frameW;
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, -vectorX, vectorY));
+				System.out.println("move Southwest");
+				// Moving Southwest
+				break;
+			case 7:
+				height = frameH;
+				width = frameW;
+				list.add(new HitItem(width, height, ItemType.AIRPLANE, -vectorX, -vectorY));
+				System.out.println("move Northwest");
+				// Moving Southeast
 				break;
 			}
 			
