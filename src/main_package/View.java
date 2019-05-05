@@ -48,6 +48,7 @@ public class View extends JPanel{
 	int x;
 	int y;
 	boolean drawDE;
+	boolean first = true;
 	
 	
 	
@@ -265,9 +266,25 @@ public class View extends JPanel{
 						g.setColor(Color.red);
 						g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
 					} else {
-						g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
-						//System.out.println("first: " + model.groundX % frameWidth);
-						g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+						//if(model.getWaterbg()) {
+							g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+							//System.out.println("first: " + model.groundX % frameWidth);
+							g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+						/*} else if(!model.getWaterbg()) {
+							/*if(frameWidth >= 0 && first) {
+								if(frameWidth == 0) {
+									first = false;
+								}
+								g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+							//System.out.println("first: " + model.groundX % frameWidth);
+								g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+							} else {
+								first = false;
+								g.drawImage(imgs.get("bgland"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+								//System.out.println("first: " + model.groundX % frameWidth);
+								g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+							//}
+						}*/
 						//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 						
 						//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
