@@ -7,6 +7,7 @@ public class Element {
 	int x;
 	// y-axis location
 	int y;
+	ItemType it;
 
 	public Element(int x, int y) {
 		this.x = x;
@@ -31,6 +32,10 @@ public class Element {
 	
 	public void move() {
 		
+	}
+	
+	public ItemType getType() {
+		return it;
 	}
 	
 }

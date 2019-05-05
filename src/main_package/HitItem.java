@@ -3,7 +3,7 @@ package main_package;
 // author Sicheng Tian
 public class HitItem extends Element{
 	//represents which kind of item it is
-	ItemType it;
+	//ItemType it;
 	int xVector;
 	int yVector;
 	boolean directionChange = false;
@@ -59,4 +59,5 @@ public class HitItem extends Element{
 	public boolean getDirectionChange() {
 		return directionChange;
 	}
+	
 }

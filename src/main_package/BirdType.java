@@ -1,7 +1,7 @@
 package main_package;
 // Author: Steven Soranno
 public enum BirdType {
-    NH("northernharrier"),
+    NH("nh"),
 	OSPREY("osprey");
 	
 	private String name = null;

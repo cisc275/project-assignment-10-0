@@ -19,6 +19,9 @@ public class Bird extends Element{
 		yVector = 0;
 	}
 	
+	public BirdType getBType() {
+		return bt;
+	}
 	//getter for x
 	public int getX() {	return this.x;}
 	// getter for y

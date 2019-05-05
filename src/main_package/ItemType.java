@@ -1,13 +1,15 @@
 package main_package;
 // Author: Steven Soranno
 public enum ItemType {
-	AIRPLANE("northernharrier"),
-	FOX("osprey"),
+	AIRPLANE("airplane"),
+	FOX("fox"),
     FISH("fish"),
     RAT("rat"),
     STICK("stick"),
-    WINFLAG("win flag"),
-    EGG("egg");
+    WINFLAG("winflag"),
+    EGG("egg"),
+	SHIP("ship"),
+	NEST("nest");
 	
 	private String name = null;
 	

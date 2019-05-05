@@ -2,7 +2,7 @@ package main_package;
 // author:¡¡Sicheng Tian, Yixiong Wu
 public class CollectedItem extends Element{
 	//represents which kind of item it is
-	ItemType it;
+	//ItemType it;
 	
 	//represents whether the item is collected or not, every item is initialized with a false value
 	boolean collected;
@@ -20,5 +20,9 @@ public class CollectedItem extends Element{
 	
 	public boolean getCollected() {
 		return collected;
+	}
+	
+	public ItemType getType() {
+		return it;
 	}
 }

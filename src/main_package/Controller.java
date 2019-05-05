@@ -24,8 +24,12 @@ public class Controller {
 	// initialize the model and view
 	public Controller() {
 		//System.out.println("controll");
+		
 		view = new View();
-		model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH);
+		model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+		System.out.println("model constructed");
+		//view.setModel(model);
+		//view.frame.setVisible(true);
 		//
 		view.OPButton.addActionListener(new OPButtonListener());
 		view.NHButton.addActionListener(new NHButtonListener());
@@ -69,6 +73,7 @@ public class Controller {
 				model.setList(new ArrayList<>());
 				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
 				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
+				model.nest = new CollectedItem(model.getFrameW()/2, model.getFrameH()/2, ItemType.NEST);
 				for(int i = 0; i<5; i++) {
 					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
 				}
@@ -107,7 +112,7 @@ public class Controller {
 				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
 				model.setList(new ArrayList<>());
 				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-				model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
+				//model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
 				model.setUpdateL();
 				try {
 					model.createQuizs();
@@ -314,7 +319,7 @@ public class Controller {
 				
 			}
 		});
-		
+		//System.out.println("drawAction");
 		drawAction = new AbstractAction(){
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
@@ -365,6 +370,7 @@ public class Controller {
 	
 	public static void main(String[] args) {
 		Controller c = new Controller();
+		//System.out.println("call start");
 		c.start();
 		//System.out.println("hello");
 	}

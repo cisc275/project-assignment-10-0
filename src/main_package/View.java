@@ -22,13 +22,14 @@ import main_package.Controller.CustomKeyListener;
 // author Sicheng Tian
 public class View extends JPanel{
 	//
-	HashMap<String, BufferedImage> imgs;
+	HashMap<String, Image> imgs;
 	//final int frameHeight = 643;    //500
 	//final int frameWidth = 1024;     //600
 	int frameHeight = 643;    //500
 	int frameWidth = 1024;     //600
-	final int imageH = 32;
-	final int imageW = 32;
+	final int imageH = 150;
+	final int imageW = 100;
+	HashMap<String, int[]> imgsSize;
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
@@ -42,7 +43,7 @@ public class View extends JPanel{
 	JButton choice3;
 	JButton choice4;
 	
-	BufferedImage curImg;
+	Image curImg;
 	Model model;
 	int x;
 	int y;
@@ -57,12 +58,6 @@ public class View extends JPanel{
 	public View() {
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		//super(new GridBagLayout());
-		String[] imgName = {"bird", "hitItem", "collectedItem", "nest", "background", "background2"};
-		imgs = new HashMap<>();
-		for(int i = 0; i < imgName.length; i++) {
-			BufferedImage img = createImage(imgName[i]);
-			imgs.put(imgName[i], img);
-		}
 		
 		//setLayout(null);
 		
@@ -115,15 +110,49 @@ public class View extends JPanel{
 		
 		
 		frame = new JFrame();
-        frame.getContentPane().add(this);
+		System.out.println("frame");
+		frame.getContentPane().add(this);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setBackground(Color.gray);
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    	frame.setVisible(true);
-    	frameWidth = frame.getWidth();
+		frame.setVisible(true);
+		frameWidth = frame.getWidth();
     	frameHeight = frame.getHeight()-40;
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
-    	frame.setVisible(true);
+    	frame.setVisible(false);
+		
+    	imgsSize = new HashMap<>();
+    	imgsSize.put("fish", new int[] {frameWidth * 115 / 1550, frameHeight * 75 / 838});
+    	imgsSize.put("airplane", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
+    	imgsSize.put("ship", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("osprey", new int[] {frameWidth * 150 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("winflag", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("nest", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("rat", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("egg", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	
+    	
+    	
+    	
+		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater"};
+    	imgs = new HashMap<>();
+		for(int i = 0; i < imgName.length; i++) {
+			BufferedImage img = createImage(imgName[i]);
+			if (imgName[i].contains("bg")) {
+				imgs.put(imgName[i], img.getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST));
+			}
+			else if(imgsSize.containsKey(imgName[i])){
+				imgs.put(imgName[i], img.getScaledInstance(imgsSize.get(imgName[i])[0], imgsSize.get(imgName[i])[1], Image.SCALE_FAST));
+			}
+		}
+		
+		frame.setVisible(true);
+    	
     	
 	}
 	
@@ -131,6 +160,7 @@ public class View extends JPanel{
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
 	public void update(Model model) {
+		//System.out.println("update model");
 		if (model.getQuizing() && model.delayTimer == null) {
 			submitButton.setVisible(true);
 			choice1.setVisible(true);
@@ -146,17 +176,17 @@ public class View extends JPanel{
 			//remove(OPButton);
 			x = model.getBird().getX();
 			y = model.getBird().getY();
-			curImg = imgs.get("bird");
+			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH1) {
 			x = model.getBird().getX();
 			y = model.getBird().getY();
-			curImg = imgs.get("bird");
+			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {
 			x = model.getBird().getX();
 			y = model.getBird().getY();
-			curImg = imgs.get("bird");
+			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
 			
@@ -166,6 +196,11 @@ public class View extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g) {
+		//System.out.println("paint");
+		if (model == null) {
+			//System.out.println("null model");
+			return;
+		}
 		try {
 			if (model.getQuizing()) {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
@@ -196,43 +231,61 @@ public class View extends JPanel{
 			}
 			else {
 				switch (model.getCurState()) {
+				case MAINMENU:
+					break;
 				case OP:
-					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), model.groundX % frameWidth, model.groundY, Color.gray, this);
+					g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
-					//g.drawImage(imgs.get("background").getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+					g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 					
 					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
 					//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
-					g.drawImage(curImg, x, y, Color.gray, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, Color.gray, this);
 					//life bar
 					g.setColor(Color.black);
-					g.drawRect(10, 2, model.defaultTime*10, 20);
+					g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
 					g.setColor(Color.yellow);
-					g.fillRect(10, 2, model.getTimeCount()*10, 20);
+					g.fillRect(10, 2, model.energy*10, 20);
 			
 					if (model.getList().size() != 0) {
 						for(Element each: model.getList()) {
-							g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+//							switch(((HitItem) each).it) {
+//							case AIRPLANE:
+//								g.drawImage(imgs.get("airplane"), each.getX(), each.getY(), null,this);
+//								break;
+//							case FOX:
+//								g.drawImage(imgs.get("fox"), each.getX(), each.getY(), null,this);
+//								break;
+//							case FISH:
+//								g.drawImage(imgs.get("fish"), each.getX(), each.getY(), null,this);
+//								break;
+//							case WINFLAG:
+//								g.drawImage(imgs.get("winflag"), each.getX(), each.getY(), null,this);
+//								break;
+//							default:
+//								break;
+//							}
 						}
 					}
 					break;
 				case NH1:
-					g.drawImage(curImg, x, y, Color.gray, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
+					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
 				
 					if (model.getList().size() != 0) {
 						for(Element each: model.getList()) {
-							g.drawImage(imgs.get("collectedItem"), each.getX(), each.getY(), Color.gray,this);
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
 					break;
 				case NH2:
-					g.drawImage(curImg, x, y, Color.gray, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
@@ -243,7 +296,7 @@ public class View extends JPanel{
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
 							//System.out.println("drawing hit item"+ each.getX());
-							g.drawImage(imgs.get("hitItem"), each.getX(), each.getY(), Color.gray,this);
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
 					break;
@@ -258,7 +311,7 @@ public class View extends JPanel{
 				}
 			}
 		}catch(NullPointerException n) {
-			
+			n.printStackTrace();
 		}
 		
 		
@@ -268,23 +321,41 @@ public class View extends JPanel{
 	public BufferedImage createImage(String x) {
 		BufferedImage bi;
 		try {
-			if (x.equals("bird")) {
+			if (x.equals("osprey")) {
 				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
 			}
-			else if (x.equals("hitItem")) {
-				bi = ImageIO.read(new File("imgs/IMG_0692.png"));
+			else if (x.equals("nh")) {
+				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
 			}
-			else if (x.equals("collectedItem")) {
+			else if (x.equals("airplane")) {
+				bi = ImageIO.read(new File("imgs/airplane.png"));
+			}
+			else if (x.equals("fox")) {
+				bi = ImageIO.read(new File("imgs/fox.png"));
+			}
+			else if (x.equals("ship")) {
+				bi = ImageIO.read(new File("imgs/ship.png"));
+			}
+			else if (x.equals("fish")) {
+				bi = ImageIO.read(new File("imgs/fish.png"));
+			}
+			else if (x.equals("winflag")) {
+				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
+			}
+			else if (x.equals("rat")) {
+				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
+			}
+			else if (x.equals("stick")) {
 				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
 			}
 			else if (x.equals("nest")) {
 				bi = ImageIO.read(new File("imgs/IMG_0692.png"));
 			}
-			else if (x.equals("background")) {
-				bi = ImageIO.read(new File("imgs/background.jpg"));
+			else if (x.equals("bgland")) {
+				bi = ImageIO.read(new File("imgs/bgland.png"));
 			}
-			else if (x.equals("background2")) {
-				bi = ImageIO.read(new File("imgs/background2.jpg"));
+			else if (x.equals("bgwater")) {
+				bi = ImageIO.read(new File("imgs/bgwater.png"));
 			}
 			else {
 				bi = null;
@@ -294,5 +365,9 @@ public class View extends JPanel{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void setModel(Model model) {
+		this.model = model;
 	}
 }

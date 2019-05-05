@@ -19,21 +19,21 @@ class ModelTest {
 
 	@Test
 	void testWinGame() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.winGame();
 		assertEquals(m.getCurState(), Type.WIN);
 	}
 
 	@Test
 	void testGameOver() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.gameOver();
 		assertEquals(m.getCurState(), Type.GAMEOVER);
 	}
 
 	@Test
 	void testUpdatePositionOP() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setCurState(Type.OP);
 		ArrayList<Element> e = new ArrayList<Element>();
 		Element e1 = new HitItem(-12, 50, ItemType.FISH,-10,0);
@@ -53,7 +53,7 @@ class ModelTest {
 	
 	@Test
 	void updateList() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setUpdateL();
 		ArrayList<Element> e = new ArrayList<Element>();
 		m.setList(e);
@@ -64,7 +64,7 @@ class ModelTest {
 	
 	@Test
 	void testUpdateBirdPositionOP() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setCurState(Type.OP);
 		m.setBird(0,0,3,BirdType.OSPREY);
 		m.getBird().setXVector(5);
@@ -88,7 +88,7 @@ class ModelTest {
 	
 	@Test
 	void testSubmitQuizofNH() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.submitQuiz();
 		
 		assertEquals(m.getEggs(),m.getNumAns()); // for eggs
@@ -99,7 +99,7 @@ class ModelTest {
 	
 	@Test
 	void testCheckQuiz() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setQuiz("1111?", "yes", new String[4]);
 		m.getQuiz().setChosenAnser("yes");
 		m.checkQuiz();
@@ -115,14 +115,14 @@ class ModelTest {
 	
 	@Test
 	void testStartQuiz() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32,null);
 		m.startQuiz();
 		assertEquals(true, m.getQuizing());
 	}
 	
 	@Test
 	void testCheckCollision() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32,null);
 		m.setBird(50, 50, 3, BirdType.OSPREY);
 		m.checkCollision(new HitItem(50,50,ItemType.AIRPLANE,0,0));
 		assertEquals(2, m.getBird().getLife());
@@ -138,7 +138,7 @@ class ModelTest {
 	
 	@Test
 	void testNoCollision() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setBird(50, 50, 2, BirdType.OSPREY);
 		assertEquals(false, m.checkCollision(new HitItem(80,100,ItemType.AIRPLANE,0,0)));
 		assertEquals(false, m.checkCollision(new HitItem(80,100,ItemType.WINFLAG,0,0)));
@@ -146,7 +146,7 @@ class ModelTest {
 	
 	@Test
 	void testCollisionNH1() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setBird(50, 50, -1, BirdType.NH);
 		ArrayList<Element> list = new ArrayList<>();
 		CollectedItem item = new CollectedItem(50,50,ItemType.STICK);
@@ -166,7 +166,7 @@ class ModelTest {
 	
 	@Test
 	void testCollisionNH2() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32,null);
 		m.setBird(50, 50, -1, BirdType.NH);
 		HitItem fox = new HitItem(80,80,ItemType.FOX,0,0);
 		CollectedItem egg = new CollectedItem(80,80,ItemType.EGG);
@@ -184,7 +184,7 @@ class ModelTest {
 	
 	@Test
 	void testGettersAndSetters() {
-		Model m = new Model(600, 500, 32, 32);
+		Model m = new Model(600, 500, 32, 32, null);
 		m.setBird(50, 50, -1, BirdType.NH);
 		Bird b = new Bird(66,64,0,BirdType.OSPREY);
 		m.setBird(b);
