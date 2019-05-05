@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-// author Sicheng Tian, Yufan Wang£¬ Rubai Bian
+// author Sicheng Tian, Yufan WangÂ£Â¬ Rubai Bian
 public class Model {
 	Timer myTimer;
 	Timer delayTimer;
@@ -600,10 +600,10 @@ public class Model {
 			if(!quiz.checkAnswer()) {
 				bird.collision();
 				energy -= 10;
-				quizOutcomeInfo = "Oh No!!!  You Are Wrong, Lose Energy!!";
+				quizOutcomeInfo = "Oh No!!!  You Are Wrong, Lose Energy!! Be Careful!!!";
 			}
 			else {
-				quizOutcomeInfo = "Correct!!!   You Saved the Bird!!";
+				quizOutcomeInfo = "Congratulations!!!   You Saved the Bird!!";
 			}
 			delayTimer = new Timer();
 			delayCount = 0;
@@ -626,16 +626,16 @@ public class Model {
 			if(!quiz.checkAnswer()) {
 				// here represent reduce number of egg in NH2
 				bird.collision();
-				quizOutcomeInfo = "Oh No!!!  You Lose an egg in next game";
+				quizOutcomeInfo = "Oh No!!!  You Lose a Northern Harrier Egg";
 				/*if(eggs > 1) {
 					eggs--;
 				}*/
 			}
 			else {
-				quizOutcomeInfo = "Correct!!!!!";
+				quizOutcomeInfo = "Correct!!! You have Learned some Knowledge Today!!!";
 				eggs++;
 			}
-			System.out.println("eggs: " + eggs);
+			System.out.println("Eggs: " + eggs);
 			quizCount++;
 			delayTimer = new Timer();
 			delayCount = 0;
