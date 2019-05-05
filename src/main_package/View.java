@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,9 +21,13 @@ import java.awt.Dimension;
 
 import main_package.Controller.CustomKeyListener;
 // author Sicheng Tian
-public class View extends JPanel{
+public class View extends JPanel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//
-	HashMap<String, Image> imgs;
+	transient HashMap<String, Image> imgs;
 	//final int frameHeight = 643;    //500
 	//final int frameWidth = 1024;     //600
 	int frameHeight = 643;    //500
@@ -42,8 +47,11 @@ public class View extends JPanel{
 	JButton choice2;
 	JButton choice3;
 	JButton choice4;
+	// for serialization
+	JButton serialize;
+	JButton deserialize;
 	
-	Image curImg;
+	transient Image curImg;
 	Model model;
 	int x;
 	int y;
@@ -123,6 +131,20 @@ public class View extends JPanel{
     			choice4.setActionCommand("D");
     			add(choice4);
     			frame.getContentPane().add(this);
+    			
+    			serialize = new JButton("Serialize");
+    			serialize.setOpaque(true);
+    			serialize.setVisible(true);
+    			serialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			serialize.setActionCommand("s");
+    			add(serialize);
+    			
+    			deserialize = new JButton("Deserialize");
+    			deserialize.setOpaque(true);
+    			deserialize.setVisible(true);
+    			deserialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			deserialize.setActionCommand("d");
+    			add(deserialize);
     	
     	frame.setVisible(false);
 		

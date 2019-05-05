@@ -1,5 +1,6 @@
 package main_package;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,7 +12,11 @@ import java.util.TimerTask;
 
 
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian
-public class Model {
+public class Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Timer myTimer;
 	Timer delayTimer;
 	final int defaultTime = 60;
