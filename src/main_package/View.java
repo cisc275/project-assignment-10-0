@@ -234,8 +234,8 @@ public class View extends JPanel{
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
-					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-					g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
+					//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
+					//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
 					g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth * 30 / 1550, frameHeight * 30/838);
 
 				}
@@ -261,6 +261,9 @@ public class View extends JPanel{
 //					}
 					if(model.drawNA()) {
 						g.drawImage(imgs.get("opmapbg"),0, 0, Color.gray, this);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						g.setColor(Color.red);
+						g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
 					} else {
 						g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
 						//System.out.println("first: " + model.groundX % frameWidth);
@@ -301,12 +304,12 @@ public class View extends JPanel{
 					}
 					break;
 				case NH1:
-					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+					/*g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 					
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
+					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);*/
 				
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					if(drawDE) {
@@ -315,17 +318,18 @@ public class View extends JPanel{
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
-						g.drawString("The Northern Harrier is a non-migratory bird. That resides in Delaware.", frameWidth/7, frameHeight/3);
+						g.drawString("The Northern Harrier is a non-migratory bird that resides in Delaware.", frameWidth/7, frameHeight/3);
 					} else {
-						
+						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
 						
-						g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						g.drawImage(imgs.get("osprey"), x, y, null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
@@ -348,12 +352,13 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
 					
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.setColor(Color.red);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					g.drawImage(imgs.get("osprey"), x, y, null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
