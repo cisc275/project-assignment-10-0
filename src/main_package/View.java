@@ -259,40 +259,44 @@ public class View extends JPanel{
 //					if (model.timeCount == 55) {
 //						s ="bgland";
 //					}
-					g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
-					//System.out.println("first: " + model.groundX % frameWidth);
-					g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
-					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
-					
-					//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
-					//System.out.println("first: " + model.groundX % frameWidth);
-					//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-					//life bar
-					g.setColor(Color.black);
-					g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
-					g.setColor(Color.yellow);
-					g.fillRect(10, 2, model.energy*10, 20);
-			
-					if (model.getList().size() != 0) {
-						for(Element each: model.getList()) {
-							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-//							switch(((HitItem) each).it) {
-//							case AIRPLANE:
-//								g.drawImage(imgs.get("airplane"), each.getX(), each.getY(), null,this);
-//								break;
-//							case FOX:
-//								g.drawImage(imgs.get("fox"), each.getX(), each.getY(), null,this);
-//								break;
-//							case FISH:
-//								g.drawImage(imgs.get("fish"), each.getX(), each.getY(), null,this);
-//								break;
-//							case WINFLAG:
-//								g.drawImage(imgs.get("winflag"), each.getX(), each.getY(), null,this);
-//								break;
-//							default:
-//								break;
-//							}
+					if(model.drawNA()) {
+						g.drawImage(imgs.get("opmapbg"),0, 0, Color.gray, this);
+					} else {
+						g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+						//System.out.println("first: " + model.groundX % frameWidth);
+						g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+						//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
+						
+						//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
+						//System.out.println("first: " + model.groundX % frameWidth);
+						//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
+						g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						//life bar
+						g.setColor(Color.black);
+						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
+						g.setColor(Color.yellow);
+						g.fillRect(10, 2, model.energy*10, 20);
+				
+						if (model.getList().size() != 0) {
+							for(Element each: model.getList()) {
+								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+	//							switch(((HitItem) each).it) {
+	//							case AIRPLANE:
+	//								g.drawImage(imgs.get("airplane"), each.getX(), each.getY(), null,this);
+	//								break;
+	//							case FOX:
+	//								g.drawImage(imgs.get("fox"), each.getX(), each.getY(), null,this);
+	//								break;
+	//							case FISH:
+	//								g.drawImage(imgs.get("fish"), each.getX(), each.getY(), null,this);
+	//								break;
+	//							case WINFLAG:
+	//								g.drawImage(imgs.get("winflag"), each.getX(), each.getY(), null,this);
+	//								break;
+	//							default:
+	//								break;
+	//							}
+							}
 						}
 					}
 					break;
