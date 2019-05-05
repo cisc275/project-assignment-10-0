@@ -44,6 +44,7 @@ public class Model {
 	int groundY;
 	HashMap<String, int[]> imgsSize;
 	boolean drawDE;
+	boolean drawNA;
 	
 	//Boolean for NH1 Game
 	boolean moreCollectedItems;
@@ -143,32 +144,37 @@ public class Model {
 	// if the curState is OP call checkCollision
 	public void updatePosition() {
 		// for background
-		groundX = groundX + xDec2;
-		// for element
-		if (updateL) {
-			updateList();
-		}
-		// if timeCount(not energy) is out win flag
-		if (timeCount == 0) {
-			// flag has same speed as background
-			list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xDec2,0));
-		}
-		
-		
-		Iterator<Element> iter = list.iterator();
-		while(iter.hasNext()) {
-			Element curE = iter.next();
-			//curE.setX(xDec);
-			curE.move();
-			if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-				System.out.println("remove");
-				iter.remove();
-				//updateL = true;
+		if(timeCount > 55) {
+			drawNA = true;
+		}else {
+			drawNA = false;
+			groundX = groundX + xDec2;
+			// for element
+			if (updateL) {
+				updateList();
 			}
-			else if (checkCollision(curE)) {
-				System.out.println("remove");
-				iter.remove();
-				//updateL = true;
+			// if timeCount(not energy) is out win flag
+			if (timeCount == 0) {
+				// flag has same speed as background
+				list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xDec2,0));
+			}
+			
+			
+			Iterator<Element> iter = list.iterator();
+			while(iter.hasNext()) {
+				Element curE = iter.next();
+				//curE.setX(xDec);
+				curE.move();
+				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+					System.out.println("remove");
+					iter.remove();
+					//updateL = true;
+				}
+				else if (checkCollision(curE)) {
+					System.out.println("remove");
+					iter.remove();
+					//updateL = true;
+				}
 			}
 		}
 	}
@@ -826,6 +832,10 @@ public class Model {
 	
 	public boolean drawDE() {
 		return drawDE;
+	}
+	
+	public boolean drawNA() {
+		return drawNA;
 	}
 	
 }
