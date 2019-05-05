@@ -229,11 +229,8 @@ public class View extends JPanel{
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
-<<<<<<< HEAD
-					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-=======
-					g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
->>>>>>> d8c671ce96e5f982208e49deafe6ceb2e31d0c1c
+					g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth * 30 / 1550, frameHeight * 30/838);
+
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
