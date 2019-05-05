@@ -269,11 +269,8 @@ public class Model {
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem(getFrameW()/2, getFrameH()/2, ItemType.NEST);
 		setList(new ArrayList<>());
-<<<<<<< HEAD
 		getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
-=======
 		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
 		setUpdateL();
 		createTimer();
 	}
@@ -363,9 +360,7 @@ public class Model {
 		}
 	}
 	
-<<<<<<< HEAD
 	//helper for updatePositionNH2()
-=======
 	public double calculateUnitVectorMag(int xpos, int ypos){
 		double mag = Math.pow(xpos, 2) + Math.pow(ypos, 2);
 		mag = Math.sqrt(mag);
@@ -375,7 +370,6 @@ public class Model {
 	}
 	
 	//helper for updatePosition()
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
 		public void updateListNH2() {
 			System.out.println("updateLIst");
 			System.out.println(list.size());
@@ -395,48 +389,38 @@ public class Model {
 			case 0:
 				height = (frameH-imgH)/2;
 				width = 0;
-<<<<<<< HEAD
-				direction = 'e';
+				//direction = 'e';
 				list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
-=======
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, 10, 0));
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
+				//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
 				System.out.println("move east");
 				// Moving East
 				break;
 			case 1:
 				height = (frameH - imgH)/2;
 				width = frameW;
-<<<<<<< HEAD
-				direction = 'w';
+				//direction = 'w';
 				list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
-=======
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, -10, 0));
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
+//				list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
 				System.out.println("move west");
 				// Moving West
 				break;
 			case 2:
 				height = 0;
 				width = (frameW - imgW)/2;
-<<<<<<< HEAD
-				direction = 's';
+				//direction = 's';
+				//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
+
 				list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
-=======
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, 10));
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
 				System.out.println("move south");
 				// Moving South
 				break;
 			case 3:
 				height = frameH;
 				width = (frameW - imgW)/2;
-<<<<<<< HEAD
-				direction = 'n';
+
+				//direction = 'n';
+				//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
 				list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-=======
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, 0, -10));
->>>>>>> 33376e7ed295bf4a14b8aaf5dee5af967a888acd
 				System.out.println("move north");
 				// Moving North
 				break;
@@ -444,28 +428,28 @@ public class Model {
 				height = 0;
 				width = 0;
 				//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, vectorX, vectorY));
+				list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
 				System.out.println("move southeast");
 				// Moving Southeast
 				break;
 			case 5:
 				height = frameH;
 				width = 0;
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, vectorX, -vectorY));
+				list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
 				System.out.println("move northeast");
 				// Moving Southeast
 				break;
 			case 6:
 				height = 0;
 				width = frameW;
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, -vectorX, vectorY));
+				list.add(new HitItem(width, height, ItemType.FOX, -vectorX, vectorY));
 				System.out.println("move Southwest");
 				// Moving Southwest
 				break;
 			case 7:
 				height = frameH;
 				width = frameW;
-				list.add(new HitItem(width, height, ItemType.AIRPLANE, -vectorX, -vectorY));
+				list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
 				System.out.println("move Northwest");
 				// Moving Southeast
 				break;

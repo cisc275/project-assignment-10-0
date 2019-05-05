@@ -242,7 +242,7 @@ public class View extends JPanel{
 					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
 					//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, Color.gray, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					//life bar
 					g.setColor(Color.black);
 					g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
@@ -322,7 +322,7 @@ public class View extends JPanel{
 		BufferedImage bi;
 		try {
 			if (x.equals("osprey")) {
-				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
+				bi = ImageIO.read(new File("imgs/Osprey1.png"));
 			}
 			else if (x.equals("nh")) {
 				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
