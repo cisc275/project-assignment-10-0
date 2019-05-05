@@ -73,7 +73,7 @@ public class Controller {
 				model.setList(new ArrayList<>());
 				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
 				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
-				model.nest = new CollectedItem(model.getFrameW()/2, model.getFrameH()/2, ItemType.NEST);
+				model.nest = new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST);
 				for(int i = 0; i<5; i++) {
 					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
 				}
@@ -82,7 +82,7 @@ public class Controller {
 					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
 				}
 				model.setUpdateL();
-				model.setBird(new Bird(model.getFrameW()/2, model.getFrameH()/2,3,BirdType.NH));
+				model.setBird(new Bird((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2,3,BirdType.NH));
 				try {
 					model.createQuizs();
 				}catch(Exception ex) {

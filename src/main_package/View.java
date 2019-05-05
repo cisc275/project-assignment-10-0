@@ -139,11 +139,13 @@ public class View extends JPanel{
     	imgsSize.put("rat", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("egg", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
+    	imgsSize.put("NorthernHarrierReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
     	
     	
     	
     	
-		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater"};
+		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater", "ospreyReal", "NorthernHarrierReal"};
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -202,7 +204,9 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		//System.out.println("paint");
 		if (model == null) {
-			//System.out.println("null model");
+			System.out.println("null model");
+			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
+			g.drawString("Time Remaining: ", 100, 20);
 			return;
 		}
 		try {
@@ -225,7 +229,11 @@ public class View extends JPanel{
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
+<<<<<<< HEAD
 					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
+=======
+					g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
+>>>>>>> d8c671ce96e5f982208e49deafe6ceb2e31d0c1c
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
@@ -236,6 +244,11 @@ public class View extends JPanel{
 			else {
 				switch (model.getCurState()) {
 				case MAINMENU:
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
+					g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
+					g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
+					g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 					break;
 				case OP:
 //					String s = "bgwater";
@@ -298,7 +311,7 @@ public class View extends JPanel{
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
-					g.drawImage(imgs.get("nest"), this.frameWidth/2, this.frameHeight/2, Color.gray,this);
+					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, Color.gray,this);
 					//System.out.println(model.getList().size());
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
@@ -364,6 +377,12 @@ public class View extends JPanel{
 			}
 			else if (x.equals("bgwater")) {
 				bi = ImageIO.read(new File("imgs/bgwater.png"));
+			}
+			else if (x.equals("ospreyReal")) {
+				bi = ImageIO.read(new File("imgs/ospreyReal.jpg"));
+			}
+			else if (x.equals("NorthernHarrierReal")) {
+				bi = ImageIO.read(new File("imgs/NHReal.jpg"));
 			}
 			else {
 				bi = null;
