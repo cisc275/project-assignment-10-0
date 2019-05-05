@@ -42,6 +42,7 @@ public class Model {
 	int groundX;
 	int groundY;
 	HashMap<String, int[]> imgsSize;
+	boolean drawDE;
 	
 	//Boolean for NH1 Game
 	boolean moreCollectedItems;
@@ -211,25 +212,31 @@ public class Model {
 			//System.out.println(bird.getX() + ", " + bird.getY());
 			//System.out.println("here1");
 			if (curState == Type.NH1) {
-				collisionNH1();
-			
-			int nestX = this.getFrameW()/2;
-			int nestY = this.getFrameH()/2;
-			//int width = imgsSize.get("bird")[0];
-			//int height = imgsSize.get("bird")[1];
-//			boolean xC = nestX - imgW/2 <= bird.getX() + imgW/2 && nestX - imgW/2 >= bird.getX() - imgW/2;
-//			boolean xC2 = nestX + imgW/2 <= bird.getX() + imgW/2 && nestX + imgW/2 >= bird.getX() - imgW/2;
-//			boolean yC1 = nestY - imgH/2 <= bird.getY() + imgH/2 && nestY - imgH/2 >= bird.getY() - imgH/2;
-//			boolean yC2 = nestY + imgH/2 <= bird.getY() + imgH/2 && nestY + imgH/2 >= bird.getY() - imgH/2;
-			//(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2)
-			if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
-				System.out.println("NH1 Complete");
-				myTimer.cancel();
-				startQuiz();
-				//myTimer.cancel();
-				//curState= Type.NH2;
-			}
-			
+				if(timeCount > 30) {
+					drawDE = true;
+				} else {
+					drawDE = false;
+					bird.move();
+					collisionNH1();
+				
+				int nestX = this.getFrameW()/2;
+				int nestY = this.getFrameH()/2;
+				//int width = imgsSize.get("bird")[0];
+				//int height = imgsSize.get("bird")[1];
+	//			boolean xC = nestX - imgW/2 <= bird.getX() + imgW/2 && nestX - imgW/2 >= bird.getX() - imgW/2;
+	//			boolean xC2 = nestX + imgW/2 <= bird.getX() + imgW/2 && nestX + imgW/2 >= bird.getX() - imgW/2;
+	//			boolean yC1 = nestY - imgH/2 <= bird.getY() + imgH/2 && nestY - imgH/2 >= bird.getY() - imgH/2;
+	//			boolean yC2 = nestY + imgH/2 <= bird.getY() + imgH/2 && nestY + imgH/2 >= bird.getY() - imgH/2;
+				//(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2)
+				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
+					System.out.println("NH1 Complete");
+					myTimer.cancel();
+					startQuiz();
+					//myTimer.cancel();
+					//curState= Type.NH2;
+				}
+				
+				}
 			}
 		}
 	}
@@ -282,81 +289,69 @@ public class Model {
 		if (!outOfFrame()) {
 			bird.move();
 			if (curState == Type.NH2) {
-				//collisionNH2();
-				if (timeCount % 2 == 0 && updateL) {
-					//System.out.println(timeCount);
-					updateListNH2();
-				}
-				Iterator<Element> iter = list.iterator();
-				//System.out.println(list.size());
-				while(iter.hasNext()) {
-					Element curE = iter.next();
-					curE.move();
-					//System.out.println(curE.getY());
-					//System.out.println((frameH)/2);
-//					int nestX = this.getFrameW()/2;
-//					int nestY = this.getFrameH()/2;
-//					boolean xC = nestX - imgW/2 <= curE.getX() + imgW/2 && nestX - imgW/2 >= curE.getX() - imgW/2;
-//					boolean xC2 = nestX + imgW/2 <= curE.getX() + imgW/2 && nestX + imgW/2 >= curE.getX() - imgW/2;
-//					boolean yC1 = nestY - imgH/2 <= curE.getY() + imgH/2 && nestY - imgH/2 >= curE.getY() - imgH/2;
-//					boolean yC2 = nestY + imgH/2 <= curE.getY() + imgH/2 && nestY + imgH/2 >= curE.getY() - imgH/2;
-					int nestW = imgsSize.get(nest.getType().getName())[0];
-					int nestH = imgsSize.get(nest.getType().getName())[1];
-					int elementW = imgsSize.get(curE.getType().getName())[0];
-					int elementH = imgsSize.get(curE.getType().getName())[1];
 					
-					boolean xC = curE.getX() <= nest.getX() + nestW
-							&& curE.getX() >= nest.getX();
-					boolean xC2 = curE.getX() + elementW <=nest.getX() + nestW
-							&& curE.getX() + elementW >= nest.getX();
-					boolean yC1 = curE.getY() <= nest.getY() + nestH 
-							&& curE.getY() >= nest.getY();
-					boolean yC2 = curE.getY() + elementH <= nest.getY() + nestH 
-							&& curE.getY() + elementH >= nest.getY();
-							
-					if(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-						System.out.println("removeNH2");
-						eggs--;
-						if(eggs <= 0) {
-							this.curState = Type.GAMEOVER;
-						}
-						iter.remove();
+					//collisionNH2();
+					if (timeCount % 2 == 0 && updateL) {
+						//System.out.println(timeCount);
+						updateListNH2();
 					}
-					/*if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-						System.out.println("removeNH2");
-						iter.remove();
-						//updateL = true;
-						//list.add(new HitItem(frameW, 100, ItemType.AIRPLANE));
-					}*/
-					else if (collisionNH2(curE) && curE.getType() != ItemType.NEST) {
-						System.out.println("remove");
-						HitItem h = (HitItem)curE;
-						/*if(h.getxVector() == 10 && !h.getDirectionChange()) {
-							h.setxVector(-10);
-							h.changeDirection();
-						} else if(h.getxVector() == -10 && !h.getDirectionChange()) {
-							h.setxVector(10);
-							h.changeDirection();
-						}
-						if(h.getyVector() == 10 && !h.getDirectionChange()) {
-							h.setyVector(-10);
-							h.changeDirection();
-						} else if(h.getyVector() == -10 && !h.getDirectionChange()) {
-							h.setyVector(10);
-							h.changeDirection();
-						}*/
+					Iterator<Element> iter = list.iterator();
+					//System.out.println(list.size());
+					while(iter.hasNext()) {
+						Element curE = iter.next();
+						curE.move();
+						//System.out.println(curE.getY());
+						//System.out.println((frameH)/2);
+	//					int nestX = this.getFrameW()/2;
+	//					int nestY = this.getFrameH()/2;
+	//					boolean xC = nestX - imgW/2 <= curE.getX() + imgW/2 && nestX - imgW/2 >= curE.getX() - imgW/2;
+	//					boolean xC2 = nestX + imgW/2 <= curE.getX() + imgW/2 && nestX + imgW/2 >= curE.getX() - imgW/2;
+	//					boolean yC1 = nestY - imgH/2 <= curE.getY() + imgH/2 && nestY - imgH/2 >= curE.getY() - imgH/2;
+	//					boolean yC2 = nestY + imgH/2 <= curE.getY() + imgH/2 && nestY + imgH/2 >= curE.getY() - imgH/2;
+						int nestW = imgsSize.get(nest.getType().getName())[0];
+						int nestH = imgsSize.get(nest.getType().getName())[1];
+						int elementW = imgsSize.get(curE.getType().getName())[0];
+						int elementH = imgsSize.get(curE.getType().getName())[1];
 						
-						if(!h.getDirectionChange()) {
-							int newX = h.getxVector()*-1;
-							int newY = h.getyVector()*-1;
-							h.setyVector(newY);
-							h.setxVector(newX);
-							h.changeDirection();
+						boolean xC = curE.getX() <= nest.getX() + nestW
+								&& curE.getX() >= nest.getX();
+						boolean xC2 = curE.getX() + elementW <=nest.getX() + nestW
+								&& curE.getX() + elementW >= nest.getX();
+						boolean yC1 = curE.getY() <= nest.getY() + nestH 
+								&& curE.getY() >= nest.getY();
+						boolean yC2 = curE.getY() + elementH <= nest.getY() + nestH 
+								&& curE.getY() + elementH >= nest.getY();
+								
+						if(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
+							System.out.println("removeNH2");
+							eggs--;
+							if(eggs <= 0) {
+								this.curState = Type.GAMEOVER;
+							}
+							iter.remove();
 						}
-						//iter.remove();
-						//updateL = true;
+						/*if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+							System.out.println("removeNH2");
+							iter.remove();
+							//updateL = true;
+							//list.add(new HitItem(frameW, 100, ItemType.AIRPLANE));
+						}*/
+						else if (collisionNH2(curE) && curE.getType() != ItemType.NEST) {
+							System.out.println("remove");
+							HitItem h = (HitItem)curE;
+							
+							if(!h.getDirectionChange()) {
+								int newX = h.getxVector()*-1;
+								int newY = h.getyVector()*-1;
+								h.setyVector(newY);
+								h.setxVector(newX);
+								h.changeDirection();
+							}
+							//iter.remove();
+							//updateL = true;
+						}
 					}
-				}
+				
 			}
 			
 		}
@@ -816,6 +811,10 @@ public class Model {
 	
 	public int getTimeCount() {
 		return timeCount;
+	}
+	
+	public boolean drawDE() {
+		return drawDE;
 	}
 	
 }

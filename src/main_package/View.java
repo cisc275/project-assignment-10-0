@@ -47,6 +47,7 @@ public class View extends JPanel{
 	Model model;
 	int x;
 	int y;
+	boolean drawDE;
 	
 	
 	
@@ -145,7 +146,7 @@ public class View extends JPanel{
     	
     	
     	
-		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater", "ospreyReal", "NorthernHarrierReal"};
+		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater", "ospreyReal", "NorthernHarrierReal", "bgdelaware"};
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -187,6 +188,7 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.NH1) {
 			x = model.getBird().getX();
 			y = model.getBird().getY();
+			drawDE = model.drawDE();
 			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {
@@ -290,26 +292,36 @@ public class View extends JPanel{
 					}
 					break;
 				case NH1:
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-				
-					if (model.getList().size() != 0) {
-						for(Element each: model.getList()) {
-							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+					
+					if(drawDE) {
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+						g.drawImage(imgs.get("bgdelaware"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						g.setColor(Color.red);
+						g.drawString("The Northern Harrier is a non-migratory bird. That resides in Delaware.", frameWidth/7, frameHeight/3);
+					} else {
+						
+						if (model.getList().size() != 0) {
+							for(Element each: model.getList()) {
+								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+							}
 						}
+						
+						g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
+						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
+					
+						/*if (model.getList().size() != 0) {
+							for(Element each: model.getList()) {
+								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+							}
+						}*/
 					}
 					break;
 				case NH2:
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
-					//g.drawString("You Win NH1", 1000, 20);
-					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, Color.gray,this);
-					//System.out.println(model.getList().size());
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
@@ -317,6 +329,21 @@ public class View extends JPanel{
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
+					
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
+					//g.drawString("You Win NH1", 1000, 20);
+					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, Color.gray,this);
+					//System.out.println(model.getList().size());
+					/*if (model.getList().size() != 0) {
+						//System.out.println("times drawn");
+						for(Element each: model.getList()) {
+							//System.out.println("drawing hit item"+ each.getX());
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+						}
+					}*/
 					break;
 				case GAMEOVER:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
@@ -380,6 +407,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("NorthernHarrierReal")) {
 				bi = ImageIO.read(new File("imgs/NHReal.jpg"));
+			}
+			else if (x.equals("bgdelaware")) {
+				bi = ImageIO.read(new File("imgs/Delaware.jpg"));
 			}
 			else {
 				bi = null;
