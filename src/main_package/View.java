@@ -134,7 +134,7 @@ public class View extends JPanel{
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("osprey", new int[] {frameWidth * 150 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
-    	imgsSize.put("winflag", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("winflag", new int[] {frameWidth * 200 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
@@ -465,7 +465,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/fish.png"));
 			}
 			else if (x.equals("winflag")) {
-				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
+				bi = ImageIO.read(new File("imgs/flag.png"));
 			}
 			else if (x.equals("rat")) {
 				bi = ImageIO.read(new File("imgs/rat.png"));

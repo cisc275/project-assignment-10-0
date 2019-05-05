@@ -22,6 +22,7 @@ public class Model {
 	Bird bird;
 	CollectedItem nest;
 	boolean quizing = false;
+	boolean winFlag = true;
 	int quizCount;
 	String quizOutcomeInfo = "";
 	Quiz quiz;
@@ -169,9 +170,10 @@ public class Model {
 				updateList();
 			}
 			// if timeCount(not energy) is out win flag
-			if (timeCount == 0) {
+			if (timeCount == 0 && winFlag) {
 				// flag has same speed as background
 				list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xDec2,0));
+				winFlag = false;
 			}
 			
 			
@@ -271,6 +273,10 @@ public class Model {
 		int elementH = imgsSize.get(e.getType().getName())[1];
 //		System.out.println(birdW + ", " + birdH + "; " + elementW + ", " + elementH
 //				);
+		
+		if (e.getType().equals(ItemType.WINFLAG)) {
+			return bird.getX() + birdW > e.getX();
+		}
 		
 		boolean xC = e.getX() <= bird.getX() + birdW 
 				&& e.getX() >= bird.getX();
