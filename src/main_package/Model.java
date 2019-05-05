@@ -27,7 +27,7 @@ public class Model {
 	Quiz quiz;
 	ArrayList<Quiz> quizs;
 	Type curState;
-	int eggs =0;
+	int eggs = 0;
 	ArrayList<CollectedItem> eggList;
 	int numTrueAns;
 	public static int xIncr = 5;
@@ -232,7 +232,6 @@ public class Model {
 				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
 					System.out.println("NH1 Complete");
 					myTimer.cancel();
-					eggs = 1;
 					startQuiz();
 					//myTimer.cancel();
 					//curState= Type.NH2;
@@ -278,10 +277,12 @@ public class Model {
 		System.out.println("here");
 		eggList = new ArrayList<>();
 		Random r = new Random();
-//		for (int i = 0; i < eggs; i++) {
-//			int ranX = r.nextInt(nest.getX()); 
-//			eggList.add(new CollectedItem())
-//		}
+		for (int i = 0; i < eggs; i++) {
+			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest")[0]) - nest.getX());
+			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest")[1]) - nest.getY()); 
+			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);
+			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
+		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
@@ -290,6 +291,7 @@ public class Model {
 		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
+		System.out.println("!!!!!!!!!!eggs: " + eggs);
 	}
 	
 	public void updatePositionNH2() {
@@ -333,6 +335,8 @@ public class Model {
 						if(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
 							System.out.println("removeNH2");
 							eggs--;
+							System.out.println("remove egg from list");
+							eggList.remove(0);
 							if(eggs <= 0) {
 								this.curState = Type.GAMEOVER;
 							}
@@ -616,6 +620,7 @@ public class Model {
 				quizOutcomeInfo = "Correct!!!!!";
 				eggs++;
 			}
+			System.out.println("eggs: " + eggs);
 			quizCount++;
 			delayTimer = new Timer();
 			delayCount = 0;
