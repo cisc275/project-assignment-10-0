@@ -265,11 +265,11 @@ public class Model {
 	
 	public void resetModelNH2() {
 		System.out.println("here");
-		setBird(new Bird(getFrameW()/2, getFrameH()/2,0,BirdType.NH));
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		//setBird(new Bird(0, 0,0,BirdType.NH));
-		nest = new CollectedItem(getFrameW()/2, getFrameH()/2, ItemType.NEST);
+		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
+		//getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
 		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
@@ -378,9 +378,9 @@ public class Model {
 			int height = 0;
 			int width = 0;
 			// Create vector in the right direction
-			double unitVectorMag = this.calculateUnitVectorMag(frameW/2, frameH/2);
-			double vX = 10*((frameW/2)/unitVectorMag);
-			double vY = 10*((frameH/2)/unitVectorMag);
+			double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
+			double vX = 10*(((frameW-imgW)/2)/unitVectorMag);
+			double vY = 10*(((frameH-imgH)/2)/unitVectorMag);
 			int vectorX = (int) vX;
 			int vectorY = (int) vY;
 			System.out.println(vectorX);
@@ -433,7 +433,7 @@ public class Model {
 				// Moving Southeast
 				break;
 			case 5:
-				height = frameH;
+				height = frameH-imgH;
 				width = 0;
 				list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
 				System.out.println("move northeast");
@@ -447,8 +447,8 @@ public class Model {
 				// Moving Southwest
 				break;
 			case 7:
-				height = frameH;
-				width = frameW;
+				height = frameH-imgH;
+				width = frameW-imgW;
 				list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
 				System.out.println("move Northwest");
 				// Moving Southeast
