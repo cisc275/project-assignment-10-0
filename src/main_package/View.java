@@ -171,7 +171,8 @@ public class View extends JPanel{
 	// and call the repaint method
 	public void update(Model model) {
 		//System.out.println("update model");
-		if (model.getQuizing() && model.delayTimer == null) {
+		if ((model.getQuizing() || model.getCurState().equals(Type.OPREVIEW) ||
+				model.getCurState().equals(Type.NHREVIEW)) && model.delayTimer == null) {
 			submitButton.setVisible(true);
 			choice1.setVisible(true);
 			choice2.setVisible(true);
@@ -339,7 +340,7 @@ public class View extends JPanel{
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 						/*if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -366,7 +367,7 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
 					
-					g.drawImage(imgs.get("osprey"), x, y, null, this);
+					//g.drawImage(imgs.get("osprey"), x, y, null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
@@ -380,7 +381,7 @@ public class View extends JPanel{
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
-					//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 					break;
 				case GAMEOVER:
@@ -389,15 +390,31 @@ public class View extends JPanel{
 					break;
 				case OPREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the game, Review what you learned", frameWidth/3, frameHeight * 50/838);
+					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, frameHeight * 70/838);
+					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 100/838);
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 260/838);
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 300 / 838);
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 340 / 838);
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
+					g.setColor(Color.red);
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 200/838);
 					break;
 				case NHREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the game, Review what you learned", frameWidth/3, frameHeight * 50/838);
+					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, frameHeight * 70/838);
+					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 100/838);
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 260/838);
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 300 / 838);
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 340 / 838);
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
+					g.setColor(Color.red);
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 200/838);
 					break;
 				case WIN:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("You Win", this.frameWidth/2, this.frameHeight/2);
+					g.drawString("You finished the review quiz", this.frameWidth/3, this.frameHeight/2);
 					break;
 				}
 			}

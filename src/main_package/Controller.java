@@ -141,24 +141,30 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			switch (model.getCurState()) {
-			case OP:
-				// call checkQuiz
-				model.checkQuiz();
-				//model.quizing = false;
-				view.submitButton.setVisible(false);
-				break;
-			case NH1:
-				// call submitQuiz
-				//model.quizing = false;
-				//model.curState = Type.NH2;
-				model.checkQuiz();
-				System.out.println(model.getCurState());
-				view.submitButton.setVisible(false);
-				
-				break;
-				
-			}
+//			switch (model.getCurState()) {
+//			case OP:
+//				// call checkQuiz
+//				model.checkQuiz();
+//				//model.quizing = false;
+//				view.submitButton.setVisible(false);
+//				break;
+//			case NH1:
+//				// call submitQuiz
+//				//model.quizing = false;
+//				//model.curState = Type.NH2;
+//				model.checkQuiz();
+//				System.out.println(model.getCurState());
+//				view.submitButton.setVisible(false);
+//				break;
+//			case OPREVIEW:
+//				break;
+//			case NHREVIEW:
+//				break;
+//				
+//			}
+			model.checkQuiz();
+			System.out.println(model.getCurState());
+			view.submitButton.setVisible(false);
 			view.choice1.setVisible(false);
 			view.choice2.setVisible(false);
 			view.choice3.setVisible(false);
@@ -352,6 +358,12 @@ public class Controller {
     				model.updatePositionNH2();
     				break;
     			case GAMEOVER:
+    				view.update(model);
+    				break;
+    			case OPREVIEW:
+    				view.update(model);
+    				break;
+    			case NHREVIEW:
     				view.update(model);
     				break;
     			case WIN:

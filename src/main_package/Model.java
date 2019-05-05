@@ -104,7 +104,7 @@ public class Model {
 			}, 0, 1000);
 			break;
 		case NH1:
-			timeCount = 40;
+			timeCount = 35;
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -131,7 +131,14 @@ public class Model {
 					updateL = true;
 					if (timeCount == 0) {
 						myTimer.cancel();
-						winGame();
+						//winGame();
+						curState = Type.NHREVIEW;
+						try {
+							createQuizs();
+							startQuiz();
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
 					} 
 				}
 				
@@ -240,7 +247,7 @@ public class Model {
 					System.out.println("NH1 Complete");
 					myTimer.cancel();
 					startQuiz();
-					eggs = 1;
+					//eggs = 1;
 					//myTimer.cancel();
 					//curState= Type.NH2;
 				}
@@ -539,7 +546,12 @@ public class Model {
 					//winGame();
 					//review quiz
 					curState = Type.OPREVIEW;
+					try {
+					createQuizs();
 					startQuiz();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			//gameOver();
@@ -568,9 +580,9 @@ public class Model {
 	// and set quizing boolean to be true
 	public void startQuiz() {
 		System.out.println("start quiz");
-		this.quizing = true;
 		switch (curState) {
 		case OP:
+			this.quizing = true;
 			Random r = new Random();
 			if (quizs.size() != 0) {
 				quiz = quizs.get(r.nextInt(quizs.size()));
@@ -578,6 +590,7 @@ public class Model {
 			}
 			break;
 		case NH1:
+			this.quizing = true;
 			quizCount = 0;
 			quiz = quizs.get(quizCount);
 			break;
@@ -666,8 +679,71 @@ public class Model {
 				}
 				
 			}, 0, 1000);
-
-			
+			break;
+		case OPREVIEW:
+			if(!quiz.checkAnswer()) {
+				// here represent reduce number of egg in NH2
+				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
+			}
+			else {
+				quizOutcomeInfo = "Correct!!";
+			}
+			quizCount++;
+			delayTimer = new Timer();
+			delayCount = 0;
+			delayTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("delayCount: " + ++delayCount);
+					if (delayCount >=2) {
+						if (quizCount < 3) {
+							quiz = quizs.get(quizCount);
+							
+						}
+						else {
+							winGame();
+						}
+						quizOutcomeInfo = "";
+						delayTimer.cancel();
+						delayTimer = null;
+					}
+				}
+				
+			}, 0, 1000);
+			break;
+		case NHREVIEW:
+			if(!quiz.checkAnswer()) {
+				// here represent reduce number of egg in NH2
+				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
+			}
+			else {
+				quizOutcomeInfo = "Correct!!";
+			}
+			quizCount++;
+			delayTimer = new Timer();
+			delayCount = 0;
+			delayTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("delayCount: " + ++delayCount);
+					if (delayCount >=2) {
+						if (quizCount < 3) {
+							quiz = quizs.get(quizCount);
+							
+						}
+						else {
+							winGame();
+						}
+						quizOutcomeInfo = "";
+						delayTimer.cancel();
+						delayTimer = null;
+					}
+				}
+				
+			}, 0, 1000);
+			break;
 		}
 		
 		
@@ -766,7 +842,7 @@ public class Model {
 			file = new File("NHquiz.txt");
 			break;
 		case OPREVIEW:
-			
+			file = new File("OPReviewQuiz.txt");
 			break;
 		case NHREVIEW:
 			file = new File("NHReviewQuiz.txt");
