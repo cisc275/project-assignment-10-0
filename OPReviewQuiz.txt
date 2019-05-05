@@ -1,0 +1,3 @@
+Usaully, ______ Osprey(s) migrate(s) on a trip?;One;Two;Three;Ten;A;
+Considering Osprey's food, what is Osprey's habitat?;Lakes and Ponds;Urban and Suburban;Deserts;Grasslands;A;
+What is Osprey's foraging (finding food) behavior?;Probing (Inserting the bill (bird's mouth) into the ground to find food);Diving (Flying down to the water and catch food);Scratching (Using feets to find food on the ground);Sallying (Catching insects in the air);B
