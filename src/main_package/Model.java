@@ -28,6 +28,7 @@ public class Model {
 	ArrayList<Quiz> quizs;
 	Type curState;
 	int eggs =0;
+	ArrayList<CollectedItem> eggList;
 	int numTrueAns;
 	public static int xIncr = 5;
 	public static int xDec = -10;
@@ -274,6 +275,12 @@ public class Model {
 	
 	public void resetModelNH2() {
 		System.out.println("here");
+		eggList = new ArrayList<>();
+		Random r = new Random();
+//		for (int i = 0; i < eggs; i++) {
+//			int ranX = r.nextInt(nest.getX()); 
+//			eggList.add(new CollectedItem())
+//		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);

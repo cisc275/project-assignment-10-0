@@ -137,7 +137,7 @@ public class View extends JPanel{
     	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("rat", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("rat", new int[] {frameWidth * 120 / 1550, frameHeight * 80 / 838});
     	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("egg", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
@@ -146,12 +146,10 @@ public class View extends JPanel{
     	
     	
     	
-<<<<<<< HEAD
+
 		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", 
-				"stick", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg"};
-=======
-		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater", "ospreyReal", "NorthernHarrierReal", "bgdelaware"};
->>>>>>> 59671f8ef111a82e5df0d2a59167e2c81db514d4
+				"stick", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg", "bgdelaware"};
+
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -236,13 +234,10 @@ public class View extends JPanel{
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
-<<<<<<< HEAD
 					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
 					g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
-=======
 					g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth * 30 / 1550, frameHeight * 30/838);
 
->>>>>>> 59671f8ef111a82e5df0d2a59167e2c81db514d4
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
@@ -302,19 +297,17 @@ public class View extends JPanel{
 					}
 					break;
 				case NH1:
-<<<<<<< HEAD
 					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
 				
-=======
-					
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					if(drawDE) {
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-						g.drawImage(imgs.get("bgdelaware"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+						g.drawImage(imgs.get("bgdelaware"),0, 0, Color.gray, this);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
@@ -339,9 +332,24 @@ public class View extends JPanel{
 							}
 						}*/
 					}
+//					if (model.getList().size() != 0) {
+//						//System.out.println("times drawn");
+//						for(Element each: model.getList()) {
+//							//System.out.println("drawing hit item"+ each.getX());
+//							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+//						}
+//					}
 					break;
 				case NH2:
->>>>>>> 59671f8ef111a82e5df0d2a59167e2c81db514d4
+					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
+					
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
+					//g.drawString("You Win NH1", 1000, 20);
+					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
+					//System.out.println(model.getList().size());
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
@@ -349,27 +357,7 @@ public class View extends JPanel{
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
-<<<<<<< HEAD
-					break;
-				case NH2:
-					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
-=======
 					
->>>>>>> 59671f8ef111a82e5df0d2a59167e2c81db514d4
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
-					//g.drawString("You Win NH1", 1000, 20);
-					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
-					//System.out.println(model.getList().size());
-					/*if (model.getList().size() != 0) {
-						//System.out.println("times drawn");
-						for(Element each: model.getList()) {
-							//System.out.println("drawing hit item"+ each.getX());
-							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-						}
-					}*/
 					break;
 				case GAMEOVER:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
@@ -414,7 +402,10 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
 			}
 			else if (x.equals("rat")) {
-				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
+				bi = ImageIO.read(new File("imgs/rat.png"));
+			}
+			else if (x.equals("egg")) {
+				bi = ImageIO.read(new File("imgs/egg.png"));
 			}
 			else if (x.equals("stick")) {
 				bi = ImageIO.read(new File("imgs/stick.png"));
@@ -432,7 +423,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/nhbg.png"));
 			}
 			else if (x.equals("opmapbg")) {
-				bi = ImageIO.read(new File("imgs/opmap.jpg"));
+				bi = ImageIO.read(new File("imgs/opmapbg.png"));
 			}
 			else if (x.equals("ospreyReal")) {
 				bi = ImageIO.read(new File("imgs/ospreyReal.jpg"));
