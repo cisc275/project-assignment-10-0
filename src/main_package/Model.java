@@ -686,7 +686,7 @@ public class Model {
 				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
 			}
 			else {
-				quizOutcomeInfo = "Correct!!";
+				quizOutcomeInfo = "Congratulations!!";
 			}
 			quizCount++;
 			delayTimer = new Timer();
@@ -718,7 +718,7 @@ public class Model {
 				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
 			}
 			else {
-				quizOutcomeInfo = "Correct!!";
+				quizOutcomeInfo = "Congratulations!!";
 			}
 			quizCount++;
 			delayTimer = new Timer();
