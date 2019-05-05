@@ -6,6 +6,8 @@ public enum Type {
 	OP("OPgame"),
 	MAINMENU("MainMenu"),
 	GAMEOVER("GameOver"),
+	OPREVIEW("opReview"),
+	NHREVIEW("nhreview"),
 	WIN("Win");
 	
 	private String name = null;

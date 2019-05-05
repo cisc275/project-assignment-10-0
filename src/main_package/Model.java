@@ -534,7 +534,10 @@ public class Model {
 					bird.collision();
 					startQuiz();
 				} else if(h.getType().equals(ItemType.WINFLAG)) {
-					winGame();
+					//winGame();
+					//review quiz
+					curState = Type.OPREVIEW;
+					startQuiz();
 				}
 			}
 			//gameOver();
@@ -575,6 +578,15 @@ public class Model {
 		case NH1:
 			quizCount = 0;
 			quiz = quizs.get(quizCount);
+			break;
+		case OPREVIEW:
+			quizCount = 0;
+			quiz = quizs.get(quizCount);
+			break;
+		case NHREVIEW:
+			quizCount = 0;
+			quiz = quizs.get(quizCount);
+			break;
 		}
 	}
 	
@@ -652,8 +664,7 @@ public class Model {
 				}
 				
 			}, 0, 1000);
-//			this.quizing = false;
-//			curState = Type.NH2;
+
 			
 		}
 		
@@ -744,36 +755,32 @@ public class Model {
 	public void createQuizs() throws Exception{
 		Scanner scan;
 		quizs = new ArrayList<>();
+		File file = null;
 		switch(curState) {
 		case OP:
-			File fileO = new File("OPquiz.txt");
-			scan = new Scanner(fileO);
-			while(scan.hasNextLine()) {
-				String[] infos = scan.nextLine().split(";", -1);
-//				System.out.println(infos.length);
-//				for(int i = 0; i < infos.length; i++) {
-//					System.out.println(infos[i]);
-//				}
-				String[] choices = {infos[1],infos[2],infos[3],infos[4]};
-				quizs.add(new Quiz(infos[0], infos[5], choices));
-			}
-			scan.close();
+			file = new File("OPquiz.txt");
 			break;
 		case NH1:
-			File fileN = new File("NHquiz.txt");
-			scan = new Scanner(fileN);
-			while(scan.hasNextLine()) {
-				String[] infos = scan.nextLine().split(";", -1);
-//				System.out.println(infos.length);
-//				for(int i = 0; i < infos.length; i++) {
-//					System.out.println(infos[i]);
-//				}
-				String[] choices = {infos[1],infos[2],infos[3],infos[4]};
-				quizs.add(new Quiz(infos[0], infos[5], choices));
-			}
-			scan.close();
+			file = new File("NHquiz.txt");
+			break;
+		case OPREVIEW:
+			
+			break;
+		case NHREVIEW:
+			file = new File("NHReviewQuiz.txt");
 			break;
 		}
+		scan = new Scanner(file);
+		while(scan.hasNextLine()) {
+			String[] infos = scan.nextLine().split(";", -1);
+//			System.out.println(infos.length);
+//			for(int i = 0; i < infos.length; i++) {
+//				System.out.println(infos[i]);
+//			}
+			String[] choices = {infos[1],infos[2],infos[3],infos[4]};
+			quizs.add(new Quiz(infos[0], infos[5], choices));
+		}
+		scan.close();
 	}
 	
 	

@@ -333,7 +333,7 @@ public class View extends JPanel{
 							}
 						}
 						
-						g.drawImage(imgs.get("osprey"), x, y, null, this);
+						//g.drawImage(imgs.get("osprey"), x, y, null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
@@ -386,6 +386,14 @@ public class View extends JPanel{
 				case GAMEOVER:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Gameover", this.frameWidth/2, this.frameHeight/2);
+					break;
+				case OPREVIEW:
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+					g.drawString("You Win the game, Review what you learned", frameWidth/3, frameHeight * 50/838);
+					break;
+				case NHREVIEW:
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+					g.drawString("You Win the game, Review what you learned", frameWidth/3, frameHeight * 50/838);
 					break;
 				case WIN:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
