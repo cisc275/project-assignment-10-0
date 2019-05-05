@@ -31,7 +31,7 @@ public class Model {
 	int numTrueAns;
 	public static int xIncr = 5;
 	public static int xDec = -10;
-	public static int xDec2 = -8;
+	public static int xDec2 = -5;
 	public static int yIncr = 5;
 	int frameW;
 	int frameH;
@@ -93,7 +93,7 @@ public class Model {
 						System.out.println(curState);
 						myTimer.cancel();
 					}
-					if (timeCount <= 0) {
+					if (timeCount < 0) {
 						myTimer.cancel();
 					}
 				}
@@ -147,7 +147,7 @@ public class Model {
 			updateList();
 		}
 		// if timeCount(not energy) is out win flag
-		if (timeCount <= 0) {
+		if (timeCount == 0) {
 			// flag has same speed as background
 			list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xDec2,0));
 		}
@@ -242,25 +242,27 @@ public class Model {
 //		System.out.println(birdW + ", " + birdH + "; " + elementW + ", " + elementH
 //				);
 		
-//		boolean xC = e.getX() <= bird.getX() + birdW 
-//				&& e.getX() >= bird.getX();
-//		boolean xC2 = e.getX() + elementW <= bird.getX() + birdW 
-//				&& e.getX() + elementW >= bird.getX();
-//		boolean yC1 = e.getY() <= bird.getY() + birdH 
-//				&& e.getY() >= bird.getY();
-//		boolean yC2 = e.getY() + elementH <= bird.getY() + birdH 
-//				&& e.getY() + elementH >= bird.getY();
+		boolean xC = e.getX() <= bird.getX() + birdW 
+				&& e.getX() >= bird.getX();
+		boolean xC2 = e.getX() + elementW <= bird.getX() + birdW 
+				&& e.getX() + elementW >= bird.getX();
+		boolean yC1 = e.getY() <= bird.getY() + birdH 
+				&& e.getY() >= bird.getY();
+		boolean yC2 = e.getY() + elementH <= bird.getY() + birdH 
+				&& e.getY() + elementH >= bird.getY();
+		boolean result1 = xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2;
 		
-		boolean xC = bird.getX() <= e.getX() + elementW
+		boolean x2C = bird.getX() <= e.getX() + elementW
 				&& bird.getX() >= e.getX();
-		boolean xC2 = bird.getX() + birdW <=e.getX() + elementW
+		boolean x2C2 = bird.getX() + birdW <=e.getX() + elementW
 				&& bird.getX() + birdW >= e.getX();
-		boolean yC1 = bird.getY() <= e.getY() + elementH 
+		boolean y2C1 = bird.getY() <= e.getY() + elementH 
 				&& bird.getY() >= e.getY();
-		boolean yC2 = bird.getY() + birdH <= e.getY() + elementH 
+		boolean y2C2 = bird.getY() + birdH <= e.getY() + elementH 
 				&& bird.getY() + birdH >= e.getY();
+		boolean result2 = x2C && y2C1 || x2C && y2C2 || x2C2 && y2C1 || x2C2 && y2C2;
 				
-		return xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2;
+		return result1 || result2;
 	}
 	
 	public void resetModelNH2() {
@@ -269,7 +271,7 @@ public class Model {
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem(getFrameW()/2, getFrameH()/2, ItemType.NEST);
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
+		//getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
 		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
@@ -514,7 +516,7 @@ public class Model {
 						energy += 10;
 					}
 					
-				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX)) {
+				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX) || h.getType().equals(ItemType.SHIP)) {
 					System.out.println(bird.getLife());
 					bird.collision();
 					startQuiz();
@@ -756,6 +758,7 @@ public class Model {
 			break;
 		}
 	}
+	
 	
 	// getter setter for create test
 	public Type getCurState() {

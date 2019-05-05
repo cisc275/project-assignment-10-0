@@ -59,59 +59,9 @@ public class View extends JPanel{
 		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		//super(new GridBagLayout());
 		
-		//setLayout(null);
-		
-		OPButton = new JButton("start Osprey Game");
-		OPButton.setOpaque(true);
-		//OPButton.setBounds(100, 100, 400, 50);
-		//OPButton.setVisible(false);
-		add(OPButton);
-		
-		NHButton = new JButton("start Northen Harrier Game");
-		NHButton.setOpaque(true);
-		//NHButton.setBounds(600,100,400,50);
-		//NHButton.setVisible(false);
-		add(NHButton);
-		
-		backButton = new JButton("back");
-		backButton.setOpaque(true);
-		backButton.setVisible(false);
-		add(backButton);
-		
-		submitButton = new JButton("submit");
-		submitButton.setOpaque(true);
-		submitButton.setVisible(false);
-		add(submitButton);
-		
-		//GridBagConstraints gbc = new GridBagConstraints();
-		choice1 = new JButton("A");
-		choice1.setOpaque(true);
-		choice1.setVisible(false);
-		choice1.setActionCommand("A");
-		add(choice1);
-		
-		choice2 = new JButton("B");
-		choice2.setOpaque(true);
-		choice2.setVisible(false);
-		choice2.setActionCommand("B");
-		add(choice2);
-		
-		choice3 = new JButton("C");
-		choice3.setOpaque(true);
-		choice3.setVisible(false);
-		choice3.setActionCommand("C");
-		add(choice3);
-		
-		choice4 = new JButton("D");
-		choice4.setOpaque(true);
-		choice4.setVisible(false);
-		choice4.setActionCommand("D");
-		add(choice4);
-		
-		
 		frame = new JFrame();
 		System.out.println("frame");
-		frame.getContentPane().add(this);
+//		frame.getContentPane().add(this);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setBackground(Color.gray);
 		frame.setVisible(true);
@@ -119,6 +69,60 @@ public class View extends JPanel{
     	frameHeight = frame.getHeight()-40;
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
+    	
+    	//setLayout(null);
+		
+    			OPButton = new JButton("start Osprey Game");
+    			OPButton.setOpaque(true);
+    			OPButton.setBounds(300, frameHeight/3, 300, 300);
+    			//OPButton.setVisible(false);
+    			add(OPButton);
+    			
+    			NHButton = new JButton("start Northen Harrier Game");
+    			NHButton.setOpaque(true);
+    			NHButton.setBounds(1000,frameHeight/3,300,300);
+    			//NHButton.setVisible(false);
+    			add(NHButton);
+    			
+    			backButton = new JButton("back");
+    			backButton.setOpaque(true);
+    			backButton.setBounds(frameWidth/2, 10, 100, 30);
+    			backButton.setVisible(false);
+    			add(backButton);
+    			
+    			submitButton = new JButton("submit");
+    			submitButton.setOpaque(true);
+    			submitButton.setBounds(frameWidth/2, (frameHeight / 2) + 50 , 100, 30);
+    			submitButton.setVisible(false);
+    			add(submitButton);
+    			
+    			//GridBagConstraints gbc = new GridBagConstraints();
+    			choice1 = new JButton("A");
+    			choice1.setOpaque(true);
+    			choice1.setBounds(frameWidth/3, 300, 50,30);
+    			choice1.setVisible(false);
+    			choice1.setActionCommand("A");
+    			add(choice1);
+    			
+    			choice2 = new JButton("B");
+    			choice2.setOpaque(true);
+    			choice2.setVisible(false);
+    			choice2.setActionCommand("B");
+    			add(choice2);
+    			
+    			choice3 = new JButton("C");
+    			choice3.setOpaque(true);
+    			choice3.setVisible(false);
+    			choice3.setActionCommand("C");
+    			add(choice3);
+    			
+    			choice4 = new JButton("D");
+    			choice4.setOpaque(true);
+    			choice4.setVisible(false);
+    			choice4.setActionCommand("D");
+    			add(choice4);
+    			frame.getContentPane().add(this);
+    	
     	frame.setVisible(false);
 		
     	imgsSize = new HashMap<>();
@@ -204,7 +208,7 @@ public class View extends JPanel{
 		try {
 			if (model.getQuizing()) {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, 100);
+				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 100/838);
 				//Don't delete this, this is the front changing attempt
 				/*
 				String question = model.getQuiz().getQuestion();
@@ -215,17 +219,17 @@ public class View extends JPanel{
 					}
 				}
 				*/
-				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, 260);
-				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, 300);
-				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, 340);
-				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, 380);
-				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, 420);
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 260/838);
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 300 / 838);
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 340 / 838);
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
-					g.drawString(model.quizCount + "/" + 3 + " Quizs", 30, 30);
+					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, frameWidth/3, 200);
+				g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 200/838);
 				
 				
 			}
@@ -234,14 +238,18 @@ public class View extends JPanel{
 				case MAINMENU:
 					break;
 				case OP:
+//					String s = "bgwater";
+//					if (model.timeCount == 55) {
+//						s ="bgland";
+//					}
 					g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
 					g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
 					
-					//g.drawImage(imgs.get("background2"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
 					//System.out.println("first: " + model.groundX % frameWidth);
-					//g.drawImage(imgs.get("background2"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
+					//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					//life bar
 					g.setColor(Color.black);
