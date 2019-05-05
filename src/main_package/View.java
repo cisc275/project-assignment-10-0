@@ -441,7 +441,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/NHReal.jpg"));
 			}
 			else if (x.equals("bgdelaware")) {
-				bi = ImageIO.read(new File("imgs/Delaware.jpg"));
+				bi = ImageIO.read(new File("imgs/Delaware.png"));
 			}
 			else {
 				bi = null;
