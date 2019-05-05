@@ -45,6 +45,7 @@ public class Model {
 	HashMap<String, int[]> imgsSize;
 	boolean drawDE;
 	boolean drawNA;
+	boolean waterbg = true;
 	
 	//Boolean for NH1 Game
 	boolean moreCollectedItems;
@@ -90,6 +91,12 @@ public class Model {
 						// every 4 second update list
 						updateL = true;
 					}
+					
+					/*if(timeCount < 40 && timeCount > 25) {
+						waterbg = false;
+					} else {
+						waterbg = true;
+					}*/
 					if (energy <= 0) {
 						// lose all energy game over
 						gameOver();
@@ -926,6 +933,10 @@ public class Model {
 	
 	public boolean drawNA() {
 		return drawNA;
+	}
+	
+	public boolean getWaterbg() {
+		return waterbg;
 	}
 	
 }
