@@ -158,7 +158,7 @@ public class Model {
 			Element curE = iter.next();
 			//curE.setX(xDec);
 			curE.move();
-			if (curE.getX() + imgW / 2 <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+			if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 				System.out.println("remove");
 				iter.remove();
 				//updateL = true;
@@ -191,9 +191,9 @@ public class Model {
 		case 0:
 			list.add(new HitItem(frameW, frameH / 4, ItemType.AIRPLANE, 0 - ranSpeed,0));
 		break;
-		// 1 is fox
+		// 1 is ship
 		case 1:
-			list.add(new HitItem(frameW, frameH * 4 / 7, ItemType.FOX, 0 - ranSpeed,0));
+			list.add(new HitItem(frameW, frameH * 4 / 7, ItemType.SHIP, 0 - ranSpeed,0));
 		break;
 		// 2 is fish
 		case 2:
