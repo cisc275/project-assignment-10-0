@@ -134,7 +134,7 @@ public class View extends JPanel{
     	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("winflag", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nest", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("rat", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
@@ -145,7 +145,8 @@ public class View extends JPanel{
     	
     	
     	
-		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", "stick", "bgland", "bgwater", "ospreyReal", "NorthernHarrierReal"};
+		String[] imgName = {"osprey", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest", 
+				"stick", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg"};
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
 			BufferedImage img = createImage(imgName[i]);
@@ -229,11 +230,8 @@ public class View extends JPanel{
 				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
 				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
 				if (model.getCurState() == Type.NH1) {
-<<<<<<< HEAD
 					g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-=======
 					g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
->>>>>>> d8c671ce96e5f982208e49deafe6ceb2e31d0c1c
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
@@ -293,6 +291,7 @@ public class View extends JPanel{
 					}
 					break;
 				case NH1:
+					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
@@ -306,12 +305,13 @@ public class View extends JPanel{
 					}
 					break;
 				case NH2:
+					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
-					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, Color.gray,this);
+					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
@@ -367,16 +367,22 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
 			}
 			else if (x.equals("stick")) {
-				bi = ImageIO.read(new File("imgs/IMG_0691.png"));
+				bi = ImageIO.read(new File("imgs/stick.png"));
 			}
 			else if (x.equals("nest")) {
-				bi = ImageIO.read(new File("imgs/IMG_0692.png"));
+				bi = ImageIO.read(new File("imgs/nest.png"));
 			}
 			else if (x.equals("bgland")) {
 				bi = ImageIO.read(new File("imgs/bgland.png"));
 			}
 			else if (x.equals("bgwater")) {
 				bi = ImageIO.read(new File("imgs/bgwater.png"));
+			}
+			else if (x.equals("nhbg")) {
+				bi = ImageIO.read(new File("imgs/nhbg.png"));
+			}
+			else if (x.equals("opmapbg")) {
+				bi = ImageIO.read(new File("imgs/opmap.jpg"));
 			}
 			else if (x.equals("ospreyReal")) {
 				bi = ImageIO.read(new File("imgs/ospreyReal.jpg"));
