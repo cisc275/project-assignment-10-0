@@ -351,13 +351,13 @@ public class View extends JPanel{
 							}
 						}
 						
-						//g.drawImage(imgs.get("osprey"), x, y, null, this);
+						g.drawImage(imgs.get("osprey"), x, y, null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-						g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 						/*if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -384,7 +384,7 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
 					
-					//g.drawImage(imgs.get("osprey"), x, y, null, this);
+					g.drawImage(imgs.get("osprey"), x, y, null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
@@ -398,7 +398,7 @@ public class View extends JPanel{
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 					break;
 				case GAMEOVER:
