@@ -304,21 +304,18 @@ public class View extends JPanel{
 					}
 					break;
 				case NH1:
-<<<<<<< HEAD
 					
 //					
 //					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 //					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 //					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 //					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-=======
 					/*g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 					
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);*/
->>>>>>> b55f2c7c722ed3ee0f7e9f8110b0be298080bfe6
 				
 //					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					if(drawDE) {
@@ -336,11 +333,7 @@ public class View extends JPanel{
 							}
 						}
 						
-<<<<<<< HEAD
-						
-=======
 						g.drawImage(imgs.get("osprey"), x, y, null, this);
->>>>>>> b55f2c7c722ed3ee0f7e9f8110b0be298080bfe6
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
@@ -372,11 +365,8 @@ public class View extends JPanel{
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
-<<<<<<< HEAD
 					
-=======
-					g.drawImage(imgs.get("osprey"), x, y, null, this);
->>>>>>> b55f2c7c722ed3ee0f7e9f8110b0be298080bfe6
+					//g.drawImage(imgs.get("osprey"), x, y, null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
