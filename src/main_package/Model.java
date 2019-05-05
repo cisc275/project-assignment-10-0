@@ -232,6 +232,7 @@ public class Model {
 				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
 					System.out.println("NH1 Complete");
 					myTimer.cancel();
+					eggs = 1;
 					startQuiz();
 					//myTimer.cancel();
 					//curState= Type.NH2;
@@ -607,6 +608,9 @@ public class Model {
 				// here represent reduce number of egg in NH2
 				bird.collision();
 				quizOutcomeInfo = "Oh No!!!  You Lose an egg in next game";
+				/*if(eggs > 1) {
+					eggs--;
+				}*/
 			}
 			else {
 				quizOutcomeInfo = "Correct!!!!!";
