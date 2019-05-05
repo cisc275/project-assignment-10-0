@@ -113,7 +113,8 @@ public class Model {
 					System.out.println("time count :" + --timeCount);
 					if (timeCount == 0) {
 						myTimer.cancel();
-						startQuiz();
+						//startQuiz();
+						gameOver();
 					} 
 				}
 				
@@ -239,6 +240,7 @@ public class Model {
 					System.out.println("NH1 Complete");
 					myTimer.cancel();
 					startQuiz();
+					eggs = 1;
 					//myTimer.cancel();
 					//curState= Type.NH2;
 				}
