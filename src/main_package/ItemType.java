@@ -1,6 +1,9 @@
 package main_package;
+
+import java.io.Serializable;
+
 // Author: Steven Soranno
-public enum ItemType {
+public enum ItemType implements Serializable{
 	AIRPLANE("airplane"),
 	FOX("fox"),
     FISH("fish"),

@@ -51,7 +51,7 @@ public class View extends JPanel implements Serializable{
 	JButton serialize;
 	JButton deserialize;
 	
-	transient Image curImg;
+	Image curImg;
 	Model model;
 	int x;
 	int y;
@@ -139,12 +139,12 @@ public class View extends JPanel implements Serializable{
     			serialize.setActionCommand("s");
     			add(serialize);
     			
-    			deserialize = new JButton("Deserialize");
+    	/*		deserialize = new JButton("Deserialize");
     			deserialize.setOpaque(true);
     			deserialize.setVisible(true);
     			deserialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
     			deserialize.setActionCommand("d");
-    			add(deserialize);
+    			add(deserialize);*/
     	
     	frame.setVisible(false);
 		

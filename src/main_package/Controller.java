@@ -28,7 +28,7 @@ public class Controller implements Serializable{
 	View view;
 	int drawDelay = 30;
 	Action drawAction;
-	Timer t;
+	transient Timer t;
 	static int count = 0;
 	static String backUpFile = "backup.ser";
 	
@@ -51,7 +51,7 @@ public class Controller implements Serializable{
 		view.choice3.addActionListener(new ChoiceButtonListener());
 		view.choice4.addActionListener(new ChoiceButtonListener());
 		view.serialize.addActionListener(new SerializeButtonListener());
-		view.deserialize.addActionListener(new SerializeButtonListener());		
+	//	view.deserialize.addActionListener(new SerializeButtonListener());		
 		view.addKeyListener(new CustomKeyListener());
 		
 		
@@ -409,20 +409,23 @@ public class Controller implements Serializable{
 		}
 	}
 	
-	public void deserialize() {
+	public static Controller deserialize() {
+		Controller tmp = null;
 		try {
 			FileInputStream file = new FileInputStream(backUpFile);
 			ObjectInputStream in = new ObjectInputStream(file);
-			Controller tmp = (Controller) in.readObject();
+			tmp = (Controller) in.readObject();
 			in.close();
 			file.close();
-			changeToController(tmp);
+		//	changeToController(tmp);
+
 	//		EventQueue. TODO:: fix exception
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		return tmp;
 	}
 	
 	public void changeToController(Controller c) {
@@ -436,6 +439,10 @@ public class Controller implements Serializable{
 	
 	public static void main(String[] args) {
 		Controller c = new Controller();
+
+	//	Controller d = deserialize();  // uncomment these two lines for deserialization.
+	//	c.model = d.model;
+		
 		//System.out.println("call start");
 		c.start();
 		//System.out.println("hello");

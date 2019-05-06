@@ -17,8 +17,8 @@ public class Model implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Timer myTimer;
-	Timer delayTimer;
+	transient Timer myTimer;
+	transient Timer delayTimer;
 	final int defaultTime = 60;
 	int timeCount;
 	int delayCount;
