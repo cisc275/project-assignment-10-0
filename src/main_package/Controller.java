@@ -401,7 +401,7 @@ public class Controller implements Serializable{
 		try {
 			FileOutputStream file = new FileOutputStream(backUpFile);
 			ObjectOutputStream out = new ObjectOutputStream(file);
-			out.writeObject(this);
+			out.writeObject(this.model);
 			out.close();
 			file.close();
 		} catch (IOException e) {
@@ -409,12 +409,12 @@ public class Controller implements Serializable{
 		}
 	}
 	
-	public static Controller deserialize() {
-		Controller tmp = null;
+	public static Model deserialize() {
+		Model tmp = null;
 		try {
 			FileInputStream file = new FileInputStream(backUpFile);
 			ObjectInputStream in = new ObjectInputStream(file);
-			tmp = (Controller) in.readObject();
+			tmp = (Model) in.readObject();
 			in.close();
 			file.close();
 		//	changeToController(tmp);
@@ -440,8 +440,8 @@ public class Controller implements Serializable{
 	public static void main(String[] args) {
 		Controller c = new Controller();
 
-	//	Controller d = deserialize();  // uncomment these two lines for deserialization.
-	//	c.model = d.model;
+	//	Model d = deserialize();  // uncomment these two lines for deserialization.
+	//	c.model = d;
 		
 		//System.out.println("call start");
 		c.start();
