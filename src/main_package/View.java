@@ -354,7 +354,7 @@ public class View extends JPanel{
 						g.drawImage(imgs.get("osprey"), x, y, null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
-						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
+						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
 						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
