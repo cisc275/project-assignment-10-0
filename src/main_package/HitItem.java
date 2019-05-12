@@ -25,7 +25,7 @@ public class HitItem extends Element{
 	public int getY() {
 		return this.y;
 	}
-	
+	// type getter
 	public ItemType getType() {
 		return it;
 	}
@@ -36,26 +36,27 @@ public class HitItem extends Element{
 		x += xVector;
 		y += yVector;
 	}
-	
+	//x-vector getter
 	public int getxVector() {
 		return xVector;
 	}
-
+	//x-vector setter
 	public void setxVector(int xVector) {
 		this.xVector = xVector;
 	}
-
+	//y-vector getter 
 	public int getyVector() {
 		return yVector;
 	}
-
+	//x-vector setter
 	public void setyVector(int yVector) {
 		this.yVector = yVector;
 	}
-	
+	//reverse direction
 	public void changeDirection() {
 		directionChange = !directionChange;
 	}
+	// directionchange getter
 	public boolean getDirectionChange() {
 		return directionChange;
 	}

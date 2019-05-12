@@ -128,7 +128,7 @@ public class View extends JPanel{
     	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("winflag", new int[] {frameWidth * 200 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
+    	imgsSize.put("nest", new int[] {frameWidth * 225 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("rat", new int[] {frameWidth * 120 / 1550, frameHeight * 80 / 838});
     	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});

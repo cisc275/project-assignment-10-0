@@ -17,11 +17,11 @@ public class CollectedItem extends Element{
 	public void isCollected() {
 		collected = true;
 	}
-	
+	// collected getter
 	public boolean getCollected() {
 		return collected;
 	}
-	
+	// getType getter
 	public ItemType getType() {
 		return it;
 	}

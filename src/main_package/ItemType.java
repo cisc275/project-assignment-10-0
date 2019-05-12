@@ -16,6 +16,8 @@ public enum ItemType {
 	private ItemType(String s){
 		name = s;
 	}
+	
+	// name getter
 	public String getName() {
 		return name;
 	}

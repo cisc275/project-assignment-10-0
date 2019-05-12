@@ -16,6 +16,7 @@ public enum Type {
 	private Type(String s){
 		name = s;
 	}
+	// name getter
 	public String getName() {
 		return name;
 	}

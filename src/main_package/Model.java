@@ -263,7 +263,7 @@ public class Model {
 			}
 		}
 	}
-	
+	//
 	public boolean collisionF(Element e) {
 		int birdW = imgsSize.get(bird.getBType().getName())[0];
 		int birdH = imgsSize.get(bird.getBType().getName())[1];
@@ -298,7 +298,7 @@ public class Model {
 				
 		return result1 || result2;
 	}
-	
+	//
 	public void resetModelNH2() {
 		System.out.println("here");
 		eggList = new ArrayList<>();
@@ -319,7 +319,7 @@ public class Model {
 		createTimer();
 		//System.out.println("!!!!!!!!!!eggs: " + eggs);
 	}
-	
+	//
 	public void updatePositionNH2() {
 		if(eggs <= 0) {
 			this.curState = Type.GAMEOVER;

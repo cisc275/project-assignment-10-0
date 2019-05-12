@@ -9,6 +9,7 @@ public enum BirdType {
 	private BirdType(String s){
 		name = s;
 	}
+	// name getter
 	public String getName() {
 		return name;
 	}

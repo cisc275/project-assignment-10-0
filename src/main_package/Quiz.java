@@ -23,23 +23,23 @@ public class Quiz {
 	public boolean checkAnswer() {
 		return answer.equals(chosenAnswer);
 	}
-	
+	// chosenAnswer getter
 	public String getChosenAnswer() {
 		return chosenAnswer;
 	}
-	
+	// question getter
 	public String getQuestion() {
 		return question;
 	}
-
+	// answer getter
 	public String getAnswer() {
 		return answer;
 	}
-
+	// choice getter
 	public String[] getChoice() {
 		return choice;
 	}
-
+	// override toString 
 	public String toString() {
 		String x = "";
 		for (int i = 0; i < choice.length;i++) {
