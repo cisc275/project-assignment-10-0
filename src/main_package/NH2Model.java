@@ -37,6 +37,7 @@ public class NH2Model extends Model{
 		createTimer();		
 	}
 
+	// This method creates a timer for 40 seconds for the NH1 game 
 	@Override
 	public void createTimer() {
 		myTimer = new Timer();
@@ -61,16 +62,23 @@ public class NH2Model extends Model{
 		
 	}
 
+	// This method updates the position of the bird based and controls the functionality of the game
 	@Override
 	public void updatePosition() {
+		// Check if user got all questions correct
+		// If the player has no eggs
 		if(eggs <= 0) {
 			//System.out.println("egg < 0  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 			this.curState = Type.GAMEOVER;
 		}
+		// If player not out off the screen, run the game.
 		if(!outOfFrame()) {
 			bird.move();
+			// Every 2 seconds spawn a fox
 			if(timeCount % 2 == 0 && updateL)
 				updateList();
+			
+			// Iterate through all the elements in the game and check for collisions
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
 				Element curE = iter.next();
@@ -84,15 +92,16 @@ public class NH2Model extends Model{
 				boolean yC1 = curE.getY() <= nest.getY() + nestH && curE.getY() >= nest.getY();
 				boolean yC2 = curE.getY() + itemH <= nest.getY() + nestH && curE.getY() + itemH >= nest.getY();
 				
+				// if the bird collide with a fox, the fox changes direction
 				if(xC1 && (yC1 || yC2) || xC2 && (yC1 ||yC2 )) {
 					System.out.println("removeNH2");
 					eggs--;
 					System.out.println("remove eggs from lists");
 					eggList.remove(0);
 					if(eggs <= 0)
-						//System.out.println("egg < 0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@");
 						this.curState = Type.GAMEOVER;
 					iter.remove();
+					// if the fox gets to the nest, it steals and egg
 				} else if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
 					System.out.println("remove");
 					HitItem h = (HitItem)curE;
@@ -108,26 +117,31 @@ public class NH2Model extends Model{
 			}
 		}
 	}
-
+	
+	// This method checks for a collision in the main game
 	@Override
 	public boolean checkCollision(Element e) {
 //		int birdW = imgsSize.get(bird.getBType().getName())[0], birdH = imgsSize.get(bird.getBType().getName())[1];
 //		int itemW = imgsSize.get(e.getType().getName())[0], itemH = imgsSize.get(e.getType().getName())[1];
 		return collisionF(e);
 	}
-
+	
+	// This method checks if the bird has moved out of the frame and prevents this from happening
 	@Override
 	public boolean outOfFrame() {
 		return (bird.getY() + bird.getYVector() < 0 || bird.getY() + imgH + bird.getYVector() > frameH || 
 				bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW);
 	}
-
+	
+	// This method sets the quizzing variable to true in order to start quizzing the player
 	@Override
 	public void startQuiz() {
 		quizCount = 0;
 		quiz = quizzes.get(quizCount);
 	}
 
+	// This method checks to if the user responses for each quiz question is correct
+	// If the user gets at least one question right, then they move on to the NH2 game
 	@Override
 	public void checkQuiz() {
 		if(!quiz.checkAnswer()) {
@@ -168,6 +182,7 @@ public class NH2Model extends Model{
 		
 	}
 
+	// This method reads in the quiz questions for the NH1 game
 	@Override
 	public void createQuizzes() throws Exception{
 		quizzes = new ArrayList<>();
@@ -180,6 +195,9 @@ public class NH2Model extends Model{
 		scanner.close();
 	}
 	
+	//helper method for updatePosition()
+	// This method generate the random position for the foxes to spawn in NH2
+	// It also determines the direction each fox should travel in to steal and egg
 	public void updateList() {
 //		Random random = new Random();
 //		int ranNum = random.nextInt(8);
@@ -282,6 +300,8 @@ public class NH2Model extends Model{
 		updateL = false;
 	}
 	
+	// This method calculates the magnitude of the vector the fox needs to reach the nest.
+	// This magnitude will be used to calculate the correct unit vector for the fox.
 	public double calculateUnitVectorMag(int x, int y) {
 		return Math.sqrt(x * x + y * y);
 	}
