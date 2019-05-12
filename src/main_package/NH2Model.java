@@ -10,9 +10,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NH2Model extends Model{
+	// Instantiate Variables
 	ArrayList<CollectedItem> eggList;
 	boolean drawDE;
 	
+	// Constructor sets up the NH2 game and determines the locations of all elements in the game
 	public NH2Model(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		
 		super(fW, fH, iW, iH, map);
@@ -31,11 +33,8 @@ public class NH2Model extends Model{
 		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
-		//getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
-		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
-		createTimer();
-		//System.out.println("!!!!!!!!!!eggs: " + eggs);		
+		createTimer();		
 	}
 
 	@Override
