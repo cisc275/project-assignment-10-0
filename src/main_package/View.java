@@ -195,7 +195,7 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.NH1) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
-			drawDE = ((NH2Model) model).drawDE;
+			drawDE = ((NHModel) model).drawDE();
 			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {

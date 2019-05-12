@@ -1,13 +1,8 @@
 package main_package;
-import java.io.File;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import main_package.Type;
 
@@ -46,6 +41,14 @@ public abstract class Model {
 		imgsSize = map;
 		groundX = 0;
 		groundY = 0;
+	}
+	
+	public int getImgH() {
+		return imgH;
+	}
+	
+	public int getImgW() {
+		return imgW;
 	}
 	
 	public abstract void createTimer();
