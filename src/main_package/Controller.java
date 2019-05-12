@@ -19,7 +19,7 @@ import javax.swing.Timer;
 
 //author Sicheng Tian
 public class Controller {
-	Model model;
+	static Model model;
 	View view;
 	int drawDelay = 30;
 	Action drawAction;
@@ -46,7 +46,7 @@ public class Controller {
 		view.choice3.addActionListener(new ChoiceButtonListener());
 		view.choice4.addActionListener(new ChoiceButtonListener());
 		view.serialize.addActionListener(new SerializeButtonListener());
-//		view.deserialize.addActionListener(new SerializeButtonListener());	
+		view.deserialize.addActionListener(new SerializeButtonListener());	
 		
 		view.addKeyListener(new CustomKeyListener());
 		
@@ -325,9 +325,11 @@ public class Controller {
 			// TODO Auto-generated method stub
 			switch(e.getActionCommand()) {
 			case "s":
+				System.out.println("serializing");
 				serialize();
 				break;
 			case "d":
+				System.out.println("deserializing");
 				deserialize();
 				break;
 			}
@@ -425,7 +427,7 @@ public class Controller {
 		}
 	}
 	
-	public static Model deserialize() {
+	public static void deserialize() {
 		Model tmp = null;
 		try {
 			FileInputStream file = new FileInputStream(backUpFile);
@@ -441,7 +443,9 @@ public class Controller {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return tmp;
+		System.out.println(tmp == null);
+		model = tmp;
+	//	return tmp;
 	}
 	
 	public static void main(String[] args) {
