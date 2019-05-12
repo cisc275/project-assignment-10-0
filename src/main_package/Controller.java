@@ -26,8 +26,9 @@ public class Controller {
 		//System.out.println("controll");
 		
 		view = new View();
-		model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-		System.out.println("model constructed");
+		
+		//model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+		//System.out.println("model constructed");
 		//view.setModel(model);
 		//view.frame.setVisible(true);
 		//
@@ -68,7 +69,7 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Create a model for the NHGame
-			Model model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
 			System.out.println(model.getCurState());
 			// Set the button views for the game
 			view.backButton.setVisible(true);
@@ -86,21 +87,7 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-				model.groundX = 0;
-				model.groundY = 0;
-				model.setCurState(Type.OP);
-				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
-				model.setList(new ArrayList<>());
-				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-				//model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
-				model.setUpdateL();
-				try {
-					model.createQuizs();
-				}catch(Exception ex) {
-					ex.printStackTrace();
-				}
-				model.createTimer();
-			
+			model = new OPModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
 				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
 				view.OPButton.setVisible(false);
@@ -318,7 +305,6 @@ public class Controller {
     				//System.out.println("OP Controller");
     				if (!model.getQuizing()) {
     				model.updatePosition();
-    				model.updateBirdPosition();
     				//view.animation();
     				}
     				view.update(model);
@@ -326,22 +312,23 @@ public class Controller {
     				break;
     			case TUTORIALNH1:
     				view.update(model);
-    				model.tutorialNH1();
+    				//model.tutorialNH1();
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");
     				view.update(model);
     				if (!model.getQuizing()) {
-    					model.updateBirdPosition();
+    					model.updatePosition();
     				}
     				break;
     			case NH2:
+    				model = new NHModel2(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
     				//System.out.println("NH2 controller");
     				if (!model.getQuizing()) {
-    					model.updateBirdPosition();
+    					model.updatePosition();
     				}
     				view.update(model);
-    				model.updatePositionNH2();
+    				model.updatePosition();
     				break;
     			case GAMEOVER:
     				view.update(model);

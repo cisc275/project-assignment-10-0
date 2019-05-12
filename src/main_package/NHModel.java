@@ -17,7 +17,7 @@ public class NHModel extends Model {
 	boolean drawDE;
 	int eggs = 0;
 	
-
+	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
 		Random rand = new Random(); 
@@ -41,6 +41,7 @@ public class NHModel extends Model {
 		createTimer();
 	}
 
+	// This method creates a timer for 35 seconds for the NH1 game 
 	@Override
 	public void createTimer() {
 		myTimer = new Timer();
@@ -74,7 +75,7 @@ public class NHModel extends Model {
 				} else {
 					drawDE = false;
 					bird.move();
-					checkCollision();
+					checkCollision(bird);
 				
 				int nestX = this.getFrameW()/2;
 				int nestY = this.getFrameH()/2;
@@ -102,7 +103,7 @@ public class NHModel extends Model {
 	
 	// This method checks to see if the bird has collided with a collected item
 	@Override
-	public void checkCollision() {
+	public boolean checkCollision(Element e) {
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
 			Element cur = iter.next();
@@ -121,11 +122,12 @@ public class NHModel extends Model {
 			}
 		}
 		moreCollectedItems = false;
-		for(Element e: list) {
-			if(e instanceof CollectedItem) {
+		for(Element el: list) {
+			if(el instanceof CollectedItem) {
 				moreCollectedItems = true;
 			}
 		}
+		return false;
 	}
 
 	// This method checks if the bird has moved out of the frame and prevents this from happening
@@ -225,6 +227,10 @@ public class NHModel extends Model {
 	// Setter for the nest object
 	public void setNest(CollectedItem n) {
 		nest  = n;
+	}
+	
+	public boolean drawDE() {
+		return drawDE;
 	}
 
 }
