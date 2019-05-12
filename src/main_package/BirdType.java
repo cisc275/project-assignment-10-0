@@ -1,6 +1,9 @@
 package main_package;
+
+import java.io.Serializable;
+
 // Author: Steven Soranno
-public enum BirdType {
+public enum BirdType implements Serializable{
     NH("nh"),
 	OSPREY("osprey");
 	

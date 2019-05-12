@@ -1,8 +1,15 @@
 package main_package;
+
+import java.io.Serializable;
+
 // author Sicheng Tian, Yixiong Wu
-public class Element {
+public class Element implements Serializable{
 	// everything exists in the game besides the background is an element
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// x-axis location
 	int x;
 	// y-axis location

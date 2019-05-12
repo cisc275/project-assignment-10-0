@@ -1,6 +1,13 @@
 package main_package;
+
+import java.io.Serializable;
+
 // author Yixiong Wu, Yufan Wang
-public class Quiz {
+public class Quiz implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// The question for one quiz
 	String question;
 	// matched answer to the question

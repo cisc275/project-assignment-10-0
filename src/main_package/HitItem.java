@@ -1,7 +1,13 @@
 package main_package;
 
+import java.io.Serializable;
+
 // author Sicheng Tian
-public class HitItem extends Element{
+public class HitItem extends Element implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//represents which kind of item it is
 	//ItemType it;
 	int xVector;
