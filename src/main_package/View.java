@@ -195,7 +195,7 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.NH1) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
-			drawDE = model.drawDE();
+			drawDE = ((NH2Model) model).drawDE;
 			//curImg = imgs.get("bird");
 		}
 		else if (model.getCurState() == Type.NH2) {
@@ -402,7 +402,7 @@ public class View extends JPanel{
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.setColor(Color.red);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
+					g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
@@ -416,8 +416,8 @@ public class View extends JPanel{
 						}
 					}
 					
-					if (model.eggList.size() != 0) {
-						for(CollectedItem each: model.eggList) {
+					if (((NH2Model) model).eggList.size() != 0) {
+						for(CollectedItem each: ((NH2Model) model).eggList) {
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}

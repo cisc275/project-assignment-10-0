@@ -71,6 +71,10 @@ public class OPModel extends Model{
 
 	@Override
 	public void updatePosition() {
+		// for bird
+		if (!(outOfFrame())) {
+			bird.move();
+		}
 		// for background
 		if(timeCount > 55) {
 			drawNA = true;
