@@ -343,8 +343,10 @@ public class Controller {
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				model.updateBirdPosition();
+    				//view.animation();
     				}
     				view.update(model);
+    				
     				break;
     			case TUTORIALNH1:
     				view.update(model);

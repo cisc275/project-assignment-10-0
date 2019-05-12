@@ -317,10 +317,13 @@ public class Model {
 		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
 		createTimer();
-		System.out.println("!!!!!!!!!!eggs: " + eggs);
+		//System.out.println("!!!!!!!!!!eggs: " + eggs);
 	}
 	
 	public void updatePositionNH2() {
+		if(eggs <= 0) {
+			this.curState = Type.GAMEOVER;
+		}
 		// for background
 		if (!outOfFrame()) {
 			bird.move();
