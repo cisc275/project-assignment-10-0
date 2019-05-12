@@ -339,8 +339,10 @@ public class Controller {
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				model.updateBirdPosition();
+    				//view.animation();
     				}
     				view.update(model);
+    				
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");
