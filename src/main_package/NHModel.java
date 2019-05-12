@@ -12,33 +12,34 @@ import java.util.Random;
 import main_package.Type;
 
 public class NHModel extends Model {
-	static CollectedItem nest;
+	//static CollectedItem nest;
 	boolean moreCollectedItems;
 	boolean drawDE;
-	static int eggs;
+	//static int eggs;
 	
 	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
-		Random rand = new Random(); 
-		setCurState(Type.NH1);
-		setList(new ArrayList<>());
-		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
-		for(int i = 0; i<5; i++) {
-			getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.STICK));
-		}
-		// Created rats for NH Game
-		for(int i = 0; i<5; i++) {
-			getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.RAT));
-		}
-		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
+			Random rand = new Random(); 
+			setCurState(Type.NH1);
+			setList(new ArrayList<>());
+			setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
+			for(int i = 0; i<5; i++) {
+				getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.STICK));
+			}
+			// Created rats for NH Game
+			for(int i = 0; i<5; i++) {
+				getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.RAT));
+			}
+			setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
+			
+			try {
+				createQuizzes();
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+			createTimer();
 		
-		try {
-			createQuizzes();
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		createTimer();
 	}
 
 	// This method creates a timer for 35 seconds for the NH1 game 

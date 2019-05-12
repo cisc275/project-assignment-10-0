@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class NH2Model extends NHModel{
+public class NH2Model extends Model{
 	ArrayList<CollectedItem> eggList;
 	boolean drawDE;
 	
@@ -64,12 +64,10 @@ public class NH2Model extends NHModel{
 
 	@Override
 	public void updatePosition() {
-		if (!(outOfFrame())) {
-			bird.move();
-		}
-		if(eggs <= 0)
+		if(eggs <= 0) {
 			//System.out.println("egg < 0  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 			this.curState = Type.GAMEOVER;
+		}
 		if(!outOfFrame()) {
 			bird.move();
 			if(timeCount % 2 == 0 && updateL)
@@ -96,6 +94,17 @@ public class NH2Model extends NHModel{
 						//System.out.println("egg < 0 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@");
 						this.curState = Type.GAMEOVER;
 					iter.remove();
+				} else if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
+					System.out.println("remove");
+					HitItem h = (HitItem)curE;
+					
+					if(!h.getDirectionChange()) {
+						int newX = h.getxVector()*-1;
+						int newY = h.getyVector()*-1;
+						h.setyVector(newY);
+						h.setxVector(newX);
+						h.changeDirection();
+					}
 				}
 			}
 		}
@@ -187,8 +196,8 @@ public class NH2Model extends NHModel{
 		int width = 0;
 		// Create vector in the right direction
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-		double vX = 10*(((frameW-imgW)/2)/unitVectorMag);
-		double vY = 10*(((frameH-imgH)/2)/unitVectorMag);
+		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
+		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
 		int vectorX = (int) vX;
 		int vectorY = (int) vY;
 		
@@ -198,7 +207,7 @@ public class NH2Model extends NHModel{
 			height = (frameH-imgH)/2;
 			width = 0;
 			//direction = 'e';
-			list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, 5, 0));
 			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
 			System.out.println("move east");
 			// Moving East
@@ -207,7 +216,7 @@ public class NH2Model extends NHModel{
 			height = (frameH - imgH)/2;
 			width = frameW;
 			//direction = 'w';
-			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, -5, 0));
 //			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
 			System.out.println("move west");
 			// Moving West
@@ -228,7 +237,7 @@ public class NH2Model extends NHModel{
 
 			//direction = 'n';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -5));
 			System.out.println("move north");
 			// Moving North
 			break;
