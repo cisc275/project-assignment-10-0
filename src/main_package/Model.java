@@ -27,6 +27,8 @@ public abstract class Model {
 	HashMap<String, int[]>imgsSize;
 	boolean tutorial;
 	private int groundX, groundY;
+	static int eggs;
+	static CollectedItem nest;
 	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false

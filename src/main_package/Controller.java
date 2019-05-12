@@ -55,7 +55,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			model.setCurState(Type.MAINMENU);
-			curState = model.getCurState();
+			curState = Type.MAINMENU;
 			model.myTimer.cancel();
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
@@ -72,6 +72,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			// Create a model for the NHGame
 			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			model.setCurState(Type.NH1);
 			curState = model.getCurState();
 			System.out.println(model.getCurState());
 			// Set the button views for the game
@@ -199,16 +200,16 @@ public class Controller {
 				break;
 			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-10);
+					model.getBird().setYVector(-5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(10);
+					model.getBird().setYVector(5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-10);
+					model.getBird().setXVector(-5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(10);
+					model.getBird().setXVector(5);
 				}
 				break;
 			default:
@@ -305,6 +306,7 @@ public class Controller {
     			switch(curState) {
     			case MAINMENU:
     				//view.update(model);
+    				System.out.println("here");
     				view.repaint();
     				break;
     			case OP:
