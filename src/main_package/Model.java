@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-// author Sicheng Tian, Yufan Wang£¬ Rubai Bian
+// author Sicheng Tian, Yufan Wang£¬ Rubai Bian, Steven Soranno
 public class Model {
 	Timer myTimer;
 	Timer delayTimer;
@@ -47,6 +47,7 @@ public class Model {
 	boolean drawDE;
 	boolean drawNA;
 	boolean waterbg = true;
+	boolean tutorial;
 	
 	//Boolean for NH1 Game
 	boolean moreCollectedItems;
@@ -81,8 +82,7 @@ public class Model {
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					//t++;
+					
 					if (!quizing) {
 						// update time and energy
 						System.out.println("time count :" + --timeCount);
@@ -116,8 +116,7 @@ public class Model {
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					//t++;
+					
 					System.out.println("time count :" + --timeCount);
 					if (timeCount == 0) {
 						myTimer.cancel();
@@ -133,8 +132,7 @@ public class Model {
 			myTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					//t++;
+					
 					System.out.println("time count :" + --timeCount);
 					updateL = true;
 					if (timeCount == 0) {
@@ -401,6 +399,8 @@ public class Model {
 	}
 	
 	//helper for updatePositionNH2()
+	// This method calculates the magnitude of the vector the fox needs to reach the nest.
+	// This magnitude will be used to calculate the correct unit vector for the fox
 	public double calculateUnitVectorMag(int xpos, int ypos){
 		double mag = Math.pow(xpos, 2) + Math.pow(ypos, 2);
 		mag = Math.sqrt(mag);
@@ -410,9 +410,10 @@ public class Model {
 	}
 	
 	//helper for updatePosition()
+	// This method generate the random position for the foxes to spawn in NH2
+	// It also determines the direction each fox should travel in to steal and egg
 		public void updateListNH2() {
-			System.out.println("updateLIst");
-			System.out.println(list.size());
+			// Generate random number
 			Random ran = new Random();
 			int ranSide = ran.nextInt(8);
 			int height = 0;
@@ -423,8 +424,8 @@ public class Model {
 			double vY = 10*(((frameH-imgH)/2)/unitVectorMag);
 			int vectorX = (int) vX;
 			int vectorY = (int) vY;
-			System.out.println(vectorX);
-			System.out.println(vectorY);
+			
+			// Switch statement to determine create a fox spawn location.
 			switch(ranSide) {
 			case 0:
 				height = (frameH-imgH)/2;
@@ -495,12 +496,6 @@ public class Model {
 				break;
 			}
 			
-			System.out.println(list.size());
-			//System.out.println(height);
-			//System.out.println(width);
-			
-			
-			//list.add(new HitItem(frameW-imgW, ran.nextInt((frameH - imgH)), ItemType.AIRPLANE, -10, 0));
 			updateL = false;
 		}
 	
@@ -850,6 +845,7 @@ public class Model {
 		}
 	}*/
 	
+	// This method reads in the quiz questions and determinds if they are good.
 	public void createQuizs() throws Exception{
 		Scanner scan;
 		quizs = new ArrayList<>();
@@ -950,6 +946,16 @@ public class Model {
 	
 	public boolean getWaterbg() {
 		return waterbg;
+	}
+	
+	public boolean inTutorial() {
+		return tutorial;
+	}
+	
+	public void tutorialNH1(){
+		if(curState == Type.TUTORIALNH1) {
+			
+		}
 	}
 	
 }

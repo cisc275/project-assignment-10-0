@@ -69,32 +69,36 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 				Random rand = new Random(); 
-				model.setCurState(Type.NH1);
-				model.setList(new ArrayList<>());
-				//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
-				//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
-				model.nest = new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST);
-				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
+				if(model.inTutorial()) {
+					model.setCurState(Type.TUTORIALNH1);
+				} else {
+					model.setCurState(Type.NH1);
+					model.setList(new ArrayList<>());
+					//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
+					//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
+					model.nest = new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST);
+					for(int i = 0; i<5; i++) {
+						model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
+					}
+					// Created rats for NH Game but don't know how to show them in the view
+					for(int i = 0; i<5; i++) {
+						model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
+					}
+					model.setUpdateL();
+					model.setBird(new Bird((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2,3,BirdType.NH));
+					try {
+						model.createQuizs();
+					}catch(Exception ex) {
+						ex.printStackTrace();
+					}
+					model.createTimer();
+					
+					System.out.println(model.getCurState());
+					view.backButton.setVisible(true);
+					view.OPButton.setVisible(false);
+					view.NHButton.setVisible(false);
+					view.requestFocusInWindow();
 				}
-				// Created rats for NH Game but don't know how to show them in the view
-				for(int i = 0; i<5; i++) {
-					model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
-				}
-				model.setUpdateL();
-				model.setBird(new Bird((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2,3,BirdType.NH));
-				try {
-					model.createQuizs();
-				}catch(Exception ex) {
-					ex.printStackTrace();
-				}
-				model.createTimer();
-				
-				System.out.println(model.getCurState());
-				view.backButton.setVisible(true);
-				view.OPButton.setVisible(false);
-				view.NHButton.setVisible(false);
-				view.requestFocusInWindow();
 				
 			
 		}
@@ -343,6 +347,10 @@ public class Controller {
     				}
     				view.update(model);
     				
+    				break;
+    			case TUTORIALNH1:
+    				view.update(model);
+    				model.tutorialNH1();
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");

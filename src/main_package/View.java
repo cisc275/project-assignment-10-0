@@ -363,9 +363,9 @@ public class View extends JPanel{
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.drawImage(imgs.get("bgdelaware"),0, 0, Color.gray, this);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.red);
-						g.drawString("The Northern Harrier is a non-migratory bird that resides in Delaware.", frameWidth/7, frameHeight/3);
+						//g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						//g.setColor(Color.red);
+						//g.drawString("The Northern Harrier is a non-migratory bird that resides in Delaware.", frameWidth/7, frameHeight/3);
 					} else {
 						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
