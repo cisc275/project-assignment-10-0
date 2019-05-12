@@ -314,7 +314,7 @@ public class Controller {
     				//view.animation();
     				}
     				view.update(model);
-    				
+    				curState = model.curState;
     				break;
     			case TUTORIALNH1:
     				view.update(model);

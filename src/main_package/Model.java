@@ -9,7 +9,7 @@ import main_package.Type;
 public abstract class Model {
 	Timer myTimer;
 	Timer delayTimer;
-	int defaultTime;
+	static int defaultTime = 60;
 	int timeCount;
 	int delayCount;
 	ArrayList<Element> list;

@@ -23,6 +23,7 @@ public class OPModel extends Model{
 		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
 		//model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
 		setUpdateL();
+		winFlag = true;
 		try {
 			createQuizzes();
 		}catch(Exception ex) {
@@ -168,6 +169,7 @@ public class OPModel extends Model{
 					bird.collision();
 					startQuiz();
 				} else if(h.getType().equals(ItemType.WINFLAG)) {
+					System.out.println("hit flag");
 					//winGame();
 					//review quiz
 					curState = Type.OPREVIEW;
@@ -198,6 +200,8 @@ public class OPModel extends Model{
 
 	@Override
 	public void startQuiz() {
+		switch(curState) {
+		case OP:
 		System.out.println("start quiz");
 		this.quizing = true;
 		Random r = new Random();
@@ -205,10 +209,18 @@ public class OPModel extends Model{
 			quiz = quizzes.get(r.nextInt(quizzes.size()));
 			System.out.println(quiz);
 		}
+		break;
+		case OPREVIEW:
+			quizCount = 0;
+			quiz = quizzes.get(quizCount);
+			break;
+		}
 	}
 
 	@Override
 	public void checkQuiz() {
+		switch(curState) {
+		case OP:
 		System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
@@ -234,7 +246,40 @@ public class OPModel extends Model{
 			}
 			
 		}, 0, 1000);
-		
+		break;
+		case OPREVIEW:
+			if(!quiz.checkAnswer()) {
+				// here represent reduce number of egg in NH2
+				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
+			}
+			else {
+				quizOutcomeInfo = "Congratulations!!";
+			}
+			quizCount++;
+			delayTimer = new Timer();
+			delayCount = 0;
+			delayTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println("delayCount: " + ++delayCount);
+					if (delayCount >=2) {
+						if (quizCount < 3) {
+							quiz = quizzes.get(quizCount);
+							
+						}
+						else {
+							winGame();
+						}
+						quizOutcomeInfo = "";
+						delayTimer.cancel();
+						delayTimer = null;
+					}
+				}
+				
+			}, 0, 1000);
+			break;
+		}
 	}
 
 	@Override
@@ -247,7 +292,15 @@ public class OPModel extends Model{
 	public void createQuizzes() throws Exception{
 		Scanner scan;
 		quizzes = new ArrayList<>();
-		File file = new File("OPquiz.txt");
+		File file = null;
+		switch(curState) {
+		case OPREVIEW:
+			file = new File("OPReviewQuiz.txt");
+			break;
+		case OP:
+			file = new File("OPquiz.txt");
+			break;
+		}
 		scan = new Scanner(file);
 		while(scan.hasNextLine()) {
 			String[] infos = scan.nextLine().split(";", -1);
