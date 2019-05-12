@@ -325,11 +325,9 @@ public class Controller {
 			// TODO Auto-generated method stub
 			switch(e.getActionCommand()) {
 			case "s":
-				System.out.println("serializing");
 				serialize();
 				break;
 			case "d":
-				System.out.println("deserializing");
 				deserialize();
 				break;
 			}
@@ -419,7 +417,7 @@ public class Controller {
 		try {
 			FileOutputStream file = new FileOutputStream(backUpFile);
 			ObjectOutputStream out = new ObjectOutputStream(file);
-			out.writeObject(this.model);
+			out.writeObject(Controller.model);
 			out.close();
 			file.close();
 		} catch (IOException e) {
@@ -435,9 +433,7 @@ public class Controller {
 			tmp = (Model) in.readObject();
 			in.close();
 			file.close();
-		//	changeToController(tmp);
 
-	//		EventQueue. TODO:: fix exception
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -445,15 +441,10 @@ public class Controller {
 		}
 		System.out.println(tmp == null);
 		model = tmp;
-	//	return tmp;
 	}
 	
 	public static void main(String[] args) {
 		Controller c = new Controller();
-		
-
-	//	Model d = deserialize();  // uncomment these two lines for deserialization.
-	//	c.model = d;
 		
 		//System.out.println("call start");
 		c.start();
