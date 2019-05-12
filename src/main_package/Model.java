@@ -53,6 +53,7 @@ public abstract class Model {
 		return imgW;
 	}
 	
+	// those abstract method will be implemented in OPModel, NHModel, and NH2Model
 	public abstract void createTimer();
 	public abstract void updatePosition();
 	public abstract boolean checkCollision(Element e);

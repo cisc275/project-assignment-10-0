@@ -230,6 +230,7 @@ public class View extends JPanel{
 //		}
 //	}
 	
+	// draw image and game content on the panel according to model class
 	public void paintComponent(Graphics g) {
 		//System.out.println("paint");
 		if (model == null) {

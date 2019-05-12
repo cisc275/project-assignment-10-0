@@ -14,7 +14,8 @@ public class OPModel extends Model{
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
 	public static int xbg = -5;
-
+	
+	// create OPModel for osprey game
 	public OPModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
 		setCurState(Type.OP);
@@ -32,7 +33,8 @@ public class OPModel extends Model{
 		createTimer();
 		
 	}
-
+	
+	// set a timer and task on osprey game
 	@Override
 	public void createTimer() {
 		// TODO Auto-generated method stub
@@ -70,7 +72,9 @@ public class OPModel extends Model{
 			
 		}, 0, 1000);
 	}
-
+	
+	// loop through the collection list update their position by calling the move method
+	// call checkCollision
 	@Override
 	public void updatePosition() {
 		// for bird
@@ -115,7 +119,7 @@ public class OPModel extends Model{
 		
 	}
 	
-	//helper for updatePosition()
+	//helper for updatePosition() to update the list by adding obiect in it 
 		public void updateList() {
 			/*
 			Random ran = new Random();
@@ -147,6 +151,12 @@ public class OPModel extends Model{
 			updateL = false;
 		}
 
+	// check if the bird position has collision with other hitItem except fish
+	// if it is call the startQize method
+	// if has collision with fish call eat() in the bird
+	// remove the hitItem that has collision from the Element list
+	// check if the bird has collision with the final flag
+	// if it is call winGame()
 	@Override
 	public boolean checkCollision(Element ht) {
 		if (collisionF(ht)) {
@@ -186,7 +196,8 @@ public class OPModel extends Model{
 		}
 		return false;
 	}
-
+	
+	// check if the bird go out of the frame
 	@Override
 	public boolean outOfFrame() {
 		// TODO Auto-generated method stub
@@ -197,7 +208,8 @@ public class OPModel extends Model{
 			return false;
 		}
 	}
-
+	
+	// start quiz set quizzing to be true 
 	@Override
 	public void startQuiz() {
 		switch(curState) {
@@ -216,7 +228,9 @@ public class OPModel extends Model{
 			break;
 		}
 	}
-
+	
+	// check if the play chose a correct answer for the quiz
+	// and give a message
 	@Override
 	public void checkQuiz() {
 		switch(curState) {
@@ -281,13 +295,15 @@ public class OPModel extends Model{
 			break;
 		}
 	}
-
+	
+	// create a tutorial for player to learn how to paly the game
 	@Override
 	public void tutorial() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	// create quizzes for osprey game and osprey review quiz by reading file
 	@Override
 	public void createQuizzes() throws Exception{
 		Scanner scan;
@@ -314,7 +330,7 @@ public class OPModel extends Model{
 		scan.close();
 	}
 	
-	
+	// getter and setter
 	public int getEnergy() {
 		return energy;
 	}

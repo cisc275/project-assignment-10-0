@@ -181,106 +181,107 @@ public class NH2Model extends Model{
 		scanner.close();
 	}
 	
+	
 	public void updateList() {
-//		Random random = new Random();
-//		int ranNum = random.nextInt(8);
-//		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-//		double vX = 10*(((frameW-imgW)/2)/unitVectorMag), vY = 0*(((frameW-imgW)/2)/unitVectorMag);
-//		int vectorX =(int) vX, vectorY = (int) vY;
-//		int[][] direction = new int[][] {{10, 0, (frameH-imgH)/2, 0}, 
-//										{-10, 0, (frameH - imgH)/2, frameW}, 
-//										{0, 5, 0, (frameH - imgH)/2}, 
-//										{0, -10, frameH, (frameW - imgW)/2}, 
-//										{vectorX, vectorY, 0, 0}, 
-//										{vectorX, -vectorY, frameH-imgH, 0}, 
-//										{-vectorX, vectorY, 0, frameW}, 
-//										{-vectorX, -vectorY, frameH-imgH, frameW-imgW}};
-//		list.add(new HitItem(direction[ranNum][2], direction[ranNum][3], ItemType.FOX, direction[ranNum][0], direction[ranNum][1]));
-//		updateL = false;
-		// Generate random number
-		Random ran = new Random();
-		int ranSide = ran.nextInt(8);
-		int height = 0;
-		int width = 0;
-		// Create vector in the right direction
+		Random random = new Random();
+		int ranNum = random.nextInt(8);
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
-		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
-		int vectorX = (int) vX;
-		int vectorY = (int) vY;
-		
-		// Switch statement to determine create a fox spawn location.
-		switch(ranSide) {
-		case 0:
-			height = (frameH-imgH)/2;
-			width = 0;
-			//direction = 'e';
-			list.add(new HitItem(width, height, ItemType.FOX, 5, 0));
-			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
-			System.out.println("move east");
-			// Moving East
-			break;
-		case 1:
-			height = (frameH - imgH)/2;
-			width = frameW;
-			//direction = 'w';
-			list.add(new HitItem(width, height, ItemType.FOX, -5, 0));
-//			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
-			System.out.println("move west");
-			// Moving West
-			break;
-		case 2:
-			height = 0;
-			width = (frameW - imgW)/2;
-			//direction = 's';
-			//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
-
-			list.add(new HitItem(width, height, ItemType.FOX, 0, 5));
-			System.out.println("move south");
-			// Moving South
-			break;
-		case 3:
-			height = frameH;
-			width = (frameW - imgW)/2;
-
-			//direction = 'n';
-			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -5));
-			System.out.println("move north");
-			// Moving North
-			break;
-		case 4:
-			height = 0;
-			width = 0;
-			//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
-			list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
-			System.out.println("move southeast");
-			// Moving Southeast
-			break;
-		case 5:
-			height = frameH-imgH;
-			width = 0;
-			list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
-			System.out.println("move northeast");
-			// Moving Southeast
-			break;
-		case 6:
-			height = 0;
-			width = frameW;
-			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, vectorY));
-			System.out.println("move Southwest");
-			// Moving Southwest
-			break;
-		case 7:
-			height = frameH-imgH;
-			width = frameW-imgW;
-			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
-			System.out.println("move Northwest");
-			// Moving Southeast
-			break;
-		}
-		
+		double vX = 10*(((frameW-imgW)/2)/unitVectorMag), vY = 10*(((frameW-imgW)/2)/unitVectorMag);
+		int vectorX =(int) vX, vectorY = (int) vY;
+		int[][] direction = new int[][] {{10, 0, (frameH-imgH)/2, 0}, 
+										{-10, 0, (frameH - imgH)/2, frameW}, 
+										{0, 5, 0, (frameH - imgH)/2}, 
+										{0, -10, frameH, (frameW - imgW)/2}, 
+										{vectorX, vectorY, 0, 0}, 
+										{vectorX, -vectorY, frameH-imgH, 0}, 
+										{-vectorX, vectorY, 0, frameW}, 
+										{-vectorX, -vectorY, frameH-imgH, frameW-imgW}};
+		list.add(new HitItem(direction[ranNum][3], direction[ranNum][2], ItemType.FOX, direction[ranNum][0], direction[ranNum][1]));
 		updateL = false;
+		// Generate random number
+//		Random ran = new Random();
+//		int ranSide = ran.nextInt(8);
+//		int height = 0;
+//		int width = 0;
+//		// Create vector in the right direction
+//		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
+//		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
+//		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
+//		int vectorX = (int) vX;
+//		int vectorY = (int) vY;
+//		
+//		// Switch statement to determine create a fox spawn location.
+//		switch(ranSide) {
+//		case 0:
+//			height = (frameH-imgH)/2;
+//			width = 0;
+//			//direction = 'e';
+//			list.add(new HitItem(width, height, ItemType.FOX, 5, 0));
+//			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
+//			System.out.println("move east");
+//			// Moving East
+//			break;
+//		case 1:
+//			height = (frameH - imgH)/2;
+//			width = frameW;
+//			//direction = 'w';
+//			list.add(new HitItem(width, height, ItemType.FOX, -5, 0));
+////			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
+//			System.out.println("move west");
+//			// Moving West
+//			break;
+//		case 2:
+//			height = 0;
+//			width = (frameW - imgW)/2;
+//			//direction = 's';
+//			//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
+//
+//			list.add(new HitItem(width, height, ItemType.FOX, 0, 5));
+//			System.out.println("move south");
+//			// Moving South
+//			break;
+//		case 3:
+//			height = frameH;
+//			width = (frameW - imgW)/2;
+//
+//			//direction = 'n';
+//			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
+//			list.add(new HitItem(width, height, ItemType.FOX, 0, -5));
+//			System.out.println("move north");
+//			// Moving North
+//			break;
+//		case 4:
+//			height = 0;
+//			width = 0;
+//			//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
+//			list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
+//			System.out.println("move southeast");
+//			// Moving Southeast
+//			break;
+//		case 5:
+//			height = frameH-imgH;
+//			width = 0;
+//			list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
+//			System.out.println("move northeast");
+//			// Moving Southeast
+//			break;
+//		case 6:
+//			height = 0;
+//			width = frameW;
+//			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, vectorY));
+//			System.out.println("move Southwest");
+//			// Moving Southwest
+//			break;
+//		case 7:
+//			height = frameH-imgH;
+//			width = frameW-imgW;
+//			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
+//			System.out.println("move Northwest");
+//			// Moving Southeast
+//			break;
+//		}
+//		
+//		updateL = false;
 	}
 	
 	public double calculateUnitVectorMag(int x, int y) {
