@@ -45,6 +45,8 @@ public class Controller {
 		view.choice2.addActionListener(new ChoiceButtonListener());
 		view.choice3.addActionListener(new ChoiceButtonListener());
 		view.choice4.addActionListener(new ChoiceButtonListener());
+		view.serialize.addActionListener(new SerializeButtonListener());
+//		view.deserialize.addActionListener(new SerializeButtonListener());	
 		
 		view.addKeyListener(new CustomKeyListener());
 		

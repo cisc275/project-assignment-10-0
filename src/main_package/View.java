@@ -33,7 +33,7 @@ public class View extends JPanel{
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
-	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3,choice4;
+	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3, choice4, serialize, deserialize;
 	Image curImg;
 	Model model;
 	int x;
@@ -114,6 +114,21 @@ public class View extends JPanel{
     			choice4.setVisible(false);
     			choice4.setActionCommand("D");
     			add(choice4);
+    			
+    			serialize = new JButton("Serialize");
+    			serialize.setOpaque(true);
+    			serialize.setVisible(true);
+    			serialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			serialize.setActionCommand("s");
+    			add(serialize);
+    			
+    			deserialize = new JButton("Deserialize");
+    			deserialize.setOpaque(true);
+    			deserialize.setVisible(true);
+    			deserialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			deserialize.setActionCommand("d");
+    			add(deserialize);
+    			
     	frame.getContentPane().add(this);
     	
     	frame.setVisible(false);
