@@ -2,6 +2,7 @@ package main_package;
 //author Sicheng Tian
 public enum Type {
 	NH1("NH1Game"),
+	TUTORIALNH1("NH1Tutorial"),
 	NH2("NH2Game"),
 	OP("OPgame"),
 	MAINMENU("MainMenu"),
