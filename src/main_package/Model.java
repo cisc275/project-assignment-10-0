@@ -13,8 +13,8 @@ import java.util.TimerTask;
 
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian, Steven Soranno
 public class Model implements Serializable{
-	Timer myTimer;
-	Timer delayTimer;
+	transient Timer myTimer;
+	transient Timer delayTimer;
 	final int defaultTime = 60;
 	int timeCount;
 	int delayCount;

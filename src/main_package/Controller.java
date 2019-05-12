@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random; 
 
@@ -20,6 +25,7 @@ public class Controller {
 	Action drawAction;
 	Timer t;
 	static int count = 0;
+	static final String backUpFile = "backup.ser";
 	
 	// initialize the model and view
 	public Controller() {
@@ -309,6 +315,21 @@ public class Controller {
 			
 		}
 		
+	 }
+	 
+	class SerializeButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			switch(e.getActionCommand()) {
+			case "s":
+				serialize();
+				break;
+			case "d":
+				deserialize();
+				break;
+			}
+		}
 	}
 	
 	// use EventQueue to create a timer and call start() by the timer
@@ -390,8 +411,44 @@ public class Controller {
     	};
 	}
 	
+	public void serialize() {
+		try {
+			FileOutputStream file = new FileOutputStream(backUpFile);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			out.writeObject(this.model);
+			out.close();
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Model deserialize() {
+		Model tmp = null;
+		try {
+			FileInputStream file = new FileInputStream(backUpFile);
+			ObjectInputStream in = new ObjectInputStream(file);
+			tmp = (Model) in.readObject();
+			in.close();
+			file.close();
+		//	changeToController(tmp);
+
+	//		EventQueue. TODO:: fix exception
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return tmp;
+	}
+	
 	public static void main(String[] args) {
 		Controller c = new Controller();
+		
+
+	//	Model d = deserialize();  // uncomment these two lines for deserialization.
+	//	c.model = d;
+		
 		//System.out.println("call start");
 		c.start();
 		//System.out.println("hello");
