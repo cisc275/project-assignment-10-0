@@ -450,7 +450,7 @@ public class Model {
 				//direction = 's';
 				//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
 
-				list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
+				list.add(new HitItem(width, height, ItemType.FOX, 0, 5));
 				System.out.println("move south");
 				// Moving South
 				break;
@@ -685,8 +685,12 @@ public class Model {
 						}
 						else {
 							quizing = false;
-							curState = Type.NH2;
-							resetModelNH2();
+							if(eggs <=0) {
+								gameOver();
+							} else {
+								curState = Type.NH2;
+								resetModelNH2();
+							}
 						}
 						quizOutcomeInfo = "";
 						delayTimer.cancel();
