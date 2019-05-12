@@ -284,16 +284,16 @@ public class View extends JPanel{
 //					if (model.timeCount == 55) {
 //						s ="bgland";
 //					}
-					if(model.drawNA()) {
+					if(((OPModel) model).getDrawNA()) {
 						g.drawImage(imgs.get("opmapbg"),0, 0, Color.gray, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
 						g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
 					} else {
 						//if(model.getWaterbg()) {
-							g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+							g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
 							//System.out.println("first: " + model.groundX % frameWidth);
-							g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+							g.drawImage(imgs.get("bgwater"), (model.getGroundX() % frameWidth) + frameWidth, model.getGroundY(), Color.gray, this);
 						/*} else if(!model.getWaterbg()) {
 							/*if(frameWidth >= 0 && first) {
 								if(frameWidth == 0) {
@@ -319,7 +319,7 @@ public class View extends JPanel{
 						g.setColor(Color.black);
 						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
 						g.setColor(Color.yellow);
-						g.fillRect(10, 2, model.energy*10, 20);
+						g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -379,7 +379,7 @@ public class View extends JPanel{
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
+						g.drawImage(imgs.get("nest"), ((NH2Model) model).nest.getX(), ((NH2Model) model).nest.getY(), null,this);
 						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 						/*if (model.getList().size() != 0) {
