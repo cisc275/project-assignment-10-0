@@ -130,27 +130,35 @@ public class NH2Model extends Model{
 
 	@Override
 	public void checkQuiz() {
-		if(!quiz.checkAnswer())
+		if(!quiz.checkAnswer()) {
+			// here represent reduce number of egg in NH2
 			quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
-		else
+		}
+		else {
 			quizOutcomeInfo = "Congratulations!!";
+		}
 		quizCount++;
 		delayTimer = new Timer();
 		delayCount = 0;
 		delayTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
+				// TODO Auto-generated method stub
 				System.out.println("delayCount: " + ++delayCount);
 				if (delayCount >=2) {
-					if (quizCount < 3)
+					if (quizCount < 3) {
 						quiz = quizzes.get(quizCount);
-					else 
-						curState = Type.WIN;
+						
+					}
+					else {
+						winGame();
+					}
 					quizOutcomeInfo = "";
 					delayTimer.cancel();
 					delayTimer = null;
 				}
 			}
+			
 		}, 0, 1000);
 	}
 
