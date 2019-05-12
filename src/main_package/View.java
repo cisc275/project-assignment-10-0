@@ -234,8 +234,14 @@ public class View extends JPanel{
 		//System.out.println("paint");
 		if (model == null) {
 			System.out.println("null model");
-			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
-			g.drawString("Time Remaining: ", 100, 20);
+//			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
+//			g.drawString("Time Remaining: ", 100, 20);
+			g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
+			g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
+			g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
+			g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 			return;
 		}
 		try {
@@ -379,7 +385,7 @@ public class View extends JPanel{
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-						g.drawImage(imgs.get("nest"), ((NH2Model) model).nest.getX(), ((NH2Model) model).nest.getY(), null,this);
+						g.drawImage(imgs.get("nest"), ((NHModel) model).nest.getX(), ((NHModel) model).nest.getY(), null,this);
 						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 						/*if (model.getList().size() != 0) {

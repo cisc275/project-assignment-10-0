@@ -37,6 +37,7 @@ public class OPModel extends Model{
 		// TODO Auto-generated method stub
 		timeCount = defaultTime;
 		energy = defaultTime - 10;
+		myTimer = new Timer();
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {

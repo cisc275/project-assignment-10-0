@@ -12,10 +12,10 @@ import java.util.Random;
 import main_package.Type;
 
 public class NHModel extends Model {
-	CollectedItem nest;
+	static CollectedItem nest;
 	boolean moreCollectedItems;
 	boolean drawDE;
-	int eggs = 0;
+	static int eggs;
 	
 	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
@@ -184,6 +184,8 @@ public class NHModel extends Model {
 							gameOver();
 						} else {
 							curState = Type.NH2;
+							
+							//System.out.println(curState);
 							//resetModelNH2();
 						}
 					}

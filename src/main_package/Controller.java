@@ -19,6 +19,7 @@ public class Controller {
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
+	Type curState;
 	static int count = 0;
 	
 	// initialize the model and view
@@ -26,7 +27,7 @@ public class Controller {
 		//System.out.println("controll");
 		
 		view = new View();
-		
+		curState = Type.MAINMENU;
 		//model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
 		//System.out.println("model constructed");
 		//view.setModel(model);
@@ -54,6 +55,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			model.setCurState(Type.MAINMENU);
+			curState = model.getCurState();
 			model.myTimer.cancel();
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
@@ -70,6 +72,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			// Create a model for the NHGame
 			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			curState = model.getCurState();
 			System.out.println(model.getCurState());
 			// Set the button views for the game
 			view.backButton.setVisible(true);
@@ -88,6 +91,7 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model = new OPModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			curState = model.getCurState();
 				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
 				view.OPButton.setVisible(false);
@@ -297,9 +301,11 @@ public class Controller {
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
     			//System.out.println(++count);
-    			switch(model.getCurState()) {
+    			//System.out.println(curState);
+    			switch(curState) {
     			case MAINMENU:
-    				view.update(model);
+    				//view.update(model);
+    				view.repaint();
     				break;
     			case OP:
     				//System.out.println("OP Controller");
@@ -319,14 +325,19 @@ public class Controller {
     				view.update(model);
     				if (!model.getQuizing()) {
     					model.updatePosition();
+    					if (model.quizCount > 2) {
+        					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+        					curState = model.getCurState();
+        					System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        				}
     				}
     				break;
     			case NH2:
-    				model = new NHModel2(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
     				//System.out.println("NH2 controller");
     				if (!model.getQuizing()) {
     					model.updatePosition();
     				}
+    				//System.out.println(model instanceof NH2Model );
     				view.update(model);
     				model.updatePosition();
     				break;
@@ -352,6 +363,7 @@ public class Controller {
     		}
     	};
 	}
+	
 	
 	public static void main(String[] args) {
 		Controller c = new Controller();
