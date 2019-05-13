@@ -1,6 +1,13 @@
 package main_package;
+
+import java.io.Serializable;
+
 // author Yixiong Wu, Yufan Wang
-public class Quiz {
+public class Quiz implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// The question for one quiz
 	String question;
 	// matched answer to the question
@@ -23,23 +30,23 @@ public class Quiz {
 	public boolean checkAnswer() {
 		return answer.equals(chosenAnswer);
 	}
-	
+	// chosenAnswer getter
 	public String getChosenAnswer() {
 		return chosenAnswer;
 	}
-	
+	// question getter
 	public String getQuestion() {
 		return question;
 	}
-
+	// answer getter
 	public String getAnswer() {
 		return answer;
 	}
-
+	// choice getter
 	public String[] getChoice() {
 		return choice;
 	}
-
+	// override toString 
 	public String toString() {
 		String x = "";
 		for (int i = 0; i < choice.length;i++) {

@@ -1,6 +1,9 @@
 package main_package;
+
+import java.io.Serializable;
+
 // Author: Steven Soranno
-public enum BirdType {
+public enum BirdType implements Serializable{
     NH("nh"),
 	OSPREY("osprey");
 	
@@ -9,6 +12,7 @@ public enum BirdType {
 	private BirdType(String s){
 		name = s;
 	}
+	// name getter
 	public String getName() {
 		return name;
 	}

@@ -1,5 +1,6 @@
 package main_package;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,9 +12,13 @@ import java.util.TimerTask;
 
 
 // author Sicheng Tian, Yufan Wang£¬ Rubai Bian, Steven Soranno
-public class Model {
-	Timer myTimer;
-	Timer delayTimer;
+public class Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	transient Timer myTimer;
+	transient Timer delayTimer;
 	final int defaultTime = 60;
 	int timeCount;
 	int delayCount;
@@ -263,7 +268,7 @@ public class Model {
 			}
 		}
 	}
-	
+	//
 	public boolean collisionF(Element e) {
 		int birdW = imgsSize.get(bird.getBType().getName())[0];
 		int birdH = imgsSize.get(bird.getBType().getName())[1];
@@ -298,7 +303,7 @@ public class Model {
 				
 		return result1 || result2;
 	}
-	
+	//
 	public void resetModelNH2() {
 		System.out.println("here");
 		eggList = new ArrayList<>();
@@ -319,7 +324,7 @@ public class Model {
 		createTimer();
 		//System.out.println("!!!!!!!!!!eggs: " + eggs);
 	}
-	
+	//
 	public void updatePositionNH2() {
 		if(eggs <= 0) {
 			this.curState = Type.GAMEOVER;

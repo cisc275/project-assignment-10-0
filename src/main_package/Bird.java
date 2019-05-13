@@ -1,7 +1,13 @@
 package main_package;
 
+import java.io.Serializable;
+
 //author: Sicheng Tian
-public class Bird extends Element{
+public class Bird extends Element implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// represent how many lives left
 	// could also represent the NUMBER OF EGG in NH2 !!!!
 	int life;

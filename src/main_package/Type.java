@@ -1,6 +1,9 @@
 package main_package;
+
+import java.io.Serializable;
+
 //author Sicheng Tian
-public enum Type {
+public enum Type implements Serializable{
 	NH1("NH1Game"),
 	TUTORIALNH1("NH1Tutorial"),
 	NH2("NH2Game"),
@@ -16,6 +19,7 @@ public enum Type {
 	private Type(String s){
 		name = s;
 	}
+	// name getter
 	public String getName() {
 		return name;
 	}

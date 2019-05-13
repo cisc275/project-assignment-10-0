@@ -33,7 +33,7 @@ public class View extends JPanel{
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
-	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3,choice4;
+	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3, choice4, serialize, deserialize;
 	Image curImg;
 	Model model;
 	int x;
@@ -114,6 +114,21 @@ public class View extends JPanel{
     			choice4.setVisible(false);
     			choice4.setActionCommand("D");
     			add(choice4);
+    			
+    			serialize = new JButton("Serialize");
+    			serialize.setOpaque(true);
+    			serialize.setVisible(true);
+    			serialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			serialize.setActionCommand("s");
+    			add(serialize);
+    			
+    			deserialize = new JButton("Deserialize");
+    			deserialize.setOpaque(true);
+    			deserialize.setVisible(true);
+    			deserialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
+    			deserialize.setActionCommand("d");
+    			add(deserialize);
+    			
     	frame.getContentPane().add(this);
     	
     	frame.setVisible(false);
@@ -128,7 +143,7 @@ public class View extends JPanel{
     	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
     	imgsSize.put("winflag", new int[] {frameWidth * 200 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
+    	imgsSize.put("nest", new int[] {frameWidth * 225 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
     	imgsSize.put("rat", new int[] {frameWidth * 120 / 1550, frameHeight * 80 / 838});
     	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
@@ -373,13 +388,13 @@ public class View extends JPanel{
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
-						
+						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
 						g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
+						
 						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
 					
 						/*if (model.getList().size() != 0) {

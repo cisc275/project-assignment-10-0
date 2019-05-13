@@ -1,3 +1,3 @@
 What is Osprey's favorite food?;Insects;Fish;Rats;Fruits and nutes;B;
-Where is the destination of the migration?;Delaware;Hawaii;Canada;Mexico;D;
-Which one is NOT an enemy (obstacle) for Osprey during the migration?;Ichthyosaur;Airplane;Boat;Fox;A;
+Where is the destination of the migration?;Delaware;Hawaii;Canada;Venezuela;D;
+Which one is NOT an enemy (obstacle) for Osprey during the migration?;Airplane;Boat;Water;Food;C;

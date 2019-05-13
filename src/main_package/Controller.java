@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random; 
 
@@ -14,12 +19,13 @@ import javax.swing.Timer;
 
 //author Sicheng Tian
 public class Controller {
-	Model model;
+	static Model model;
 	View view;
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
 	static int count = 0;
+	static final String backUpFile = "backup.ser";
 	
 	// initialize the model and view
 	public Controller() {
@@ -39,6 +45,8 @@ public class Controller {
 		view.choice2.addActionListener(new ChoiceButtonListener());
 		view.choice3.addActionListener(new ChoiceButtonListener());
 		view.choice4.addActionListener(new ChoiceButtonListener());
+		view.serialize.addActionListener(new SerializeButtonListener());
+		view.deserialize.addActionListener(new SerializeButtonListener());	
 		
 		view.addKeyListener(new CustomKeyListener());
 		
@@ -309,6 +317,21 @@ public class Controller {
 			
 		}
 		
+	 }
+	 
+	class SerializeButtonListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			switch(e.getActionCommand()) {
+			case "s":
+				serialize();
+				break;
+			case "d":
+				deserialize();
+				break;
+			}
+		}
 	}
 	
 	// use EventQueue to create a timer and call start() by the timer
@@ -390,8 +413,39 @@ public class Controller {
     	};
 	}
 	
+	public void serialize() {
+		try {
+			FileOutputStream file = new FileOutputStream(backUpFile);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			out.writeObject(Controller.model);
+			out.close();
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deserialize() {
+		Model tmp = null;
+		try {
+			FileInputStream file = new FileInputStream(backUpFile);
+			ObjectInputStream in = new ObjectInputStream(file);
+			tmp = (Model) in.readObject();
+			in.close();
+			file.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println(tmp == null);
+		model = tmp;
+	}
+	
 	public static void main(String[] args) {
 		Controller c = new Controller();
+		
 		//System.out.println("call start");
 		c.start();
 		//System.out.println("hello");

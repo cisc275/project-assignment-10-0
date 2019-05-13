@@ -1,8 +1,15 @@
 package main_package;
+
+import java.io.Serializable;
+
 // author Sicheng Tian, Yixiong Wu
-public class Element {
+public class Element implements Serializable{
 	// everything exists in the game besides the background is an element
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// x-axis location
 	int x;
 	// y-axis location
@@ -14,26 +21,27 @@ public class Element {
 		this.y = y;
 	}
 
+	// x-position getter
 	public int getX() {
 		return x;
 	}
-
+	// y-position getter
 	public int getY() {
 		return y;
 	}
-	
+	// x-position setter
 	public void setX(int xChange) {
 		x += xChange;
 	}
-	
+	// y-position setter
 	public void setY(int yChange) {
 		y+= yChange;
 	}
-	
+
 	public void move() {
 		
 	}
-	
+	// type getter
 	public ItemType getType() {
 		return it;
 	}
