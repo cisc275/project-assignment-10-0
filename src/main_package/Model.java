@@ -11,9 +11,9 @@ public abstract class Model {
 	Timer myTimer;
 	Timer delayTimer;
 	static int defaultTime = 60;
-	private static final long serialVersionUID = 1L;
-	transient Timer myTimer;
-	transient Timer delayTimer;
+//	private static final long serialVersionUID = 1L;
+//	transient Timer myTimer;
+//	transient Timer delayTimer;
 	int timeCount;
 	int delayCount;
 	ArrayList<Element> list;
