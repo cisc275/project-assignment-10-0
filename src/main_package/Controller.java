@@ -24,6 +24,7 @@ public class Controller {
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
+	Type curState;
 	static int count = 0;
 	static final String backUpFile = "backup.ser";
 	
@@ -32,8 +33,9 @@ public class Controller {
 		//System.out.println("controll");
 		
 		view = new View();
-		model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-		System.out.println("model constructed");
+		curState = Type.MAINMENU;
+		//model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+		//System.out.println("model constructed");
 		//view.setModel(model);
 		//view.frame.setVisible(true);
 		//
@@ -61,6 +63,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			model.setCurState(Type.MAINMENU);
+			curState = Type.MAINMENU;
 			model.myTimer.cancel();
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
@@ -75,38 +78,16 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-				Random rand = new Random(); 
-				if(model.inTutorial()) {
-					model.setCurState(Type.TUTORIALNH1);
-				} else {
-					model.setCurState(Type.NH1);
-					model.setList(new ArrayList<>());
-					//model.getList().add(new CollectedItem(250, 100, ItemType.STICK));
-					//model.getList().add(new CollectedItem(400, 300, ItemType.STICK));
-					model.nest = new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST);
-					for(int i = 0; i<5; i++) {
-						model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.STICK));
-					}
-					// Created rats for NH Game but don't know how to show them in the view
-					for(int i = 0; i<5; i++) {
-						model.getList().add(new CollectedItem(rand.nextInt(model.getFrameW()-model.imgW), rand.nextInt(model.getFrameH()-model.imgH), ItemType.RAT));
-					}
-					model.setUpdateL();
-					model.setBird(new Bird((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2,3,BirdType.NH));
-					try {
-						model.createQuizs();
-					}catch(Exception ex) {
-						ex.printStackTrace();
-					}
-					model.createTimer();
-					
-					System.out.println(model.getCurState());
-					view.backButton.setVisible(true);
-					view.OPButton.setVisible(false);
-					view.NHButton.setVisible(false);
-					view.requestFocusInWindow();
-				}
+			// Create a model for the NHGame
+			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			model.setCurState(Type.NH1);
+			curState = model.getCurState();
+			System.out.println(model.getCurState());
+			// Set the button views for the game
+			view.backButton.setVisible(true);
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.requestFocusInWindow();
 				
 			
 		}
@@ -118,21 +99,8 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-				model.groundX = 0;
-				model.groundY = 0;
-				model.setCurState(Type.OP);
-				model.setBird(new Bird(0,250,3,BirdType.OSPREY));
-				model.setList(new ArrayList<>());
-				model.getList().add(new HitItem(model.getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-				//model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
-				model.setUpdateL();
-				try {
-					model.createQuizs();
-				}catch(Exception ex) {
-					ex.printStackTrace();
-				}
-				model.createTimer();
-			
+			model = new OPModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+			curState = model.getCurState();
 				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
 				view.OPButton.setVisible(false);
@@ -240,16 +208,16 @@ public class Controller {
 				break;
 			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-10);
+					model.getBird().setYVector(-5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(10);
+					model.getBird().setYVector(5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-10);
+					model.getBird().setXVector(-5);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(10);
+					model.getBird().setXVector(5);
 				}
 				break;
 			default:
@@ -357,38 +325,46 @@ public class Controller {
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
     			//System.out.println(++count);
-    			switch(model.getCurState()) {
+    			//System.out.println(curState);
+    			switch(curState) {
     			case MAINMENU:
-    				view.update(model);
+    				//view.update(model);
+    				System.out.println("here");
+    				view.repaint();
     				break;
     			case OP:
     				//System.out.println("OP Controller");
     				if (!model.getQuizing()) {
     				model.updatePosition();
-    				model.updateBirdPosition();
     				//view.animation();
     				}
     				view.update(model);
-    				
+    				curState = model.curState;
     				break;
     			case TUTORIALNH1:
     				view.update(model);
-    				model.tutorialNH1();
+    				//model.tutorialNH1();
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");
     				view.update(model);
     				if (!model.getQuizing()) {
-    					model.updateBirdPosition();
+    					model.updatePosition();
+    					if (model.quizCount > 2) {
+        					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
+        					curState = model.getCurState();
+        					System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        				}
     				}
     				break;
     			case NH2:
     				//System.out.println("NH2 controller");
     				if (!model.getQuizing()) {
-    					model.updateBirdPosition();
+    					model.updatePosition();
     				}
+    				//System.out.println(model instanceof NH2Model );
     				view.update(model);
-    				model.updatePositionNH2();
+    				model.updatePosition();
     				break;
     			case GAMEOVER:
     				view.update(model);
@@ -412,6 +388,7 @@ public class Controller {
     		}
     	};
 	}
+	
 	
 	public void serialize() {
 		try {

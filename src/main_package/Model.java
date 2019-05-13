@@ -1,61 +1,38 @@
 package main_package;
-import java.io.File;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.Timer;
-import java.util.TimerTask;
 
+import main_package.Type;
 
-// author Sicheng Tian, Yufan Wang£¬ Rubai Bian, Steven Soranno
-public class Model implements Serializable{
-	/**
-	 * 
-	 */
+public abstract class Model {
+	Timer myTimer;
+	Timer delayTimer;
+	static int defaultTime = 60;
 	private static final long serialVersionUID = 1L;
 	transient Timer myTimer;
 	transient Timer delayTimer;
-	final int defaultTime = 60;
 	int timeCount;
 	int delayCount;
-	int energy;
 	ArrayList<Element> list;
 	Bird bird;
-	CollectedItem nest;
-	boolean quizing = false;
-	boolean winFlag = true;
+	boolean quizing, updateL;
+	ArrayList<Quiz> quizzes;
 	int quizCount;
 	String quizOutcomeInfo = "";
 	Quiz quiz;
-	ArrayList<Quiz> quizs;
 	Type curState;
-	int eggs = 0;
-	ArrayList<CollectedItem> eggList;
-	int numTrueAns;
-	public static int xIncr = 5;
-	public static int xDec = -10;
-	public static int xDec2 = -5;
-	public static int yIncr = 5;
 	int frameW;
 	int frameH;
 	int imgH;
 	int imgW;
-	boolean updateL;
-	// for move background
-	int groundX;
-	int groundY;
-	HashMap<String, int[]> imgsSize;
-	boolean drawDE;
-	boolean drawNA;
-	boolean waterbg = true;
+	HashMap<String, int[]>imgsSize;
 	boolean tutorial;
-	
-	//Boolean for NH1 Game
-	boolean moreCollectedItems;
+	private int groundX, groundY;
+	static int eggs;
+	static CollectedItem nest;
 	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false
@@ -68,207 +45,30 @@ public class Model implements Serializable{
 		imgH = iH;
 		curState = Type.MAINMENU;
 		imgsSize = map;
+		groundX = 0;
+		groundY = 0;
 	}
 	
-	//getter for eggs
-	public int getEggs() {return this.eggs;};
-	//getter for numofTrueAns
-	public int getNumAns() {return this.numTrueAns;};
-	//getter for quizing
-	public boolean getQuizing() {return this.quizing;};
-	
-	// create timer and task depends on curState
-	public void createTimer() {
-		myTimer = new Timer();
-		switch(curState) {
-		case OP:
-			timeCount = defaultTime;
-			energy = defaultTime - 10;
-			myTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					
-					if (!quizing) {
-						// update time and energy
-						System.out.println("time count :" + --timeCount);
-						energy --;
-					}
-					if (timeCount % 4 == 0) {
-						// every 4 second update list
-						updateL = true;
-					}
-					
-					/*if(timeCount < 40 && timeCount > 25) {
-						waterbg = false;
-					} else {
-						waterbg = true;
-					}*/
-					if (energy <= 0) {
-						// lose all energy game over
-						gameOver();
-						System.out.println(curState);
-						myTimer.cancel();
-					}
-					if (timeCount < 0) {
-						myTimer.cancel();
-					}
-				}
-				
-			}, 0, 1000);
-			break;
-		case NH1:
-			timeCount = 35;
-			myTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					
-					System.out.println("time count :" + --timeCount);
-					if (timeCount == 0) {
-						myTimer.cancel();
-						//startQuiz();
-						gameOver();
-					} 
-				}
-				
-			}, 0, 1000);
-			break;
-		case NH2:
-			timeCount = 40;
-			myTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					
-					System.out.println("time count :" + --timeCount);
-					updateL = true;
-					if (timeCount == 0) {
-						myTimer.cancel();
-						//winGame();
-						curState = Type.NHREVIEW;
-						try {
-							createQuizs();
-							startQuiz();
-						}catch(Exception e) {
-							e.printStackTrace();
-						}
-					} 
-				}
-				
-			}, 0, 1000);
-			break;
-		}
+	public int getImgH() {
+		return imgH;
 	}
 	
-	// loop through the collection list update their position by calling the move method
-	// if the curState is NH2 call collisionNH2()
-	// if the curState is OP call checkCollision
-	public void updatePosition() {
-		// for background
-		if(timeCount > 55) {
-			drawNA = true;
-		}else {
-			drawNA = false;
-			groundX = groundX + xDec2;
-			// for element
-			if (updateL) {
-				updateList();
-			}
-			// if timeCount(not energy) is out win flag
-			if (timeCount == 0 && winFlag) {
-				// flag has same speed as background
-				list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xDec2,0));
-				winFlag = false;
-			}
-			
-			
-			Iterator<Element> iter = list.iterator();
-			while(iter.hasNext()) {
-				Element curE = iter.next();
-				//curE.setX(xDec);
-				curE.move();
-				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-					System.out.println("remove");
-					iter.remove();
-					//updateL = true;
-				}
-				else if (checkCollision(curE)) {
-					System.out.println("remove");
-					iter.remove();
-					//updateL = true;
-				}
-			}
-		}
+	public int getImgW() {
+		return imgW;
 	}
 	
-	//helper for updatePosition()
-	public void updateList() {
-		/*
-		Random ran = new Random();
-		int ranH = ran.nextInt(frameH - imgH / 2);
-		//System.out.println(ranH);
-		list.add(new HitItem(frameW, ranH, ItemType.AIRPLANE, -10, 0));
-		updateL = false;
-		*/
-		System.out.println("update list");
-		Random ran = new Random();
-		int ranType = ran.nextInt(3);
-		int ranSpeed = ran.nextInt(6) + 8;
-		System.out.println("random type: " + ranType);
-		System.out.println("random speed: " + ranSpeed);
-		switch(ranType) {
-		// 0 is airplane
-		case 0:
-			list.add(new HitItem(frameW, frameH / 4, ItemType.AIRPLANE, 0 - ranSpeed,0));
-		break;
-		// 1 is ship
-		case 1:
-			list.add(new HitItem(frameW, frameH * 4 / 7, ItemType.SHIP, 0 - ranSpeed,0));
-		break;
-		// 2 is fish
-		case 2:
-			list.add(new HitItem(frameW, frameH * 5 / 7, ItemType.FISH, 0 - ranSpeed,0));
-		break;
-		}
-		updateL = false;
-	}
+	// those abstract method will be implemented in OPModel, NHModel, and NH2Model
+	public abstract void createTimer();
+	public abstract void updatePosition();
+	public abstract boolean checkCollision(Element e);
+	public abstract boolean outOfFrame();
+	public abstract void startQuiz();
+	public abstract void checkQuiz();
+	public abstract void tutorial();
+	public abstract void createQuizzes() throws Exception;
 	
-	// update the bird position by calling the move method
-	// if the curState is NH1 call collisionNH1()
-	public void updateBirdPosition() {
-		if (!outOfFrame()) {
-			bird.move();
-			//System.out.println(bird.getX() + ", " + bird.getY());
-			//System.out.println("here1");
-			if (curState == Type.NH1) {
-				if(timeCount > 30) {
-					drawDE = true;
-				} else {
-					drawDE = false;
-					bird.move();
-					collisionNH1();
-				
-				int nestX = this.getFrameW()/2;
-				int nestY = this.getFrameH()/2;
-				//int width = imgsSize.get("bird")[0];
-				//int height = imgsSize.get("bird")[1];
-	//			boolean xC = nestX - imgW/2 <= bird.getX() + imgW/2 && nestX - imgW/2 >= bird.getX() - imgW/2;
-	//			boolean xC2 = nestX + imgW/2 <= bird.getX() + imgW/2 && nestX + imgW/2 >= bird.getX() - imgW/2;
-	//			boolean yC1 = nestY - imgH/2 <= bird.getY() + imgH/2 && nestY - imgH/2 >= bird.getY() - imgH/2;
-	//			boolean yC2 = nestY + imgH/2 <= bird.getY() + imgH/2 && nestY + imgH/2 >= bird.getY() - imgH/2;
-				//(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2)
-				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
-					System.out.println("NH1 Complete");
-					myTimer.cancel();
-					startQuiz();
-					//eggs = 1;
-					//myTimer.cancel();
-					//curState= Type.NH2;
-				}
-				
-				}
-			}
-		}
-	}
 	//
+	// check if collision
 	public boolean collisionF(Element e) {
 		int birdW = imgsSize.get(bird.getBType().getName())[0];
 		int birdH = imgsSize.get(bird.getBType().getName())[1];
@@ -303,587 +103,17 @@ public class Model implements Serializable{
 				
 		return result1 || result2;
 	}
-	//
-	public void resetModelNH2() {
-		System.out.println("here");
-		eggList = new ArrayList<>();
-		Random r = new Random();
-		for (int i = 0; i < eggs; i++) {
-			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest")[0]) - nest.getX());
-			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest")[1]) - nest.getY()); 
-			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);
-			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
-		}
-		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
-		//setBird(new Bird(0, 0,0,BirdType.NH));
-		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
-		setList(new ArrayList<>());
-		//getList().add(new HitItem(getFrameW(), 100, ItemType.FOX, -10, 0));
-		//getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-		setUpdateL();
-		createTimer();
-		//System.out.println("!!!!!!!!!!eggs: " + eggs);
-	}
-	//
-	public void updatePositionNH2() {
-		if(eggs <= 0) {
-			this.curState = Type.GAMEOVER;
-		}
-		// for background
-		if (!outOfFrame()) {
-			bird.move();
-			if (curState == Type.NH2) {
-					
-					//collisionNH2();
-					if (timeCount % 2 == 0 && updateL) {
-						//System.out.println(timeCount);
-						updateListNH2();
-					}
-					Iterator<Element> iter = list.iterator();
-					//System.out.println(list.size());
-					while(iter.hasNext()) {
-						Element curE = iter.next();
-						curE.move();
-						//System.out.println(curE.getY());
-						//System.out.println((frameH)/2);
-	//					int nestX = this.getFrameW()/2;
-	//					int nestY = this.getFrameH()/2;
-	//					boolean xC = nestX - imgW/2 <= curE.getX() + imgW/2 && nestX - imgW/2 >= curE.getX() - imgW/2;
-	//					boolean xC2 = nestX + imgW/2 <= curE.getX() + imgW/2 && nestX + imgW/2 >= curE.getX() - imgW/2;
-	//					boolean yC1 = nestY - imgH/2 <= curE.getY() + imgH/2 && nestY - imgH/2 >= curE.getY() - imgH/2;
-	//					boolean yC2 = nestY + imgH/2 <= curE.getY() + imgH/2 && nestY + imgH/2 >= curE.getY() - imgH/2;
-						int nestW = imgsSize.get(nest.getType().getName())[0];
-						int nestH = imgsSize.get(nest.getType().getName())[1];
-						int elementW = imgsSize.get(curE.getType().getName())[0];
-						int elementH = imgsSize.get(curE.getType().getName())[1];
-						
-						boolean xC = curE.getX() <= nest.getX() + nestW
-								&& curE.getX() >= nest.getX();
-						boolean xC2 = curE.getX() + elementW <=nest.getX() + nestW
-								&& curE.getX() + elementW >= nest.getX();
-						boolean yC1 = curE.getY() <= nest.getY() + nestH 
-								&& curE.getY() >= nest.getY();
-						boolean yC2 = curE.getY() + elementH <= nest.getY() + nestH 
-								&& curE.getY() + elementH >= nest.getY();
-								
-						if(xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-							System.out.println("removeNH2");
-							eggs--;
-							System.out.println("remove egg from list");
-							eggList.remove(0);
-							if(eggs <= 0) {
-								this.curState = Type.GAMEOVER;
-							}
-							iter.remove();
-						}
-						/*if (curE.getX() + imgW <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-							System.out.println("removeNH2");
-							iter.remove();
-							//updateL = true;
-							//list.add(new HitItem(frameW, 100, ItemType.AIRPLANE));
-						}*/
-						else if (collisionNH2(curE) && curE.getType() != ItemType.NEST) {
-							System.out.println("remove");
-							HitItem h = (HitItem)curE;
-							
-							if(!h.getDirectionChange()) {
-								int newX = h.getxVector()*-1;
-								int newY = h.getyVector()*-1;
-								h.setyVector(newY);
-								h.setxVector(newX);
-								h.changeDirection();
-							}
-							//iter.remove();
-							//updateL = true;
-						}
-					}
-				
-			}
-			
-		}
-	}
-	
-	//helper for updatePositionNH2()
-	// This method calculates the magnitude of the vector the fox needs to reach the nest.
-	// This magnitude will be used to calculate the correct unit vector for the fox
-	public double calculateUnitVectorMag(int xpos, int ypos){
-		double mag = Math.pow(xpos, 2) + Math.pow(ypos, 2);
-		mag = Math.sqrt(mag);
-		System.out.println(mag);
-		return mag;
-		
-	}
-	
-	//helper for updatePosition()
-	// This method generate the random position for the foxes to spawn in NH2
-	// It also determines the direction each fox should travel in to steal and egg
-		public void updateListNH2() {
-			// Generate random number
-			Random ran = new Random();
-			int ranSide = ran.nextInt(8);
-			int height = 0;
-			int width = 0;
-			// Create vector in the right direction
-			double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-			double vX = 10*(((frameW-imgW)/2)/unitVectorMag);
-			double vY = 10*(((frameH-imgH)/2)/unitVectorMag);
-			int vectorX = (int) vX;
-			int vectorY = (int) vY;
-			
-			// Switch statement to determine create a fox spawn location.
-			switch(ranSide) {
-			case 0:
-				height = (frameH-imgH)/2;
-				width = 0;
-				//direction = 'e';
-				list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
-				//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
-				System.out.println("move east");
-				// Moving East
-				break;
-			case 1:
-				height = (frameH - imgH)/2;
-				width = frameW;
-				//direction = 'w';
-				list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
-//				list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
-				System.out.println("move west");
-				// Moving West
-				break;
-			case 2:
-				height = 0;
-				width = (frameW - imgW)/2;
-				//direction = 's';
-				//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
-
-				list.add(new HitItem(width, height, ItemType.FOX, 0, 5));
-				System.out.println("move south");
-				// Moving South
-				break;
-			case 3:
-				height = frameH;
-				width = (frameW - imgW)/2;
-
-				//direction = 'n';
-				//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-				list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-				System.out.println("move north");
-				// Moving North
-				break;
-			case 4:
-				height = 0;
-				width = 0;
-				//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
-				list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
-				System.out.println("move southeast");
-				// Moving Southeast
-				break;
-			case 5:
-				height = frameH-imgH;
-				width = 0;
-				list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
-				System.out.println("move northeast");
-				// Moving Southeast
-				break;
-			case 6:
-				height = 0;
-				width = frameW;
-				list.add(new HitItem(width, height, ItemType.FOX, -vectorX, vectorY));
-				System.out.println("move Southwest");
-				// Moving Southwest
-				break;
-			case 7:
-				height = frameH-imgH;
-				width = frameW-imgW;
-				list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
-				System.out.println("move Northwest");
-				// Moving Southeast
-				break;
-			}
-			
-			updateL = false;
-		}
-	
-	// helper function for updateBirdPosition to prevent bird go out of screen
-	public boolean outOfFrame() {
-		switch (curState) {
-		case OP:
-			if (bird.getY() + bird.getYVector() < 0|| bird.getY() + imgH + bird.getYVector() > frameH) {
-				return true;
-			}
-			break;
-		case NH1:
-			if (bird.getY() + bird.getYVector() < 0 || bird.getY() + imgH + bird.getYVector() > frameH || 
-					bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW) {
-				return true;
-			}
-			break;
-		case NH2:
-			if (bird.getY() + bird.getYVector() < 0 || bird.getY() + imgH + bird.getYVector() > frameH || 
-					bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW) {
-				return true;
-			}
-			break;
-		}
-		return false;
-	}
-	
-	//for OP game
-	// check if the bird position has collision with other hitItem except fish
-	// if it is call the startQize method
-	// if has collision with fish call eat() in the bird
-	// remove the hitItem that has collision from the Element list
-	// check if the bird has collision with the final flag
-	// if it is call winGame()
-	public boolean checkCollision(Element ht) {
-//		boolean xC = ht.getX() - imgW/2 <= bird.getX() + imgW/2 && ht.getX() - imgW/2 >= bird.getX() - imgW/2;
-//		boolean yC1 = ht.getY() - imgH/2 <= bird.getY() + imgH/2 && ht.getY() - imgH/2 >= bird.getY() - imgH/2;
-//		boolean yC2 = ht.getY() + imgH/2 <= bird.getY() + imgH/2 && ht.getY() + imgH/2 >= bird.getY() - imgH/2;
-		if (collisionF(ht)) {
-			System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			if(ht instanceof HitItem) {
-				HitItem h = (HitItem)ht;
-				if(h.getType().equals(ItemType.FISH)) {
-					System.out.println(bird.getLife());
-					bird.eat();
-					//get energy
-					if (defaultTime - 10 - energy <= 10) {
-						energy = defaultTime - 10;
-					}
-					else {
-						energy += 10;
-					}
-					
-				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX) || h.getType().equals(ItemType.SHIP)) {
-					System.out.println(bird.getLife());
-					bird.collision();
-					startQuiz();
-				} else if(h.getType().equals(ItemType.WINFLAG)) {
-					//winGame();
-					//review quiz
-					curState = Type.OPREVIEW;
-					try {
-					createQuizs();
-					startQuiz();
-					}catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			//gameOver();
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean collisionNH2(Element cur) {
-//		boolean xC = cur.getX() - imgW/2 <= bird.getX() + imgW/2 && cur.getX() - imgW/2 >= bird.getX() - imgW/2;
-//		boolean xC2 = cur.getX() + imgW/2 <= bird.getX() + imgW/2 && cur.getX() + imgW/2 >= bird.getX() - imgW/2;
-//		boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
-//		boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
-		if (collisionF(cur)) {
-			System.out.println("Collision");
-			return true;
-			
-		}
-			
-		
-		return false;
-		
-	}
-	
-	// the method will generate a quiz
-	// and set quizing boolean to be true
-	public void startQuiz() {
-		System.out.println("start quiz");
-		switch (curState) {
-		case OP:
-			this.quizing = true;
-			Random r = new Random();
-			if (quizs.size() != 0) {
-				quiz = quizs.get(r.nextInt(quizs.size()));
-				System.out.println(quiz);
-			}
-			break;
-		case NH1:
-			this.quizing = true;
-			quizCount = 0;
-			quiz = quizs.get(quizCount);
-			break;
-		case OPREVIEW:
-			quizCount = 0;
-			quiz = quizs.get(quizCount);
-			break;
-		case NHREVIEW:
-			quizCount = 0;
-			quiz = quizs.get(quizCount);
-			break;
-		}
-	}
-	
-	// for OP and NH Game
-	// check the answer of the quiz
-	// if it is true, set the quizing boolean to be false;
-	// if it is false, call the collision method in the bird and then set the quizing boolean to be false
-	// and check the remaining life of bird, if it is zero call gameOver()
-	public void checkQuiz() {
-		
-		System.out.println("submit");
-		switch(curState) {
-		case OP:
-			if(!quiz.checkAnswer()) {
-				bird.collision();
-				energy -= 10;
-				quizOutcomeInfo = "Oh No!!!  You Are Wrong, Lose Energy!! Be Careful!!!";
-			}
-			else {
-				quizOutcomeInfo = "Congratulations!!!   You Saved the Bird!!";
-			}
-			delayTimer = new Timer();
-			delayCount = 0;
-			delayTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					System.out.println("delayCount: " + ++delayCount);
-					if (delayCount >=3) {
-						quizing = false;
-						delayTimer.cancel();
-						delayTimer = null;
-						quizOutcomeInfo = "";
-					}
-				}
-				
-			}, 0, 1000);
-			break;
-		case NH1:
-			if(!quiz.checkAnswer()) {
-				// here represent reduce number of egg in NH2
-				bird.collision();
-				quizOutcomeInfo = "Oh No!!!  You Lose a Northern Harrier Egg";
-				/*if(eggs > 1) {
-					eggs--;
-				}*/
-			}
-			else {
-				quizOutcomeInfo = "Correct!!! You have Learned some Knowledge Today!!!";
-				eggs++;
-			}
-			System.out.println("Eggs: " + eggs);
-			quizCount++;
-			delayTimer = new Timer();
-			delayCount = 0;
-			delayTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					System.out.println("delayCount: " + ++delayCount);
-					if (delayCount >=2) {
-						if (quizCount < 3) {
-							quiz = quizs.get(quizCount);
-							
-						}
-						else {
-							quizing = false;
-							if(eggs <=0) {
-								gameOver();
-							} else {
-								curState = Type.NH2;
-								resetModelNH2();
-							}
-						}
-						quizOutcomeInfo = "";
-						delayTimer.cancel();
-						delayTimer = null;
-					}
-				}
-				
-			}, 0, 1000);
-			break;
-		case OPREVIEW:
-			if(!quiz.checkAnswer()) {
-				// here represent reduce number of egg in NH2
-				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
-			}
-			else {
-				quizOutcomeInfo = "Congratulations!!";
-			}
-			quizCount++;
-			delayTimer = new Timer();
-			delayCount = 0;
-			delayTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					System.out.println("delayCount: " + ++delayCount);
-					if (delayCount >=2) {
-						if (quizCount < 3) {
-							quiz = quizs.get(quizCount);
-							
-						}
-						else {
-							winGame();
-						}
-						quizOutcomeInfo = "";
-						delayTimer.cancel();
-						delayTimer = null;
-					}
-				}
-				
-			}, 0, 1000);
-			break;
-		case NHREVIEW:
-			if(!quiz.checkAnswer()) {
-				// here represent reduce number of egg in NH2
-				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
-			}
-			else {
-				quizOutcomeInfo = "Congratulations!!";
-			}
-			quizCount++;
-			delayTimer = new Timer();
-			delayCount = 0;
-			delayTimer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					System.out.println("delayCount: " + ++delayCount);
-					if (delayCount >=2) {
-						if (quizCount < 3) {
-							quiz = quizs.get(quizCount);
-							
-						}
-						else {
-							winGame();
-						}
-						quizOutcomeInfo = "";
-						delayTimer.cancel();
-						delayTimer = null;
-					}
-				}
-				
-			}, 0, 1000);
-			break;
-		}
-		
-		
-		
-	}
 	
 	// set curState to be End
 	public void gameOver() {
-	    curState = Type.GAMEOVER;
+		   curState = Type.GAMEOVER;
 	}
-	
+		
 	// set curState to be Win 
 	public void winGame() {
 		curState = Type.WIN;
 	}
 	
-	// for NH game
-	// check if current bird position has collision with CollectedItem in the Element list
-	// if the item has collision call isCollected() method in Collected
-	// if all the CollectedItem is collected, call the startQuiz() method
-	public void collisionNH1() {
-		Iterator<Element> iter = list.iterator();
-		while(iter.hasNext()) {
-			Element cur = iter.next();
-			//System.out.println(bird.getBType().getName());
-			//System.out.println(cur.getType().getName());
-//			boolean xC = cur.getX() - imgW/2 <= bird.getX() + imgW/2 && cur.getX() - imgW/2 >= bird.getX() - imgW/2;
-//			boolean xC2 = cur.getX() + imgW/2 <= bird.getX() + imgW/2 && cur.getX() + imgW/2 >= bird.getX() - imgW/2;
-//			boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
-//			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
-			if (collisionF(cur) && !cur.getType().equals(ItemType.NEST)) {  //xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2
-				bird.setItemsCollected(bird.getItemsCollected() + 1);
-				CollectedItem c = (CollectedItem)cur;
-				c.isCollected();
-				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				iter.remove();
-			}
-		}
-		moreCollectedItems = false;
-		for(Element e: list) {
-			if(e instanceof CollectedItem) {
-				moreCollectedItems = true;
-			}
-		}
-		/*if(!moreCollectedItems) {
-			System.out.println("NH1 Complete");
-			curState= Type.NH2;
-		}*/
-	}
-	
-	// for NH game
-	// check the number of right answer in the quiz
-	// set the number of egg to be the number of right answers
-	// set the quizing boolean to be false
-	// set curState to be NH2
-	// NO NEED FOR THIS ONE !!!!!!!!!!!!!   ALL USE CHECKQUIZ
-	public void submitQuiz() {
-		this.quizing = false;
-	}
-	
-	// for NH game
-	// check whether the hitItem fox has collision with egg
-	// if it is remove the egg item and the hitItem from list, subtract one from int eggs
-	// if the fox has collision with bird, call the move method of the fox
-	// check the number of eggs left. if it is zero, call gameOver()
-	/*public void collisionNH2(HitItem ht) {
-		Iterator<Element> iter = list.iterator();
-		while(iter.hasNext()) {
-			Element cur = iter.next();
-			boolean xC = cur.getX() - imgW/2 <= bird.getX() + imgW/2 && cur.getX() - imgW/2 >= bird.getX() - imgW/2;
-			boolean xC2 = cur.getX() + imgW/2 <= bird.getX() + imgW/2 && cur.getX() + imgW/2 >= bird.getX() - imgW/2;
-			boolean yC1 = cur.getY() - imgH/2 <= bird.getY() + imgH/2 && cur.getY() - imgH/2 >= bird.getY() - imgH/2;
-			boolean yC2 = cur.getY() + imgH/2 <= bird.getY() + imgH/2 && cur.getY() + imgH/2 >= bird.getY() - imgH/2;
-			if (xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2) {
-				CollectedItem c = (CollectedItem)cur;
-				c.isCollected();
-				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-				iter.remove();
-			}
-		}
-		eggs--;
-		if(eggs <= 0) {
-			this.curState = Type.GAMEOVER;
-		}
-	}*/
-	
-	// This method reads in the quiz questions and determinds if they are good.
-	public void createQuizs() throws Exception{
-		Scanner scan;
-		quizs = new ArrayList<>();
-		File file = null;
-		switch(curState) {
-		case OP:
-			file = new File("OPquiz.txt");
-			break;
-		case NH1:
-			file = new File("NHquiz.txt");
-			break;
-		case OPREVIEW:
-			file = new File("OPReviewQuiz.txt");
-			break;
-		case NHREVIEW:
-			file = new File("NHReviewQuiz.txt");
-			break;
-		}
-		scan = new Scanner(file);
-		while(scan.hasNextLine()) {
-			String[] infos = scan.nextLine().split(";", -1);
-//			System.out.println(infos.length);
-//			for(int i = 0; i < infos.length; i++) {
-//				System.out.println(infos[i]);
-//			}
-			String[] choices = {infos[1],infos[2],infos[3],infos[4]};
-			quizs.add(new Quiz(infos[0], infos[5], choices));
-		}
-		scan.close();
-	}
-	
-	
-	// getter setter for create test
 	public Type getCurState() {
 		return curState;
 	}
@@ -919,9 +149,7 @@ public class Model implements Serializable{
 	public ArrayList<Element> getList(){
 		return list;
 	}
-	public void setEgg(int e) {
-		eggs = e;
-	}
+
 	public boolean getUpdateL() {
 		return updateL;
 	}
@@ -941,27 +169,27 @@ public class Model implements Serializable{
 		return timeCount;
 	}
 	
-	public boolean drawDE() {
-		return drawDE;
-	}
-	
-	public boolean drawNA() {
-		return drawNA;
-	}
-	
-	public boolean getWaterbg() {
-		return waterbg;
-	}
-	
 	public boolean inTutorial() {
 		return tutorial;
 	}
 	
-	public void tutorialNH1(){
-		if(curState == Type.TUTORIALNH1) {
-			
-		}
+	public boolean getQuizing() {
+		return quizing;
+	}
+	
+	public int getGroundY() {
+		return groundY;
+	}
+	public int getGroundX() {
+		return groundX;
+	}
+
+	public void setGroundX(int groundX) {
+		this.groundX = groundX;
+	}
+
+	public void setGroundY(int groundY) {
+		this.groundY = groundY;
 	}
 	
 }
-// testing2

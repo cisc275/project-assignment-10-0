@@ -23,8 +23,8 @@ import main_package.Controller.CustomKeyListener;
 public class View extends JPanel{
 	//
 	HashMap<String, Image> imgs;
-	//final int frameHeight = 643;    //500
-	//final int frameWidth = 1024;     //600
+	final int scaleHeight = 838;    //500
+	final int scaleWidth = 1550;     //600
 	int frameHeight = 643;    //500
 	int frameWidth = 1024;     //600
 	final int imageH = 150;
@@ -134,22 +134,23 @@ public class View extends JPanel{
     	frame.setVisible(false);
 		
     	imgsSize = new HashMap<>();
-    	imgsSize.put("fish", new int[] {frameWidth * 115 / 1550, frameHeight * 75 / 838});
-    	imgsSize.put("airplane", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
-    	imgsSize.put("ship", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
-    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("osprey", new int[] {frameWidth * 150 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("osprey2", new int[] {frameWidth * 150 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nh", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
-    	imgsSize.put("winflag", new int[] {frameWidth * 200 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
+    	imgsSize.put("fish", new int[] {frameWidth * 115 / scaleWidth, frameHeight * 75 / scaleHeight});
+    	imgsSize.put("airplane", new int[] {frameWidth * 300 / scaleWidth, frameHeight * 200 / 838});
+    	imgsSize.put("ship", new int[] {frameWidth * 300 / scaleWidth, frameHeight * 200 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("osprey", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("osprey2", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("nh", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("winflag", new int[] {frameWidth * 200 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
     	imgsSize.put("nest", new int[] {frameWidth * 225 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("rat", new int[] {frameWidth * 120 / 1550, frameHeight * 80 / 838});
-    	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("rat", new int[] {frameWidth * 120 / scaleWidth, frameHeight * 80 / 838});
+    	imgsSize.put("stick", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 100 / 838});
     	imgsSize.put("egg", new int[] {frameWidth * 30 / 1550, frameHeight * 50 / 838});
-    	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
-    	imgsSize.put("NorthernHarrierReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
+    	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / scaleWidth, frameHeight * 500 / 838});
+    	imgsSize.put("NorthernHarrierReal", new int[] {frameWidth * 400 / scaleWidth, frameHeight * 500 / 838});
+    	imgsSize.put("quizpanel", new int[] {frameWidth * 1000 / scaleWidth, frameHeight * 600 / 838});
     	
     	
     	
@@ -189,8 +190,9 @@ public class View extends JPanel{
 			choice2.setVisible(true);
 			choice3.setVisible(true);
 			choice4.setVisible(true);
+			backButton.setVisible(false);
 		}
-		
+		else {
 		if (model.getCurState() == Type.MAINMENU) {
 			
 		}
@@ -206,20 +208,28 @@ public class View extends JPanel{
 			else {
 				curImg = imgs.get("osprey");
 			}
+			backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH1) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
-			drawDE = model.drawDE();
+			drawDE = ((NHModel) model).drawDE();
 			//curImg = imgs.get("bird");
+			//backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH2) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
 			//curImg = imgs.get("bird");
+			backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
-			
+			backButton.setVisible(true);
+		}
+		else if (model.getCurState() == Type.WIN) {
+			backButton.setVisible(true);
+		}
+		
 		}
 		this.model = model;
 		frame.repaint();
@@ -245,46 +255,24 @@ public class View extends JPanel{
 //		}
 //	}
 	
+	// draw image and game content on the panel according to model class
 	public void paintComponent(Graphics g) {
 		//System.out.println("paint");
 		if (model == null) {
 			System.out.println("null model");
-			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
-			g.drawString("Time Remaining: ", 100, 20);
+//			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
+//			g.drawString("Time Remaining: ", 100, 20);
+			g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
+			g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
+			g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
+			g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 			return;
 		}
 		try {
-			if (model.getQuizing()) {
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 100/838);
-				//Don't delete this, this is the front changing attempt
-				/*
-				String question = model.getQuiz().getQuestion();
-				String[] questions = question.split(".", -1);
-				for(int i = 0; i < questions.length; i++) {
-					if(i != (questions.length -1)) {
-						g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
-					}
-				}
-				*/
-				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 260/838);
-				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 300 / 838);
-				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 340 / 838);
-				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
-				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
-				if (model.getCurState() == Type.NH1) {
-					//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-					//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
-					g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth * 30 / 1550, frameHeight * 30/838);
 
-				}
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 200/838);
-				
-				
-			}
-			else {
+			//else {
 				switch (model.getCurState()) {
 				case MAINMENU:
 					g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
@@ -299,16 +287,16 @@ public class View extends JPanel{
 //					if (model.timeCount == 55) {
 //						s ="bgland";
 //					}
-					if(model.drawNA()) {
+					if(((OPModel) model).getDrawNA()) {
 						g.drawImage(imgs.get("opmapbg"),0, 0, Color.gray, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
 						g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
 					} else {
 						//if(model.getWaterbg()) {
-							g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
+							g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
 							//System.out.println("first: " + model.groundX % frameWidth);
-							g.drawImage(imgs.get("bgwater"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
+							g.drawImage(imgs.get("bgwater"), (model.getGroundX() % frameWidth) + frameWidth, model.getGroundY(), Color.gray, this);
 						/*} else if(!model.getWaterbg()) {
 							/*if(frameWidth >= 0 && first) {
 								if(frameWidth == 0) {
@@ -334,27 +322,11 @@ public class View extends JPanel{
 						g.setColor(Color.black);
 						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
 						g.setColor(Color.yellow);
-						g.fillRect(10, 2, model.energy*10, 20);
+						g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-	//							switch(((HitItem) each).it) {
-	//							case AIRPLANE:
-	//								g.drawImage(imgs.get("airplane"), each.getX(), each.getY(), null,this);
-	//								break;
-	//							case FOX:
-	//								g.drawImage(imgs.get("fox"), each.getX(), each.getY(), null,this);
-	//								break;
-	//							case FISH:
-	//								g.drawImage(imgs.get("fish"), each.getX(), each.getY(), null,this);
-	//								break;
-	//							case WINFLAG:
-	//								g.drawImage(imgs.get("winflag"), each.getX(), each.getY(), null,this);
-	//								break;
-	//							default:
-	//								break;
-	//							}
 							}
 						}
 					}
@@ -389,13 +361,13 @@ public class View extends JPanel{
 							}
 						}
 						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-						g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
+						//g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 						
-						//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					
 						/*if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -417,12 +389,12 @@ public class View extends JPanel{
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 					g.setColor(Color.red);
 					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawString("Eggs: " + String.valueOf(model.eggs), 1000, 20);
+					g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggs), 1000, 20);
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
 					
-					g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
+					//g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
 					if (model.getList().size() != 0) {
 						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
@@ -431,12 +403,12 @@ public class View extends JPanel{
 						}
 					}
 					
-					if (model.eggList.size() != 0) {
-						for(CollectedItem each: model.eggList) {
+					if (((NH2Model) model).eggList.size() != 0) {
+						for(CollectedItem each: ((NH2Model) model).eggList) {
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
-					//g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					
 					break;
 				case GAMEOVER:
@@ -472,7 +444,39 @@ public class View extends JPanel{
 					g.drawString("You finished the review quiz", this.frameWidth/3, this.frameHeight/2);
 					break;
 				}
-			}
+		//	}
+				if (model.getQuizing()) {
+					g.drawImage(imgs.get("quizpanel"), frameWidth/4, frameHeight * 100/838, null,this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
+					g.setColor(Color.black);
+					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 220/838);
+					//Don't delete this, this is the front changing attempt
+					/*
+					String question = model.getQuiz().getQuestion();
+					String[] questions = question.split(".", -1);
+					for(int i = 0; i < questions.length; i++) {
+						if(i != (questions.length -1)) {
+							g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
+						}
+					}
+					*/
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 360/838);
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 400 / 838);
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 440 / 838);
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 480 / 838);
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 520 / 838);
+					if (model.getCurState() == Type.NH1) {
+						//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
+						//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
+						g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth/2, frameHeight * 600/838);
+
+					}
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.red);
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 300/838);
+					
+					
+				}
 		}catch(NullPointerException n) {
 			n.printStackTrace();
 		}
@@ -491,7 +495,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/Osprey2.png"));
 			}
 			else if (x.equals("nh")) {
-				bi = ImageIO.read(new File("imgs/IMG_0690.png"));
+				bi = ImageIO.read(new File("imgs/nh1.png"));
 			}
 			else if (x.equals("mainmenubg")) {
 				bi = ImageIO.read(new File("imgs/mainmenu.png"));
