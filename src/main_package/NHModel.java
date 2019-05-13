@@ -156,13 +156,13 @@ public class NHModel extends Model {
 		if(!quiz.checkAnswer()) {
 			// here represent reduce number of egg in NH2
 			bird.collision();
-			quizOutcomeInfo = "Oh No!!!  You Lose a Northern Harrier Egg";
+			quizOutcomeInfo = "You Lose a Northern Harrier Egg";
 			/*if(eggs > 1) {
 				eggs--;
 			}*/
 		}
 		else {
-			quizOutcomeInfo = "Correct!!! You have Learned some Knowledge Today!!!";
+			quizOutcomeInfo = "Correct!!! ";
 			eggs++;
 		}
 		System.out.println("Eggs: " + eggs);

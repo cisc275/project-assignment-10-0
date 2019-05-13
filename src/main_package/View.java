@@ -23,8 +23,8 @@ import main_package.Controller.CustomKeyListener;
 public class View extends JPanel{
 	//
 	HashMap<String, Image> imgs;
-	//final int frameHeight = 643;    //500
-	//final int frameWidth = 1024;     //600
+	final int scaleHeight = 838;    //500
+	final int scaleWidth = 1550;     //600
 	int frameHeight = 643;    //500
 	int frameWidth = 1024;     //600
 	final int imageH = 150;
@@ -119,22 +119,23 @@ public class View extends JPanel{
     	frame.setVisible(false);
 		
     	imgsSize = new HashMap<>();
-    	imgsSize.put("fish", new int[] {frameWidth * 115 / 1550, frameHeight * 75 / 838});
-    	imgsSize.put("airplane", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
-    	imgsSize.put("ship", new int[] {frameWidth * 300 / 1550, frameHeight * 200 / 838});
-    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("osprey", new int[] {frameWidth * 150 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("osprey2", new int[] {frameWidth * 150 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nh", new int[] {frameWidth * 150 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("winflag", new int[] {frameWidth * 200 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("nest", new int[] {frameWidth * 200 / 1550, frameHeight * 200 / 838});
-    	imgsSize.put("fox", new int[] {frameWidth * 100 / 1550, frameHeight * 150 / 838});
-    	imgsSize.put("rat", new int[] {frameWidth * 120 / 1550, frameHeight * 80 / 838});
-    	imgsSize.put("stick", new int[] {frameWidth * 100 / 1550, frameHeight * 100 / 838});
+    	imgsSize.put("fish", new int[] {frameWidth * 115 / scaleWidth, frameHeight * 75 / scaleHeight});
+    	imgsSize.put("airplane", new int[] {frameWidth * 300 / scaleWidth, frameHeight * 200 / 838});
+    	imgsSize.put("ship", new int[] {frameWidth * 300 / scaleWidth, frameHeight * 200 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("osprey", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("osprey2", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("nh", new int[] {frameWidth * 150 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("winflag", new int[] {frameWidth * 200 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("collectedItem", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("nest", new int[] {frameWidth * 200 / scaleWidth, frameHeight * 200 / 838});
+    	imgsSize.put("fox", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 150 / 838});
+    	imgsSize.put("rat", new int[] {frameWidth * 120 / scaleWidth, frameHeight * 80 / 838});
+    	imgsSize.put("stick", new int[] {frameWidth * 100 / scaleWidth, frameHeight * 100 / 838});
     	imgsSize.put("egg", new int[] {frameWidth * 30 / 1550, frameHeight * 50 / 838});
-    	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
-    	imgsSize.put("NorthernHarrierReal", new int[] {frameWidth * 400 / 1550, frameHeight * 500 / 838});
+    	imgsSize.put("ospreyReal", new int[] {frameWidth * 400 / scaleWidth, frameHeight * 500 / 838});
+    	imgsSize.put("NorthernHarrierReal", new int[] {frameWidth * 400 / scaleWidth, frameHeight * 500 / 838});
+    	imgsSize.put("quizpanel", new int[] {frameWidth * 1000 / scaleWidth, frameHeight * 600 / 838});
     	
     	
     	
@@ -174,8 +175,9 @@ public class View extends JPanel{
 			choice2.setVisible(true);
 			choice3.setVisible(true);
 			choice4.setVisible(true);
+			backButton.setVisible(false);
 		}
-		
+		else {
 		if (model.getCurState() == Type.MAINMENU) {
 			
 		}
@@ -191,20 +193,28 @@ public class View extends JPanel{
 			else {
 				curImg = imgs.get("osprey");
 			}
+			backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH1) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
 			drawDE = ((NHModel) model).drawDE();
 			//curImg = imgs.get("bird");
+			//backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH2) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
 			//curImg = imgs.get("bird");
+			backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
-			
+			backButton.setVisible(true);
+		}
+		else if (model.getCurState() == Type.WIN) {
+			backButton.setVisible(true);
+		}
+		
 		}
 		this.model = model;
 		frame.repaint();
@@ -246,37 +256,8 @@ public class View extends JPanel{
 			return;
 		}
 		try {
-			if (model.getQuizing()) {
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 100/838);
-				//Don't delete this, this is the front changing attempt
-				/*
-				String question = model.getQuiz().getQuestion();
-				String[] questions = question.split(".", -1);
-				for(int i = 0; i < questions.length; i++) {
-					if(i != (questions.length -1)) {
-						g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
-					}
-				}
-				*/
-				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 260/838);
-				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 300 / 838);
-				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 340 / 838);
-				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 380 / 838);
-				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 420 / 838);
-				if (model.getCurState() == Type.NH1) {
-					//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-					//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
-					g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth * 30 / 1550, frameHeight * 30/838);
 
-				}
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 200/838);
-				
-				
-			}
-			else {
+			//else {
 				switch (model.getCurState()) {
 				case MAINMENU:
 					g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
@@ -448,7 +429,39 @@ public class View extends JPanel{
 					g.drawString("You finished the review quiz", this.frameWidth/3, this.frameHeight/2);
 					break;
 				}
-			}
+		//	}
+				if (model.getQuizing()) {
+					g.drawImage(imgs.get("quizpanel"), frameWidth/4, frameHeight * 100/838, null,this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
+					g.setColor(Color.black);
+					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, frameHeight * 220/838);
+					//Don't delete this, this is the front changing attempt
+					/*
+					String question = model.getQuiz().getQuestion();
+					String[] questions = question.split(".", -1);
+					for(int i = 0; i < questions.length; i++) {
+						if(i != (questions.length -1)) {
+							g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
+						}
+					}
+					*/
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, frameHeight * 360/838);
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, frameHeight * 400 / 838);
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, frameHeight * 440 / 838);
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, frameHeight * 480 / 838);
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, frameHeight * 520 / 838);
+					if (model.getCurState() == Type.NH1) {
+						//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
+						//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
+						g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth/2, frameHeight * 600/838);
+
+					}
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.red);
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, frameHeight * 300/838);
+					
+					
+				}
 		}catch(NullPointerException n) {
 			n.printStackTrace();
 		}

@@ -34,7 +34,7 @@ public class OPModel extends Model{
 		
 	}
 	
-	// set a timer and task on osprey game
+	// set a timer and task on osprey game from 60 to 0, every second count one
 	@Override
 	public void createTimer() {
 		// TODO Auto-generated method stub
@@ -239,10 +239,10 @@ public class OPModel extends Model{
 		if(!quiz.checkAnswer()) {
 			bird.collision();
 			energy -= 10;
-			quizOutcomeInfo = "Oh No!!!  You Are Wrong, Lose Energy!! Be Careful!!!";
+			quizOutcomeInfo = "You Are Wrong, Lose Energy!!";
 		}
 		else {
-			quizOutcomeInfo = "Congratulations!!!   You Saved the Bird!!";
+			quizOutcomeInfo = "Congratulations! You Saved the Bird!!";
 		}
 		delayTimer = new Timer();
 		delayCount = 0;
