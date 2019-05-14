@@ -18,9 +18,7 @@ public class NH2Model extends Model{
 	public NH2Model(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		
 		super(fW, fH, iW, iH, map);
-		System.out.println("egg: " + eggs);
-		System.out.println("here");
-		curState = Type.NH2;
+		curState = Type.TUTORIALNH2;
 		eggList = new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < eggs; i++) {
@@ -30,18 +28,27 @@ public class NH2Model extends Model{
 			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
 		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
-		//setBird(new Bird(0, 0,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
-		createTimer();		
+		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));
+		//createTimer(40);		
+	}
+	
+	public void setUpGame() {
+		curState = Type.NH2;
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
+		//nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
+		setList(new ArrayList<>());
+		setUpdateL();
+		createTimer(30);
 	}
 
 	// This method creates a timer for 40 seconds for the NH1 game 
 	@Override
-	public void createTimer() {
+	public void createTimer(int time) {
 		myTimer = new Timer();
-		timeCount = 40;
+		timeCount = time;
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -133,6 +140,12 @@ public class NH2Model extends Model{
 				bird.getX() + bird.getXVector() < 0 || bird.getX() + imgW + bird.getXVector() > frameW);
 	}
 	
+	public boolean foxoutOfFrame(Element e) {
+		HitItem fox = ((HitItem) e);
+		return (fox.getY() + fox.getyVector() < 0 || fox.getY() + imgH + fox.getyVector() > frameH || 
+				fox.getX() + fox.getxVector() < 0 || fox.getX() + imgW + fox.getxVector() > frameW);
+	}
+	
 	// This method sets the quizzing variable to true in order to start quizzing the player
 	@Override
 	public void startQuiz() {
@@ -178,8 +191,34 @@ public class NH2Model extends Model{
 
 	@Override
 	public void tutorial() {
-		// TODO Auto-generated method stub
-		
+		if(!outOfFrame()) {
+			bird.move();
+			
+			
+			// Iterate through all the elements in the game and check for collisions
+			Iterator<Element> iter = list.iterator();
+			while(iter.hasNext()) {
+				Element curE = iter.next();
+				curE.move();
+				
+				if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
+					System.out.println("remove");
+					HitItem h = (HitItem)curE;
+					
+					if(!h.getDirectionChange()) {
+						int newX = -5;
+						int newY = 0;
+						h.setyVector(newY);
+						h.setxVector(newX);
+						h.changeDirection();
+						
+					}
+				}
+				if(this.foxoutOfFrame(curE)) {
+					setUpGame();
+				}
+			}
+		}
 	}
 
 	// This method reads in the quiz questions for the NH1 game
@@ -252,7 +291,7 @@ public class NH2Model extends Model{
 			//direction = 's';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
 
-			list.add(new HitItem(width, height, ItemType.FOX, 0, 5));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, 3));
 			System.out.println("move south");
 			// Moving South
 			break;
@@ -262,7 +301,7 @@ public class NH2Model extends Model{
 
 			//direction = 'n';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -5));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -4));
 			System.out.println("move north");
 			// Moving North
 			break;

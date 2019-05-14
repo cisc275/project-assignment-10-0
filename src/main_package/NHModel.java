@@ -15,38 +15,49 @@ public class NHModel extends Model {
 	//static CollectedItem nest;
 	boolean moreCollectedItems;
 	boolean drawDE;
+	Random rand = new Random(); 
 	//static int eggs;
 	
 	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
-			Random rand = new Random(); 
-			setCurState(Type.NH1);
-			setList(new ArrayList<>());
-			setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
-			for(int i = 0; i<5; i++) {
-				getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.STICK));
-			}
-			// Created rats for NH Game
-			for(int i = 0; i<5; i++) {
-				getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), ItemType.RAT));
-			}
-			setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
-			
-			try {
-				createQuizzes();
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			}
-			createTimer();
+		//setCurState(Type.NH1);
+		setCurState(Type.TUTORIALNH1);
+		setList(new ArrayList<>());
+		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
+		getList().add(new CollectedItem((getFrameW()-imgW)/3, getFrameH()-imgH, ItemType.STICK));
+		getList().add(new CollectedItem(4*(getFrameW()-imgW)/5, (getFrameH()-imgH)/2, ItemType.RAT));
+		createTimer(5);
+		//getList().add(new CollectedItem(2*(getFrameW()-imgW)/3, getFrameH()-imgH, ItemType.RAT));
+	}
+	
+	public void setUpGame() {
+		setList(new ArrayList<>());
+		//setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
+		createCollectedItems(5, ItemType.STICK);
+		createCollectedItems(5, ItemType.RAT);
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
 		
+		try {
+			createQuizzes();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		createTimer(20);
+	}
+	
+	public void createCollectedItems(int num, ItemType it) {
+		for(int i = 0; i<num; i++) {
+			getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), it));
+		}
 	}
 
 	// This method creates a timer for 35 seconds for the NH1 game 
 	@Override
-	public void createTimer() {
+	public void createTimer(int time) {
 		myTimer = new Timer();
-		timeCount = 35;
+		timeCount = time;
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -54,27 +65,29 @@ public class NHModel extends Model {
 				System.out.println("time count :" + --timeCount);
 				if (timeCount == 0) {
 					myTimer.cancel();
-					//startQuiz();
-					gameOver();
+					//drawDE = false;
 				} 
 			}
 			
 		}, 0, 1000);
-		
 	}
 	
 	// This method updates the position of the bird based and controls the functionality of the game
 	@Override
 	public void updatePosition() {
+		System.out.println("Updating position");
+		if(timeCount <= 0) {
+			gameOver();
+		}
 		if (!outOfFrame()) {
 			bird.move();
 			//System.out.println(bird.getX() + ", " + bird.getY());
 			//System.out.println("here1");
 			if (curState == Type.NH1) {
-				if(timeCount > 30) {
+				/*if(timeCount > 30) {
 					drawDE = true;
 				} else {
-					drawDE = false;
+					drawDE = false;*/
 					bird.move();
 					checkCollision(bird);
 				
@@ -96,15 +109,16 @@ public class NHModel extends Model {
 					//curState= Type.NH2;
 				}
 				
-				}
+				//}
 			}
-		}
+		} 
 		
 	}
 	
 	// This method checks to see if the bird has collided with a collected item
 	@Override
 	public boolean checkCollision(Element e) {
+		boolean collision = false;
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
 			Element cur = iter.next();
@@ -120,6 +134,7 @@ public class NHModel extends Model {
 				c.isCollected();
 				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
+				collision = true;
 			}
 		}
 		moreCollectedItems = false;
@@ -128,7 +143,7 @@ public class NHModel extends Model {
 				moreCollectedItems = true;
 			}
 		}
-		return false;
+		return collision;
 	}
 
 	// This method checks if the bird has moved out of the frame and prevents this from happening
@@ -203,8 +218,21 @@ public class NHModel extends Model {
 	// This method runs the tutorial for the NH1 game
 	@Override
 	public void tutorial() {
-		// TODO Auto-generated method stub
 		
+		if (!outOfFrame() && timeCount == 0) {
+			drawDE = false;
+			bird.move();
+			if(this.checkCollision(bird)) {
+				System.out.println("No more");
+			}
+			if (!moreCollectedItems && collisionF(nest)) {
+				System.out.println("NH1 Complete");
+				bird.setItemsCollected(0);
+				setUpGame();
+				curState = Type.NH1;
+			}
+			
+		}
 	}
 	
 	// This method reads in the quiz questions for the NH1 game

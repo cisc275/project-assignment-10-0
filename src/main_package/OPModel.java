@@ -30,13 +30,13 @@ public class OPModel extends Model{
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		createTimer();
+		createTimer(defaultTime);
 		
 	}
 	
 	// set a timer and task on osprey game from 60 to 0, every second count one
 	@Override
-	public void createTimer() {
+	public void createTimer(int time) {
 		// TODO Auto-generated method stub
 		timeCount = defaultTime;
 		energy = defaultTime - 10;

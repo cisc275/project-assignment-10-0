@@ -58,7 +58,7 @@ public abstract class Model {
 	}
 	
 	// those abstract method will be implemented in OPModel, NHModel, and NH2Model
-	public abstract void createTimer();
+	public abstract void createTimer(int time);
 	public abstract void updatePosition();
 	public abstract boolean checkCollision(Element e);
 	public abstract boolean outOfFrame();

@@ -80,9 +80,10 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			// Create a model for the NHGame
 			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-			model.setCurState(Type.NH1);
+			model.setCurState(Type.TUTORIALNH1);
 			curState = model.getCurState();
 			System.out.println(model.getCurState());
+			((NHModel) model).drawDE = true;
 			// Set the button views for the game
 			view.backButton.setVisible(true);
 			view.OPButton.setVisible(false);
@@ -192,7 +193,35 @@ public class Controller {
 					//model.updateBirdPosition(10, 0);
 				}
 				break;
+			case TUTORIALNH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(-10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(-10);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(10);
+				}
+				break;
 			case NH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(-7);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(7);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(-7);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(7);
+				}
+				break;
+			case TUTORIALNH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(-10);
 				}
@@ -208,16 +237,16 @@ public class Controller {
 				break;
 			case NH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-5);
+					model.getBird().setYVector(-7);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(5);
+					model.getBird().setYVector(7);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-5);
+					model.getBird().setXVector(-7);
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(5);
+					model.getBird().setXVector(7);
 				}
 				break;
 			default:
@@ -246,7 +275,35 @@ public class Controller {
 					//model.updateBirdPosition(10, 0);
 				}
 				break;
+			case TUTORIALNH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(0);
+				}
+				break;
 			case NH1:
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					model.getBird().setYVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					model.getBird().setXVector(0);
+				}
+				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					model.getBird().setXVector(0);
+				}
+				break;
+			case TUTORIALNH2:
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0);
 				}
@@ -343,7 +400,8 @@ public class Controller {
     				break;
     			case TUTORIALNH1:
     				view.update(model);
-    				//model.tutorialNH1();
+    				model.tutorial();
+    				curState = model.getCurState();
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");
@@ -356,6 +414,11 @@ public class Controller {
         					System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         				}
     				}
+    				break;
+    			case TUTORIALNH2:
+    				view.update(model);
+    				model.tutorial();
+    				curState = model.getCurState();
     				break;
     			case NH2:
     				//System.out.println("NH2 controller");

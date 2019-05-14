@@ -210,10 +210,13 @@ public class View extends JPanel{
 			}
 			backButton.setVisible(true);
 		}
+		else if(model.getCurState() == Type.TUTORIALNH1) {
+			drawDE = ((NHModel) model).drawDE();
+		}
 		else if (model.getCurState() == Type.NH1) {
 			//x = model.getBird().getX();
 			//y = model.getBird().getY();
-			drawDE = ((NHModel) model).drawDE();
+			//drawDE = ((NHModel) model).drawDE();
 			//curImg = imgs.get("bird");
 			//backButton.setVisible(true);
 		}
@@ -331,6 +334,25 @@ public class View extends JPanel{
 						}
 					}
 					break;
+				case TUTORIALNH1:
+					if(drawDE) {
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+						g.drawImage(imgs.get("bgdelaware"),0, 0, Color.gray, this);
+						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+					} else {
+						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						g.setColor(Color.red);
+						g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
+						if (model.getList().size() != 0) {
+							for(Element each: model.getList()) {
+								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+							}
+						}
+						g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
+						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
+					}
+					break;
 				case NH1:
 					
 //					
@@ -346,14 +368,6 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);*/
 				
 //					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-					if(drawDE) {
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-						g.drawImage(imgs.get("bgdelaware"),0, 0, Color.gray, this);
-						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-						//g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						//g.setColor(Color.red);
-						//g.drawString("The Northern Harrier is a non-migratory bird that resides in Delaware.", frameWidth/7, frameHeight/3);
-					} else {
 						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -374,7 +388,7 @@ public class View extends JPanel{
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}*/
-					}
+					//}
 //					if (model.getList().size() != 0) {
 //						//System.out.println("times drawn");
 //						for(Element each: model.getList()) {
@@ -382,6 +396,24 @@ public class View extends JPanel{
 //							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 //						}
 //					}
+					break;
+				case TUTORIALNH2:
+					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+					g.drawImage(imgs.get("nest"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.red);
+					g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
+					if (model.getList().size() != 0) {
+						//System.out.println("times drawn");
+						for(Element each: model.getList()) {
+							//System.out.println("drawing hit item"+ each.getX());
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+						}
+					}
+					for(CollectedItem each: ((NH2Model) model).eggList) {
+						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+					}
+					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					break;
 				case NH2:
 					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
