@@ -5,13 +5,18 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Random;
 
 import main_package.Type;
 
-public class NHModel extends Model {
+public class NHModel extends Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//static CollectedItem nest;
 	boolean moreCollectedItems;
 	boolean drawDE;

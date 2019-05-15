@@ -20,7 +20,7 @@ import javax.swing.Timer;
 //author Sicheng Tian
 public class Controller {
 	static Model model;
-	View view;
+	static View view;
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
@@ -481,6 +481,7 @@ public class Controller {
 		}
 		System.out.println(tmp == null);
 		model = tmp;
+	//	view.update(model);
 	}
 	
 	public static void main(String[] args) {

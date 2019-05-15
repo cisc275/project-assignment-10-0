@@ -1,6 +1,7 @@
 package main_package;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +10,11 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class NH2Model extends Model{
+public class NH2Model extends Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Instantiate Variables
 	ArrayList<CollectedItem> eggList;
 	boolean drawDE;
