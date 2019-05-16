@@ -196,7 +196,7 @@ public class View extends JPanel{
 		//System.out.println("update model");
 		if ((model.getQuizing() || model.getCurState().equals(Type.OPREVIEW) ||
 			model.getCurState().equals(Type.NHREVIEW)) && model.delayTimer == null) {//&& model.delayTimer == null
-			submitButton.setVisible(true);
+			//submitButton.setVisible(true);
 			choice1.setVisible(true);
 			choice2.setVisible(true);
 			choice3.setVisible(true);
@@ -298,7 +298,7 @@ public class View extends JPanel{
 						g.drawImage(opmap,0, 0, Color.gray, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
-						g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
+						//g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
 					} else {
 						//if(model.getWaterbg()) {
 							g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
@@ -386,10 +386,10 @@ public class View extends JPanel{
 						}
 						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
 						//g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
-						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 1000, 20);
-						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 2*this.frameWidth/3, this.frameWidth/25);
+						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
 						
 						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					
@@ -428,10 +428,10 @@ public class View extends JPanel{
 				case NH2:
 					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
 					
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 					g.setColor(Color.red);
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggs), 1000, 20);
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
+					g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggList.size()), 3*this.frameWidth/4, this.frameWidth/25);
 					//g.drawString("You Win NH1", 1000, 20);
 					g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					//System.out.println(model.getList().size());
@@ -460,7 +460,7 @@ public class View extends JPanel{
 				case OPREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(70));
-					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
+					g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
 					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(260));
 					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(300));
 					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(340));
@@ -472,7 +472,7 @@ public class View extends JPanel{
 				case NHREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(70));
-					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
+					g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
 					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(260));
 					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(300));
 					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(340));
@@ -491,7 +491,7 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("quizpanel"), frameWidth/4, frameHeight * 100/838, null,this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
 					g.setColor(Color.black);
-					g.drawString("Your chose: " + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(220));
+					g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(220));
 					//Don't delete this, this is the front changing attempt
 					/*
 					String question = model.getQuiz().getQuestion();

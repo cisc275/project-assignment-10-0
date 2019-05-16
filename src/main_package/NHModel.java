@@ -28,7 +28,7 @@ public class NHModel extends Model implements Serializable{
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
 		//setCurState(Type.NH1);
-		nestBuild = "nest1";
+		nestBuild = "nest10";
 		setCurState(Type.TUTORIALNH1);
 		setList(new ArrayList<>());
 		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
@@ -40,6 +40,7 @@ public class NHModel extends Model implements Serializable{
 	}
 	
 	public void setUpGame() {
+		nestBuild = "nest1";
 		setList(new ArrayList<>());
 		//setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
 		createCollectedItems(5, ItemType.STICK);
@@ -51,7 +52,7 @@ public class NHModel extends Model implements Serializable{
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		createTimer(20);
+		createTimer(40);
 	}
 	
 	public void createCollectedItems(int num, ItemType it) {

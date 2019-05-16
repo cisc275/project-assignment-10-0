@@ -36,8 +36,7 @@ public class NH2Model extends Model implements Serializable{
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
-		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));
-		//createTimer(40);		
+		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));	
 	}
 	
 	public void setUpGame() {
