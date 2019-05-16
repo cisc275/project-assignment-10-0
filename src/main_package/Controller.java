@@ -147,11 +147,11 @@ public class Controller {
 //			}
 			model.checkQuiz();
 			System.out.println(model.getCurState());
-			view.submitButton.setVisible(false);
-			view.choice1.setVisible(false);
-			view.choice2.setVisible(false);
-			view.choice3.setVisible(false);
-			view.choice4.setVisible(false);
+//			view.submitButton.setVisible(false);
+//			view.choice1.setVisible(false);
+//			view.choice2.setVisible(false);
+//			view.choice3.setVisible(false);
+//			view.choice4.setVisible(false);
 			view.requestFocusInWindow();
 		}
 		
@@ -186,81 +186,95 @@ public class Controller {
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
 			
-			switch (model.getCurState()) {
-			case OP:
-				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//			switch (model.getCurState()) {
+//			case OP:
+//				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//					model.getBird().setYVector(-10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					//model.updateBirdPosition(-10, 0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					//model.updateBirdPosition(10, 0);
+//				}
+//				break;
+//			case TUTORIALNH1:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(-10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(-10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(10);
+//				}
+//				break;
+//			case NH1:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(-7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(-7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(7);
+//				}
+//				break;
+//			case TUTORIALNH2:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(-10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(-10);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(10);
+//				}
+//				break;
+//			case NH2:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(-7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(-7);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(7);
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+			if (model.getBird() != null) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					model.getBird().setYVector(-10);
+					model.getBird().setYVector(0 - model.getBird().getyMove());
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(10);
+					model.getBird().setYVector(model.getBird().getyMove());
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					//model.updateBirdPosition(-10, 0);
+					model.getBird().setXVector(0 - model.getBird().getxMove());
 				}
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					//model.updateBirdPosition(10, 0);
+					model.getBird().setXVector(model.getBird().getxMove());
 				}
-				break;
-			case TUTORIALNH1:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(10);
-				}
-				break;
-			case NH1:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(7);
-				}
-				break;
-			case TUTORIALNH2:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-10);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(10);
-				}
-				break;
-			case NH2:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(-7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(-7);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(7);
-				}
-				break;
-			default:
-				break;
 			}
 			
 		}
@@ -268,24 +282,7 @@ public class Controller {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			switch (model.getCurState()) {
-			case OP:
-				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					//model.updateBirdPosition(-10, 0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					//model.updateBirdPosition(10, 0);
-				}
-				break;
-			case TUTORIALNH1:
+			if (model.getBird() != null) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0);
 				}
@@ -298,52 +295,83 @@ public class Controller {
 				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					model.getBird().setXVector(0);
 				}
-				break;
-			case NH1:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(0);
-				}
-				break;
-			case TUTORIALNH2:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(0);
-				}
-				break;
-			case NH2:
-				if (e.getKeyCode() == KeyEvent.VK_UP) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-					model.getBird().setYVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-					model.getBird().setXVector(0);
-				}
-				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-					model.getBird().setXVector(0);
-				}
-				break;
-			default:
-				break;
 			}
+//			switch (model.getCurState()) {
+//			case OP:
+//				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					//model.updateBirdPosition(-10, 0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					//model.updateBirdPosition(10, 0);
+//				}
+//				break;
+//			case TUTORIALNH1:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(0);
+//				}
+//				break;
+//			case NH1:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(0);
+//				}
+//				break;
+//			case TUTORIALNH2:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(0);
+//				}
+//				break;
+//			case NH2:
+//				if (e.getKeyCode() == KeyEvent.VK_UP) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+//					model.getBird().setYVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+//					model.getBird().setXVector(0);
+//				}
+//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+//					model.getBird().setXVector(0);
+//				}
+//				break;
+//			default:
+//				break;
+//			}
 		}
 
 		@Override

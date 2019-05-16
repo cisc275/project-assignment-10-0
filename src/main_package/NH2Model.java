@@ -266,8 +266,8 @@ public class NH2Model extends Model implements Serializable{
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
 		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
 		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
-		int vectorX = (int) vX;
-		int vectorY = (int) vY;
+		int vectorX = (int) vX;//scaleW((int) vX);
+		int vectorY = (int) vY;//scaleH((int) vY);
 		
 		// Switch statement to determine create a fox spawn location.
 		switch(ranSide) {

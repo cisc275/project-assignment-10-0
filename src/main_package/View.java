@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,73 +71,8 @@ public class View extends JPanel{
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
     	
     	//setLayout(null);
-		
-    			OPButton = new JButton("start Osprey Game");
-    			OPButton.setOpaque(true);
-    			OPButton.setBounds(300, frameHeight/3, 300, 300);
-    			//OPButton.setVisible(false);
-    			add(OPButton);
-    			
-    			NHButton = new JButton("start Northen Harrier Game");
-    			NHButton.setOpaque(true);
-    			NHButton.setBounds(1000,frameHeight/3,300,300);
-    			//NHButton.setVisible(false);
-    			add(NHButton);
-    			
-    			backButton = new JButton("back");
-    			backButton.setOpaque(true);
-    			backButton.setBounds(frameWidth/2, 10, 100, 30);
-    			backButton.setVisible(false);
-    			add(backButton);
-    			
-    			submitButton = new JButton("submit");
-    			submitButton.setOpaque(true);
-    			submitButton.setBounds(frameWidth/2, (frameHeight / 2) + 50 , 100, 30);
-    			submitButton.setVisible(false);
-    			add(submitButton);
-    			
-    			//GridBagConstraints gbc = new GridBagConstraints();
-    			choice1 = new JButton("A");
-    			choice1.setOpaque(true);
-    			choice1.setBounds(frameWidth/3, 300, 50,30);
-    			choice1.setVisible(false);
-    			choice1.setActionCommand("A");
-    			add(choice1);
-    			
-    			choice2 = new JButton("B");
-    			choice2.setOpaque(true);
-    			choice2.setVisible(false);
-    			choice2.setActionCommand("B");
-    			add(choice2);
-    			
-    			choice3 = new JButton("C");
-    			choice3.setOpaque(true);
-    			choice3.setVisible(false);
-    			choice3.setActionCommand("C");
-    			add(choice3);
-    			
-    			choice4 = new JButton("D");
-    			choice4.setOpaque(true);
-    			choice4.setVisible(false);
-    			choice4.setActionCommand("D");
-    			add(choice4);
-    			
-    			serialize = new JButton("Serialize");
-    			serialize.setOpaque(true);
-    			serialize.setVisible(true);
-    			serialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
-    			serialize.setActionCommand("s");
-    			add(serialize);
-    			
-    			deserialize = new JButton("Deserialize");
-    			deserialize.setOpaque(true);
-    			deserialize.setVisible(true);
-    			deserialize.setBounds(frameWidth/4, (frameHeight / 4) + 50 , 100, 30);
-    			deserialize.setActionCommand("d");
-    			add(deserialize);
-    			
-    	frame.getContentPane().add(this);
-    	
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
     	frame.setVisible(false);
 		
     	imgsSize = new HashMap<>();
@@ -160,9 +96,6 @@ public class View extends JPanel{
     	imgsSize.put("NorthernHarrierReal", new int[] {scaleW(400), scaleH(500)});
     	imgsSize.put("quizpanel", new int[] {scaleW(1000), scaleH(600)});
     	
-    	
-    	
-    	
 
 		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
@@ -184,6 +117,78 @@ public class View extends JPanel{
 		nhmap = imgs.get("nhmapbg");
 		nhmaps = new Image[]{imgs.get("nhmapbg"),imgs.get("nhmapbg2"),imgs.get("nhmapbg3"),imgs.get("nhmapbg4") };
 		opmaps = new Image[]{imgs.get("opmapbg"), imgs.get("opmapbg2"),imgs.get("opmapbg3"), imgs.get("opmapbg4"),imgs.get("opmapbg5")};
+		
+		
+		setLayout(null);
+		OPButton = new JButton(new ImageIcon(imgs.get("ospreyReal")));
+		OPButton.setOpaque(true);
+		OPButton.setBounds(frameWidth/5, frameHeight/8, imgsSize.get("ospreyReal")[0], imgsSize.get("ospreyReal")[1]);
+		//OPButton.setVisible(false);
+		add(OPButton);
+		
+		NHButton = new JButton(new ImageIcon(imgs.get("NorthernHarrierReal")));
+		NHButton.setOpaque(true);
+		NHButton.setBounds(frameWidth/2,frameHeight/8,imgsSize.get("NorthernHarrierReal")[0],imgsSize.get("NorthernHarrierReal")[1]);
+		//NHButton.setVisible(false);
+		add(NHButton);
+		
+		backButton = new JButton("back");
+		backButton.setOpaque(true);
+		backButton.setBounds(frameWidth/2, scaleH(5), scaleW(100), scaleH(30));
+		backButton.setVisible(false);
+		add(backButton);
+		
+		submitButton = new JButton("submit");
+		submitButton.setOpaque(true);
+		submitButton.setBounds(scaleW(795), scaleH(600) , scaleW(100), scaleH(30));
+		submitButton.setVisible(false);
+		add(submitButton);
+		
+		//GridBagConstraints gbc = new GridBagConstraints();
+		choice1 = new JButton("A");
+		choice1.setOpaque(true);
+		choice1.setBounds(scaleW(730), scaleH(550), scaleW(50),scaleH(30));
+		choice1.setVisible(false);
+		choice1.setActionCommand("A");
+		add(choice1);
+		
+		choice2 = new JButton("B");
+		choice2.setOpaque(true);
+		choice2.setBounds(scaleW(780), scaleH(550), scaleW(50),scaleH(30));
+		choice2.setVisible(false);
+		choice2.setActionCommand("B");
+		add(choice2);
+		
+		choice3 = new JButton("C");
+		choice3.setOpaque(true);
+		choice3.setBounds(scaleW(830), scaleH(550), scaleW(50),scaleH(30));
+		choice3.setVisible(false);
+		choice3.setActionCommand("C");
+		add(choice3);
+		
+		choice4 = new JButton("D");
+		choice4.setOpaque(true);
+		choice4.setBounds(scaleW(880), scaleH(550), scaleW(50),scaleH(30));
+		choice4.setVisible(false);
+		choice4.setActionCommand("D");
+		add(choice4);
+		
+		serialize = new JButton("Serialize");
+		serialize.setOpaque(true);
+		serialize.setVisible(true);
+		serialize.setBounds(scaleW(1200), scaleH(5), scaleW(100), scaleH(30));
+		serialize.setActionCommand("s");
+		add(serialize);
+		
+		deserialize = new JButton("Deserialize");
+		deserialize.setOpaque(true);
+		deserialize.setVisible(true);
+		deserialize.setBounds(scaleW(1300), scaleH(5), scaleW(100), scaleH(30));
+		deserialize.setActionCommand("d");
+		add(deserialize);
+		
+		frame.getContentPane().add(this);
+		
 		frame.setVisible(true);
     	
     	
@@ -195,7 +200,7 @@ public class View extends JPanel{
 	public void update(Model model) {
 		//System.out.println("update model");
 		if ((model.getQuizing() || model.getCurState().equals(Type.OPREVIEW) ||
-			model.getCurState().equals(Type.NHREVIEW)) && model.delayTimer == null) {//&& model.delayTimer == null
+			model.getCurState().equals(Type.NHREVIEW))) {//&& model.delayTimer == null
 			//submitButton.setVisible(true);
 			choice1.setVisible(true);
 			choice2.setVisible(true);
@@ -204,6 +209,12 @@ public class View extends JPanel{
 			backButton.setVisible(false);
 		}
 		else {
+			submitButton.setVisible(false);
+			choice1.setVisible(false);
+			choice2.setVisible(false);
+			choice3.setVisible(false);
+			choice4.setVisible(false);
+			backButton.setVisible(true);
 		if (model.getCurState() == Type.MAINMENU) {
 			
 		}
@@ -273,8 +284,8 @@ public class View extends JPanel{
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
 			g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
-			g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
-			g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
+			//g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
+			//g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 			return;
 		}
 		try {
@@ -510,7 +521,7 @@ public class View extends JPanel{
 					if (model.getCurState() == Type.NH1) {
 						//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
 						//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
-						g.drawString(model.quizCount + "/" + 3 + " Quizzes", frameWidth/2, scaleH(600));
+						g.drawString(model.quizCount + "/" + 3 + " Quizzes", scaleW(1000), scaleH(600));
 
 					}
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));

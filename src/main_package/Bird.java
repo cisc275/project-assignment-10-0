@@ -16,6 +16,8 @@ public class Bird extends Element implements Serializable{
 	int itemsCollected;
 	int xVector;
 	int yVector;
+	int xMove;
+	int yMove;
 	
 	public Bird (int x, int y, int l, BirdType b) {
 		super(x,y);
@@ -25,12 +27,16 @@ public class Bird extends Element implements Serializable{
 		yVector = 0;
 		switch(b) {
 		case OSPREY:
+			xMove = 0;
+			yMove = 10;
 			xHitSize1 = 0; 
 			xHitSize2 = 150;
 			yHitSize1 = 0;
 			yHitSize2 = 150;
 			break;
 		case NH:
+			xMove = 7;
+			yMove = 7;
 			xHitSize1 = 0;
 			xHitSize2 = 150;
 			yHitSize1 = 0;
@@ -39,6 +45,14 @@ public class Bird extends Element implements Serializable{
 		}
 	}
 	
+	public int getxMove() {
+		return xMove;
+	}
+
+	public int getyMove() {
+		return yMove;
+	}
+
 	public BirdType getBType() {
 		return bt;
 	}
