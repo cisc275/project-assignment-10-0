@@ -15,6 +15,7 @@ public class Element implements Serializable{
 	// y-axis location
 	int y;
 	ItemType it;
+	int xHitSize1, xHitSize2, yHitSize1, yHitSize2;
 
 	public Element(int x, int y) {
 		this.x = x;
@@ -44,6 +45,22 @@ public class Element implements Serializable{
 	// type getter
 	public ItemType getType() {
 		return it;
+	}
+
+	public int getxHitSize1() {
+		return xHitSize1;
+	}
+
+	public int getxHitSize2() {
+		return xHitSize2;
+	}
+
+	public int getyHitSize1() {
+		return yHitSize1;
+	}
+
+	public int getyHitSize2() {
+		return yHitSize2;
 	}
 	
 }

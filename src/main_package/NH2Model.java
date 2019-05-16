@@ -22,8 +22,8 @@ public class NH2Model extends Model{
 		eggList = new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < eggs; i++) {
-			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest")[0]) - nest.getX());
-			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest")[1]) - nest.getY()); 
+			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
+			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest10")[1]) - nest.getY()); 
 			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);
 			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
 		}

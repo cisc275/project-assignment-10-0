@@ -1,5 +1,6 @@
 package main_package;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class OPModel extends Model{
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
 	public static int xbg = -5;
+	Color color;
 	
 	// create OPModel for osprey game
 	public OPModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
@@ -31,6 +33,7 @@ public class OPModel extends Model{
 			ex.printStackTrace();
 		}
 		createTimer(defaultTime);
+		color = Color.yellow;
 		
 	}
 	
@@ -49,7 +52,7 @@ public class OPModel extends Model{
 					System.out.println("time count :" + --timeCount);
 					energy --;
 				}
-				if (timeCount % 4 == 0) {
+				if (timeCount % 1 == 0) {
 					// every 4 second update list
 					updateL = true;
 				}
@@ -77,6 +80,7 @@ public class OPModel extends Model{
 	// call checkCollision
 	@Override
 	public void updatePosition() {
+		color = Color.yellow;
 		// for bird
 		if (!(outOfFrame())) {
 			bird.move();
@@ -131,21 +135,23 @@ public class OPModel extends Model{
 			System.out.println("update list");
 			Random ran = new Random();
 			int ranType = ran.nextInt(3);
-			int ranSpeed = ran.nextInt(6) + 8;
+			int ranSpeed = scaleW(ran.nextInt(14) + 10);
+			int ranPosition1 = scaleH(ran.nextInt(frameH/2));
+			int ranPosition2 = scaleH(ran.nextInt(frameH/2 - 200) + frameH/2);
 			System.out.println("random type: " + ranType);
 			System.out.println("random speed: " + ranSpeed);
 			switch(ranType) {
 			// 0 is airplane
 			case 0:
-				list.add(new HitItem(frameW, frameH / 4, ItemType.AIRPLANE, 0 - ranSpeed,0));
+				list.add(new HitItem(frameW, ranPosition1, ItemType.AIRPLANE, 0 - ranSpeed,0));  //    1/4
 			break;
 			// 1 is ship
 			case 1:
-				list.add(new HitItem(frameW, frameH * 4 / 7, ItemType.SHIP, 0 - ranSpeed,0));
+				list.add(new HitItem(frameW, ranPosition2, ItemType.SHIP, 0 - ranSpeed,0));  //     4/7
 			break;
 			// 2 is fish
 			case 2:
-				list.add(new HitItem(frameW, frameH * 5 / 7, ItemType.FISH, 0 - ranSpeed,0));
+				list.add(new HitItem(frameW, frameH*5/7, ItemType.FISH, 0 - ranSpeed,0));   //   5/7
 			break;
 			}
 			updateL = false;
@@ -164,6 +170,7 @@ public class OPModel extends Model{
 			if(ht instanceof HitItem) {
 				HitItem h = (HitItem)ht;
 				if(h.getType().equals(ItemType.FISH)) {
+					color = Color.green;
 					System.out.println(bird.getLife());
 					bird.eat();
 					//get energy
@@ -173,6 +180,7 @@ public class OPModel extends Model{
 					else {
 						energy += 10;
 					}
+					
 					
 				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX) || h.getType().equals(ItemType.SHIP)) {
 					System.out.println(bird.getLife());
@@ -214,6 +222,7 @@ public class OPModel extends Model{
 	public void startQuiz() {
 		switch(curState) {
 		case OP:
+		color = Color.red;
 		System.out.println("start quiz");
 		this.quizing = true;
 		Random r = new Random();

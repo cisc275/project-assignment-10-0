@@ -12,7 +12,7 @@ public enum ItemType implements Serializable{
     WINFLAG("winflag"),
     EGG("egg"),
 	SHIP("ship"),
-	NEST("nest");
+	NEST("nest1");
 	
 	private String name = null;
 	

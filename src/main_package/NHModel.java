@@ -16,12 +16,14 @@ public class NHModel extends Model {
 	boolean moreCollectedItems;
 	boolean drawDE;
 	Random rand = new Random(); 
+	String nestBuild;
 	//static int eggs;
 	
 	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
 		//setCurState(Type.NH1);
+		nestBuild = "nest1";
 		setCurState(Type.TUTORIALNH1);
 		setList(new ArrayList<>());
 		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
@@ -79,6 +81,13 @@ public class NHModel extends Model {
 		if(timeCount <= 0) {
 			gameOver();
 		}
+		if (bird.getItemsCollected() == 5) {
+			nestBuild = "nest5";
+		}
+		else if (bird.getItemsCollected() == 10) {
+			nestBuild = "nest10";
+		}
+		
 		if (!outOfFrame()) {
 			bird.move();
 			//System.out.println(bird.getX() + ", " + bird.getY());

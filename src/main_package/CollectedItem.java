@@ -18,6 +18,32 @@ public class CollectedItem extends Element implements Serializable{
 		super(x,y);
 		it = i;
 		collected = false;
+		switch(i) {
+		case STICK:
+			xHitSize1 = 0; 
+			xHitSize2 = 100;
+			yHitSize1 = 0;
+			yHitSize2 = 100;
+			break;
+		case RAT:
+			xHitSize1 = 0;
+			xHitSize2 = 120;
+			yHitSize1 = 0;
+			yHitSize2 = 80;
+			break;
+		case EGG:
+			xHitSize1 = 0;
+			xHitSize2 = 30;
+			yHitSize1 = 0;
+			yHitSize2 = 50;
+			break;
+		case NEST:
+			xHitSize1 = 0;
+			xHitSize2 = 225;
+			yHitSize1 = 0;
+			yHitSize2 = 150;
+			break;
+		}
 	}
 	
 	// call when the item is collected, change boolean collected to true

@@ -26,6 +26,8 @@ public abstract class Model {
 	Type curState;
 	int frameW;
 	int frameH;
+	final int scaleWidth = 1550;
+	final int scaleHeight = 838;
 	int imgH;
 	int imgW;
 	HashMap<String, int[]>imgsSize;
@@ -72,8 +74,12 @@ public abstract class Model {
 	public boolean collisionF(Element e) {
 		int birdW = imgsSize.get(bird.getBType().getName())[0];
 		int birdH = imgsSize.get(bird.getBType().getName())[1];
-		int elementW = imgsSize.get(e.getType().getName())[0];
-		int elementH = imgsSize.get(e.getType().getName())[1];
+		//int elementW = imgsSize.get(e.getType().getName())[0];
+		//int elementH = imgsSize.get(e.getType().getName())[1];
+		int xhit1 = scaleW(e.getxHitSize1());
+		int xhit2 = scaleW(e.getxHitSize2());
+		int yhit1 = scaleH(e.getyHitSize1());
+		int yhit2 = scaleH(e.getyHitSize2());
 //		System.out.println(birdW + ", " + birdH + "; " + elementW + ", " + elementH
 //				);
 		
@@ -81,24 +87,44 @@ public abstract class Model {
 			return bird.getX() + birdW > e.getX();
 		}
 		
-		boolean xC = e.getX() <= bird.getX() + birdW 
-				&& e.getX() >= bird.getX();
-		boolean xC2 = e.getX() + elementW <= bird.getX() + birdW 
-				&& e.getX() + elementW >= bird.getX();
-		boolean yC1 = e.getY() <= bird.getY() + birdH 
-				&& e.getY() >= bird.getY();
-		boolean yC2 = e.getY() + elementH <= bird.getY() + birdH 
-				&& e.getY() + elementH >= bird.getY();
+//		boolean xC = e.getX() <= bird.getX() + birdW 
+//				&& e.getX() >= bird.getX();
+//		boolean xC2 = e.getX() + elementW <= bird.getX() + birdW 
+//				&& e.getX() + elementW >= bird.getX();
+//		boolean yC1 = e.getY() <= bird.getY() + birdH 
+//				&& e.getY() >= bird.getY();
+//		boolean yC2 = e.getY() + elementH <= bird.getY() + birdH 
+//				&& e.getY() + elementH >= bird.getY();
+		
+		boolean xC = e.getX() + xhit1<= bird.getX() + birdW 
+				&& e.getX() + xhit1 >= bird.getX();
+		boolean xC2 = e.getX() + xhit2 <= bird.getX() + birdW 
+				&& e.getX() + xhit2 >= bird.getX();
+		boolean yC1 = e.getY() + yhit1 <= bird.getY() + birdH 
+				&& e.getY() + yhit1>= bird.getY();
+		boolean yC2 = e.getY() + yhit2 <= bird.getY() + birdH 
+				&& e.getY() + yhit2 >= bird.getY();
+				
 		boolean result1 = xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2;
 		
-		boolean x2C = bird.getX() <= e.getX() + elementW
-				&& bird.getX() >= e.getX();
-		boolean x2C2 = bird.getX() + birdW <=e.getX() + elementW
-				&& bird.getX() + birdW >= e.getX();
-		boolean y2C1 = bird.getY() <= e.getY() + elementH 
-				&& bird.getY() >= e.getY();
-		boolean y2C2 = bird.getY() + birdH <= e.getY() + elementH 
-				&& bird.getY() + birdH >= e.getY();
+//		boolean x2C = bird.getX() <= e.getX() + elementW
+//				&& bird.getX() >= e.getX();
+//		boolean x2C2 = bird.getX() + birdW <=e.getX() + elementW
+//				&& bird.getX() + birdW >= e.getX();
+//		boolean y2C1 = bird.getY() <= e.getY() + elementH 
+//				&& bird.getY() >= e.getY();
+//		boolean y2C2 = bird.getY() + birdH <= e.getY() + elementH 
+//				&& bird.getY() + birdH >= e.getY();
+		
+		boolean x2C = bird.getX() <= e.getX() + xhit2
+				&& bird.getX() >= e.getX() + xhit1;
+		boolean x2C2 = bird.getX() + birdW <=e.getX() + xhit2
+				&& bird.getX() + birdW >= e.getX() + xhit1;
+		boolean y2C1 = bird.getY() <= e.getY() + yhit2 
+				&& bird.getY() >= e.getY() + yhit1;
+		boolean y2C2 = bird.getY() + birdH <= e.getY() + yhit2 
+				&& bird.getY() + birdH >= e.getY() + yhit1;
+				
 		boolean result2 = x2C && y2C1 || x2C && y2C2 || x2C2 && y2C1 || x2C2 && y2C2;
 				
 		return result1 || result2;
@@ -190,6 +216,13 @@ public abstract class Model {
 
 	public void setGroundY(int groundY) {
 		this.groundY = groundY;
+	}
+	
+	public int scaleW(int size) {
+		return frameW * size / scaleWidth;
+	}
+	public int scaleH(int size) {
+		return frameH * size / scaleHeight;
 	}
 	
 }

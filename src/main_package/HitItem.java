@@ -19,6 +19,38 @@ public class HitItem extends Element implements Serializable{
 		it = i;
 		xVector = xV;
 		yVector = yV;
+		switch(i) {
+		case AIRPLANE:
+			xHitSize1 = 50; 
+			xHitSize2 = 300;
+			yHitSize1 = 50;
+			yHitSize2 = 150;
+			break;
+		case SHIP:
+			xHitSize1 = 80;
+			xHitSize2 = 270;
+			yHitSize1 = 80;
+			yHitSize2 = 200;
+			break;
+		case FISH:
+			xHitSize1 = 0;
+			xHitSize2 = 115;
+			yHitSize1 = 0;
+			yHitSize2 = 75;
+			break;
+		case FOX:
+			xHitSize1 = 0;
+			xHitSize2 = 100;
+			yHitSize1 = 0;
+			yHitSize2 = 150;
+			break;
+		case WINFLAG:
+			xHitSize1 = 0;
+			xHitSize2 = 200;
+			yHitSize1 = 0;
+			yHitSize2 = 150;
+			break;
+		}
 	}
 	
 

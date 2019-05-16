@@ -391,6 +391,11 @@ public class Controller {
     				break;
     			case OP:
     				//System.out.println("OP Controller");
+    				if (((OPModel) model).getDrawNA()) {
+    					t.setDelay(500);
+    				}else {
+    					t.setDelay(30);
+    				}
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				//view.animation();
@@ -399,6 +404,11 @@ public class Controller {
     				curState = model.curState;
     				break;
     			case TUTORIALNH1:
+    				if (((NHModel) model).drawDE()) {
+    					t.setDelay(500);
+    				}else {
+    					t.setDelay(30);
+    				}
     				view.update(model);
     				model.tutorial();
     				curState = model.getCurState();

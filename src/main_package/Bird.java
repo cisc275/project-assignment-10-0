@@ -23,6 +23,20 @@ public class Bird extends Element implements Serializable{
 		bt = b;
 		xVector = 0;
 		yVector = 0;
+		switch(b) {
+		case OSPREY:
+			xHitSize1 = 0; 
+			xHitSize2 = 150;
+			yHitSize1 = 0;
+			yHitSize2 = 150;
+			break;
+		case NH:
+			xHitSize1 = 0;
+			xHitSize2 = 150;
+			yHitSize1 = 0;
+			yHitSize2 = 150;
+			break;
+		}
 	}
 	
 	public BirdType getBType() {
