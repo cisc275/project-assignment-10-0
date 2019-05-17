@@ -14,7 +14,7 @@ public class OPModel extends Model{
 	private int energy;
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
-	public static int xbg = -5;
+	public static int xbg = -8;
 	Color color;
 	
 	// create OPModel for osprey game
