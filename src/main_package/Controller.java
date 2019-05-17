@@ -64,7 +64,9 @@ public class Controller {
 			// TODO Auto-generated method stub
 			model.setCurState(Type.MAINMENU);
 			curState = Type.MAINMENU;
-			model.myTimer.cancel();
+			if(model.myTimer != null) {
+				model.myTimer.cancel();
+			}
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
 			view.OPButton.setVisible(true);
@@ -161,6 +163,14 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			model.getQuiz().setChosenAnser(e.getActionCommand());
+			model.checkQuiz();
+			System.out.println(model.getCurState());
+			view.submitButton.setVisible(false);
+			view.choice1.setVisible(false);
+			view.choice2.setVisible(false);
+			view.choice3.setVisible(false);
+			view.choice4.setVisible(false);
+			view.requestFocusInWindow();
 		}
 		
 	}

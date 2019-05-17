@@ -36,8 +36,7 @@ public class NH2Model extends Model implements Serializable{
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
-		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));
-		//createTimer(40);		
+		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));	
 	}
 	
 	public void setUpGame() {
@@ -267,8 +266,8 @@ public class NH2Model extends Model implements Serializable{
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
 		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
 		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
-		int vectorX = scaleW((int) vX);
-		int vectorY = scaleH((int) vY);
+		int vectorX = (int) vX;//scaleW((int) vX);
+		int vectorY = (int) vY;//scaleH((int) vY);
 		
 		// Switch statement to determine create a fox spawn location.
 		switch(ranSide) {
