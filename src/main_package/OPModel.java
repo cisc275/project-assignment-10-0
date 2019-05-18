@@ -54,7 +54,7 @@ public class OPModel extends Model implements Serializable{
 					System.out.println("time count :" + --timeCount);
 					energy --;
 				}
-				if (timeCount % 1 == 0) {
+				if (timeCount % 2 == 0) {
 					// every 4 second update list
 					updateL = true;
 				}

@@ -24,6 +24,7 @@ public class NH2Model extends Model implements Serializable{
 		
 		super(fW, fH, iW, iH, map);
 		curState = Type.TUTORIALNH2;
+		tutorialBg = new String[] {"NHtutorial3bg"};
 		eggList = new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < eggs; i++) {
@@ -220,9 +221,9 @@ public class NH2Model extends Model implements Serializable{
 						
 					}
 				}
-				if(this.foxoutOfFrame(curE)) {
-					setUpGame();
-				}
+//				if(this.foxoutOfFrame(curE)) {
+//					setUpGame();
+//				}
 			}
 		}
 	}

@@ -47,6 +47,7 @@ public class Controller {
 		view.choice2.addActionListener(new ChoiceButtonListener());
 		view.choice3.addActionListener(new ChoiceButtonListener());
 		view.choice4.addActionListener(new ChoiceButtonListener());
+		view.next.addActionListener(new NextListener());
 		view.serialize.addActionListener(new SerializeButtonListener());
 		view.deserialize.addActionListener(new SerializeButtonListener());	
 		
@@ -110,6 +111,41 @@ public class Controller {
 				view.NHButton.setVisible(false);
 				view.requestFocusInWindow();
 				
+			
+		}
+		
+	}
+	
+	class NextListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if (model.tutor < model.tutorialBg.length - 1) {
+				if (model.tutor == 0 && model instanceof NHModel) {
+					System.out.println("add element");
+					((NHModel) model).setNest(new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST));
+					model.getList().add(new CollectedItem((model.getFrameW()-model.imgW)/3, model.getFrameH()-model.imgH, ItemType.STICK));
+					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, (model.getFrameH()-model.imgH)/2, ItemType.RAT));
+				}
+				model.tutor++;
+				System.out.println(model.tutor);
+			}else {
+				switch(model.getCurState()) {
+				case TUTORIALNH1:
+					((NHModel) model).setUpGame();
+					curState = Type.NH1;
+					model.setCurState(Type.NH1);
+					break;
+				case TUTORIALNH2:
+					((NH2Model) model).setUpGame();
+					curState = Type.NH2;
+					model.setCurState(Type.NH2);
+					break;
+				}
+				view.next.setVisible(false);
+			}
+			view.requestFocusInWindow();
 			
 		}
 		
@@ -265,6 +301,7 @@ public class Controller {
 //				break;
 //			}
 			if (model.getBird() != null) {
+				System.out.println("key listener");
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0 - model.getBird().getyMove());
 				}
@@ -452,7 +489,7 @@ public class Controller {
     				}
     				view.update(model);
     				model.tutorial();
-    				curState = model.getCurState();
+    				//curState = model.getCurState();
     				break;
     			case NH1:
     				//System.out.println("NH1 controlller");

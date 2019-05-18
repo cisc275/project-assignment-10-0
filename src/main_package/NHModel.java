@@ -30,11 +30,13 @@ public class NHModel extends Model implements Serializable{
 		//setCurState(Type.NH1);
 		nestBuild = "nest10";
 		setCurState(Type.TUTORIALNH1);
+		tutorialBg = new String[] {"NHtutorial1bg","NHtutorial2bg"};
+		tutor = 0;
 		setList(new ArrayList<>());
-		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
+		//setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
-		getList().add(new CollectedItem((getFrameW()-imgW)/3, getFrameH()-imgH, ItemType.STICK));
-		getList().add(new CollectedItem(4*(getFrameW()-imgW)/5, (getFrameH()-imgH)/2, ItemType.RAT));
+		//getList().add(new CollectedItem((getFrameW()-imgW)/3, getFrameH()-imgH, ItemType.STICK));
+		//getList().add(new CollectedItem(4*(getFrameW()-imgW)/5, (getFrameH()-imgH)/2, ItemType.RAT));
 		createTimer(5);
 		//getList().add(new CollectedItem(2*(getFrameW()-imgW)/3, getFrameH()-imgH, ItemType.RAT));
 	}
@@ -42,7 +44,7 @@ public class NHModel extends Model implements Serializable{
 	public void setUpGame() {
 		nestBuild = "nest1";
 		setList(new ArrayList<>());
-		//setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
+		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
 		createCollectedItems(5, ItemType.STICK);
 		createCollectedItems(5, ItemType.RAT);
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
@@ -240,12 +242,12 @@ public class NHModel extends Model implements Serializable{
 			if(this.checkCollision(bird)) {
 				System.out.println("No more");
 			}
-			if (!moreCollectedItems && collisionF(nest)) {
-				System.out.println("NH1 Complete");
-				bird.setItemsCollected(0);
-				setUpGame();
-				curState = Type.NH1;
-			}
+//			if (!moreCollectedItems && collisionF(nest)) {
+//				System.out.println("NH1 Complete");
+//				bird.setItemsCollected(0);
+//				setUpGame();
+//				curState = Type.NH1;
+//			}
 			
 		}
 	}

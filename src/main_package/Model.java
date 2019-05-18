@@ -20,7 +20,7 @@ public abstract class Model implements Serializable{
 //	transient Timer delayTimer;
 	int timeCount;
 	int delayCount;
-	int pic;
+	int pic, tutor;
 	ArrayList<Element> list;
 	Bird bird;
 	boolean quizing, updateL;
@@ -40,6 +40,7 @@ public abstract class Model implements Serializable{
 	private int groundX, groundY;
 	static int eggs;
 	static CollectedItem nest;
+	String[] tutorialBg;
 	
 	// initialize the timer and all the element in the Collection and bird
 	// initializing the quizing to be false

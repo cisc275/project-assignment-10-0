@@ -36,7 +36,7 @@ public class View extends JPanel{
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
-	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3, choice4, serialize, deserialize;
+	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3, choice4, serialize, deserialize, next;
 	Image curImg, opmap, nhmap;
 	int pic = 0;
 	int pic2 = 0;
@@ -92,11 +92,13 @@ public class View extends JPanel{
     	imgsSize.put("ospreyReal", new int[] {scaleW(400), scaleH(500)});
     	imgsSize.put("NorthernHarrierReal", new int[] {scaleW(400), scaleH(500)});
     	imgsSize.put("quizpanel", new int[] {scaleW(1000), scaleH(600)});
+    	imgsSize.put("nextbutton", new int[] {scaleW(150), scaleH(70)});
     	
 
 		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
-				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel"};
+				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel",
+				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton"};
 
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -170,6 +172,13 @@ public class View extends JPanel{
 		choice4.setActionCommand("D");
 		add(choice4);
 		
+		next = new JButton(new ImageIcon(imgs.get("nextbutton")));
+		next.setOpaque(true);
+		next.setContentAreaFilled(false);
+		next.setBounds(scaleW(1300), scaleH(700), scaleW(150),scaleH(70));
+		next.setVisible(false);
+		add(next);
+		
 		serialize = new JButton("Serialize");
 		serialize.setOpaque(true);
 		serialize.setVisible(true);
@@ -239,9 +248,14 @@ public class View extends JPanel{
 			if (drawDE) {
 				model.pic = (model.pic + 1)%fcNhmap;
 				nhmap = nhmaps[model.pic];
+			}else {
+				next.setVisible(true);
 			}
 		}
 		else if (model.getCurState() == Type.NH1) {
+		}
+		else if (model.getCurState() == Type.TUTORIALNH2) {
+			next.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH2) {
 			backButton.setVisible(true);
@@ -340,10 +354,10 @@ public class View extends JPanel{
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-								if (each.getType().equals(ItemType.WINFLAG)) {
-									System.out.println("land");
-									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
-								}
+//								if (each.getType().equals(ItemType.WINFLAG)) {
+//									System.out.println("land");
+//									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
+//								}
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
@@ -355,7 +369,7 @@ public class View extends JPanel{
 						g.drawImage(nhmap,0, 0, Color.gray, this);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
 					} else {
-						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+						g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
 						g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
@@ -364,7 +378,9 @@ public class View extends JPanel{
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
+						if (model.nest != null) {
 						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
+						}
 						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					}
 					break;
@@ -413,7 +429,7 @@ public class View extends JPanel{
 //					}
 					break;
 				case TUTORIALNH2:
-					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+					g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
 					g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 					g.setColor(Color.red);
@@ -624,6 +640,18 @@ public class View extends JPanel{
 			}
 			else if (x.equals("nhmapbg4")) {
 				bi = ImageIO.read(new File("imgs/demap4.png"));
+			}
+			else if (x.equals("NHtutorial1bg")) {
+				bi = ImageIO.read(new File("imgs/NHtutorial1.png"));
+			}
+			else if (x.equals("NHtutorial2bg")) {
+				bi = ImageIO.read(new File("imgs/NHtutorial2.png"));
+			}
+			else if (x.equals("NHtutorial3bg")) {
+				bi = ImageIO.read(new File("imgs/NHtutorial3.png"));
+			}
+			else if (x.equals("nextbutton")) {
+				bi = ImageIO.read(new File("imgs/nextbutton.png"));
 			}
 			else {
 				bi = null;
