@@ -27,10 +27,23 @@ public class NH2Model extends Model implements Serializable{
 		eggList = new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < eggs; i++) {
-			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
+			/*int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
 			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest10")[1]) - nest.getY()); 
-			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);
-			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
+			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);*/
+			switch(i) {
+			case 0:
+				eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
+				System.out.println("1 egg");
+				break;
+			case 1:
+				eggList.add(new CollectedItem(nest.getX() + 80, nest.getY() + 50, ItemType.EGG));
+				System.out.println("2 egg");
+				break;
+			case 2:
+				eggList.add(new CollectedItem(nest.getX() + 50, nest.getY() + 50, ItemType.EGG));
+				System.out.println("3 egg");
+				break;
+			}
 		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
