@@ -496,7 +496,7 @@ public class Controller {
     				view.update(model);
     				if (!model.getQuizing()) {
     					model.updatePosition();
-    					if (model.quizCount > 2) {
+    					if (model.quizCount > 2 && model.eggs > 0) {
         					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
         					curState = model.getCurState();
         					System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

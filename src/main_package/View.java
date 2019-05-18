@@ -93,11 +93,11 @@ public class View extends JPanel{
     	imgsSize.put("NorthernHarrierReal", new int[] {scaleW(400), scaleH(500)});
     	imgsSize.put("quizpanel", new int[] {scaleW(1000), scaleH(600)});
     	imgsSize.put("nextbutton", new int[] {scaleW(150), scaleH(70)});
+    	imgsSize.put("arrow", new int[] {scaleW(300), scaleH(150)});
     	
-
 		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
-				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel",
+				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow"};
 				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton"};
 
     	imgs = new HashMap<>();
@@ -402,7 +402,11 @@ public class View extends JPanel{
 						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+								if(model.timeCount < 15) {
+									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), Color.GREEN,this);
+								} else {
+									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+								}
 							}
 						}
 						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
@@ -444,6 +448,7 @@ public class View extends JPanel{
 					for(CollectedItem each: ((NH2Model) model).eggList) {
 						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 					}
+					g.drawImage(imgs.get("arrow"), this.frameWidth/3, (3*this.frameHeight)/8, null,this);
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					break;
 				case NH2:
@@ -641,6 +646,8 @@ public class View extends JPanel{
 			else if (x.equals("nhmapbg4")) {
 				bi = ImageIO.read(new File("imgs/demap4.png"));
 			}
+			else if (x.equals("arrow")) {
+				bi = ImageIO.read(new File("imgs/redArrow.png"));
 			else if (x.equals("NHtutorial1bg")) {
 				bi = ImageIO.read(new File("imgs/NHtutorial1.png"));
 			}

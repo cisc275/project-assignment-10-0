@@ -28,10 +28,23 @@ public class NH2Model extends Model implements Serializable{
 		eggList = new ArrayList<>();
 		Random r = new Random();
 		for (int i = 0; i < eggs; i++) {
-			int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
+			/*int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
 			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest10")[1]) - nest.getY()); 
-			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);
-			eggList.add(new CollectedItem(nest.getX() + ranX, nest.getY() + ranY, ItemType.EGG));
+			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);*/
+			switch(i) {
+			case 0:
+				eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
+				System.out.println("1 egg");
+				break;
+			case 1:
+				eggList.add(new CollectedItem(nest.getX() + 80, nest.getY() + 50, ItemType.EGG));
+				System.out.println("2 egg");
+				break;
+			case 2:
+				eggList.add(new CollectedItem(nest.getX() + 50, nest.getY() + 50, ItemType.EGG));
+				System.out.println("3 egg");
+				break;
+			}
 		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
@@ -109,7 +122,8 @@ public class NH2Model extends Model implements Serializable{
 					System.out.println("removeNH2");
 					eggs--;
 					System.out.println("remove eggs from lists");
-					if (!eggList.isEmpty()) {
+					System.out.println(eggList.size());
+					if(eggList.size()>0) {
 						eggList.remove(0);
 					}
 					if(eggs <= 0)
@@ -267,8 +281,8 @@ public class NH2Model extends Model implements Serializable{
 		int width = 0;
 		// Create vector in the right direction
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
-		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
+		double vX = 3*(((frameW-imgW)/2)/unitVectorMag);
+		double vY = 3*(((frameH-imgH)/2)/unitVectorMag);
 		int vectorX = (int) vX;//scaleW((int) vX);
 		int vectorY = (int) vY;//scaleH((int) vY);
 		
@@ -278,7 +292,7 @@ public class NH2Model extends Model implements Serializable{
 			height = (frameH-imgH)/2;
 			width = 0;
 			//direction = 'e';
-			list.add(new HitItem(width, height, ItemType.FOX, 5, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, 3, 0));
 			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
 			System.out.println("move east");
 			// Moving East
@@ -287,7 +301,7 @@ public class NH2Model extends Model implements Serializable{
 			height = (frameH - imgH)/2;
 			width = frameW;
 			//direction = 'w';
-			list.add(new HitItem(width, height, ItemType.FOX, -5, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, -3, 0));
 //			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
 			System.out.println("move west");
 			// Moving West
@@ -308,7 +322,7 @@ public class NH2Model extends Model implements Serializable{
 
 			//direction = 'n';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -4));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -3));
 			System.out.println("move north");
 			// Moving North
 			break;
