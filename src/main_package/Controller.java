@@ -162,8 +162,10 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			model.getQuiz().setChosenAnser(e.getActionCommand());
-			model.checkQuiz();
+			if (model.delayTimer == null) {
+				model.getQuiz().setChosenAnser(e.getActionCommand());
+				model.checkQuiz();
+			}
 			System.out.println(model.getCurState());
 			view.submitButton.setVisible(false);
 			view.choice1.setVisible(false);
@@ -429,8 +431,9 @@ public class Controller {
     				break;
     			case OP:
     				//System.out.println("OP Controller");
+    				view.update(model);
     				if (((OPModel) model).getDrawNA()) {
-    					t.setDelay(500);
+    					t.setDelay(30);
     				}else {
     					t.setDelay(30);
     				}
@@ -438,7 +441,7 @@ public class Controller {
     				model.updatePosition();
     				//view.animation();
     				}
-    				view.update(model);
+    				
     				curState = model.curState;
     				break;
     			case TUTORIALNH1:

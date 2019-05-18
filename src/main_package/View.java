@@ -56,9 +56,6 @@ public class View extends JPanel{
 	// initialize the frame and button
 	// add button to the JPanel
 	public View() {
-		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		//super(new GridBagLayout());
-		
 		frame = new JFrame();
 		System.out.println("frame");
 //		frame.getContentPane().add(this);
@@ -219,13 +216,14 @@ public class View extends JPanel{
 			
 		}
 		else if (model.getCurState() == Type.OP) {
-			//remove(OPButton);
-			//x = model.getBird().getX();
-			//y = model.getBird().getY();
-			//curImg = imgs.get("bird");
-			if (((OPModel) model).getDrawNA()) {
-				pic = (pic+1) % fcOpmap;
-				opmap = opmaps[pic];
+			if (((OPModel) model).getDrawNA() && model.pic < 4) {
+				model.pic = model.pic+1;
+				opmap = opmaps[model.pic];
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			if (curImg == imgs.get("osprey")) {
@@ -239,21 +237,13 @@ public class View extends JPanel{
 		else if(model.getCurState() == Type.TUTORIALNH1) {
 			drawDE = ((NHModel) model).drawDE();
 			if (drawDE) {
-				pic2 = (pic2 + 1)%fcNhmap;
-				nhmap = nhmaps[pic2];
+				model.pic = (model.pic + 1)%fcNhmap;
+				nhmap = nhmaps[model.pic];
 			}
 		}
 		else if (model.getCurState() == Type.NH1) {
-			//x = model.getBird().getX();
-			//y = model.getBird().getY();
-			//drawDE = ((NHModel) model).drawDE();
-			//curImg = imgs.get("bird");
-			//backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.NH2) {
-			//x = model.getBird().getX();
-			//y = model.getBird().getY();
-			//curImg = imgs.get("bird");
 			backButton.setVisible(true);
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
@@ -350,6 +340,10 @@ public class View extends JPanel{
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
+								if (each.getType().equals(ItemType.WINFLAG)) {
+									System.out.println("land");
+									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
+								}
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}

@@ -20,6 +20,7 @@ public class OPModel extends Model{
 	// create OPModel for osprey game
 	public OPModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
+		drawNA = true;
 		setCurState(Type.OP);
 		setBird(new Bird(0,250,3,BirdType.OSPREY));
 		setList(new ArrayList<>());
@@ -88,7 +89,7 @@ public class OPModel extends Model{
 		// for background
 		if(timeCount > 55) {
 			drawNA = true;
-		}else {
+		}else{
 			drawNA = false;
 			setGroundX(getGroundX() + xbg);
 			// for element
@@ -247,10 +248,11 @@ public class OPModel extends Model{
 		System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
-			energy -= 10;
+			energy -= 20;
 			quizOutcomeInfo = "You Are Wrong, Lose Energy!!";
 		}
 		else {
+			color = Color.green;
 			quizOutcomeInfo = "Congratulations! You Saved the Bird!!";
 		}
 		delayTimer = new Timer();
@@ -342,6 +344,10 @@ public class OPModel extends Model{
 	// getter and setter
 	public int getEnergy() {
 		return energy;
+	}
+
+	public boolean isWinFlag() {
+		return winFlag;
 	}
 
 	public void setEnergy(int energy) {

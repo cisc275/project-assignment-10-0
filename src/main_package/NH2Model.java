@@ -108,7 +108,9 @@ public class NH2Model extends Model implements Serializable{
 					System.out.println("removeNH2");
 					eggs--;
 					System.out.println("remove eggs from lists");
-					eggList.remove(0);
+					if (!eggList.isEmpty()) {
+						eggList.remove(0);
+					}
 					if(eggs <= 0)
 						this.curState = Type.GAMEOVER;
 					iter.remove();

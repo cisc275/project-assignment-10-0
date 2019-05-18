@@ -16,6 +16,7 @@ public abstract class Model {
 //	transient Timer delayTimer;
 	int timeCount;
 	int delayCount;
+	int pic;
 	ArrayList<Element> list;
 	Bird bird;
 	boolean quizing, updateL;
@@ -49,6 +50,7 @@ public abstract class Model {
 		imgsSize = map;
 		groundX = 0;
 		groundY = 0;
+		pic = 0;
 	}
 	
 	public int getImgH() {
