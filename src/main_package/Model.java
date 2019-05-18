@@ -74,6 +74,7 @@ public abstract class Model implements Serializable{
 	public abstract void startQuiz();
 	public abstract void checkQuiz();
 	public abstract void tutorial();
+	public abstract void setUpGame();
 	public abstract void createQuizzes() throws Exception;
 	
 	//

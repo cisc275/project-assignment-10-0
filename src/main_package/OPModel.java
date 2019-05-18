@@ -22,19 +22,23 @@ public class OPModel extends Model implements Serializable{
 	public OPModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
 		super(fW, fH, iW, iH, map);
 		drawNA = true;
-		setCurState(Type.OP);
+		quizing = false;
+		setCurState(Type.TUTORIALOP);
+		tutorialBg = new String[] {"OPtutorial1bg", "OPtutorial2bg"};
+		tutor = 0;
+		energy = 50;
 		setBird(new Bird(0,250,3,BirdType.OSPREY));
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-		//model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
-		setUpdateL();
-		winFlag = true;
-		try {
-			createQuizzes();
-		}catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		createTimer(defaultTime);
+//		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+//		model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
+//		setUpdateL();
+		//winFlag = true;
+//		try {
+//			createQuizzes();
+//		}catch(Exception ex) {
+//			ex.printStackTrace();
+//		}
+		createTimer(5);
 		color = Color.yellow;
 		
 	}
@@ -43,17 +47,35 @@ public class OPModel extends Model implements Serializable{
 	@Override
 	public void createTimer(int time) {
 		// TODO Auto-generated method stub
+		if (drawNA) {
+			timeCount = time;
+			myTimer = new Timer();
+			myTimer.schedule(new TimerTask() {
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					--timeCount;
+					if (timeCount <= 0) {
+						//drawNA = false;
+						myTimer.cancel();
+						myTimer = null;
+					}
+				}
+				
+			}, 0,1000);
+		}else {
 		timeCount = defaultTime;
 		energy = defaultTime - 10;
 		myTimer = new Timer();
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				
 				if (!quizing) {
 					System.out.println("time count :" + --timeCount);
 					energy --;
 				}
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				if (timeCount % 2 == 0) {
 					// every 4 second update list
 					updateL = true;
@@ -76,6 +98,7 @@ public class OPModel extends Model implements Serializable{
 			}
 			
 		}, 0, 1000);
+		}
 	}
 	
 	// loop through the collection list update their position by calling the move method
@@ -88,12 +111,13 @@ public class OPModel extends Model implements Serializable{
 			bird.move();
 		}
 		// for background
-		if(timeCount > 55) {
-			drawNA = true;
-		}else{
-			drawNA = false;
+//		if(timeCount > 55) {
+//			drawNA = true;
+//		}else{
+			//drawNA = false;
 			setGroundX(getGroundX() + xbg);
 			// for element
+			//System.out.println(updateL + "!!!!!!!!!!!!!!!!!!!!!!!");
 			if (updateL) {
 				updateList();
 			}
@@ -121,12 +145,13 @@ public class OPModel extends Model implements Serializable{
 					//updateL = true;
 				}
 			}
-		}
+		//}
 		
 	}
 	
 	//helper for updatePosition() to update the list by adding obiect in it 
 		public void updateList() {
+		//	System.out.println("update list called");
 			/*
 			Random ran = new Random();
 			int ranH = ran.nextInt(frameH - imgH / 2);
@@ -233,6 +258,15 @@ public class OPModel extends Model implements Serializable{
 			System.out.println(quiz);
 		}
 		break;
+		case TUTORIALOP:
+			quizing = true;
+			color = Color.red;
+			if (energy - 20 >=0) {
+				energy -= 20;
+			}else {
+				energy = 0;
+			}
+			break;
 		case OPREVIEW:
 			quizCount = 0;
 			quiz = quizzes.get(quizCount);
@@ -305,6 +339,9 @@ public class OPModel extends Model implements Serializable{
 				
 			}, 0, 1000);
 			break;
+		case TUTORIALOP:
+			quizing = false;
+			break;
 		}
 	}
 	
@@ -312,7 +349,45 @@ public class OPModel extends Model implements Serializable{
 	@Override
 	public void tutorial() {
 		// TODO Auto-generated method stub
-		
+		if (!outOfFrame() && timeCount == 0) {
+			drawNA = false;
+			bird.move();
+			if (list.isEmpty() && tutor == 1 && !quizing) {
+				color = Color.yellow;
+				list.add(new HitItem(frameW, scaleH(100), ItemType.AIRPLANE, 0 - 10,0));
+				list.add(new HitItem(frameW, scaleH(320), ItemType.SHIP, 0 - 10,0));
+				list.add(new HitItem(frameW, 3*frameH/4, ItemType.FISH, 0 - 10,0));
+			}
+			Iterator<Element> iter = list.iterator();
+			while(iter.hasNext()) {
+				Element curE = iter.next();
+				curE.move();
+				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+					System.out.println("remove");
+					iter.remove();
+				}
+				else if (checkCollision(curE)) {
+					System.out.println("remove");
+					iter.remove();
+				}
+			}
+		}
+		//System.out.println();
+	}
+	
+	public void setUpGame() {
+		setBird(new Bird(0,250,3,BirdType.OSPREY));
+		setList(new ArrayList<>());
+		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+		setUpdateL();
+		winFlag = true;
+		try {
+			createQuizzes();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		createTimer(defaultTime);
+		color = Color.yellow;
 	}
 	
 	// create quizzes for osprey game and osprey review quiz by reading file

@@ -9,6 +9,7 @@ public enum Type implements Serializable{
 	NH2("NH2Game"),
 	TUTORIALNH2("NH2Tutorial"),
 	OP("OPgame"),
+	TUTORIALOP("OPTutorial"),
 	MAINMENU("MainMenu"),
 	GAMEOVER("GameOver"),
 	OPREVIEW("opReview"),

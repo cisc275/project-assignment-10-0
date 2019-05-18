@@ -70,6 +70,7 @@ public class Controller {
 			}
 			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
+			view.next.setVisible(false);
 			view.OPButton.setVisible(true);
 			view.NHButton.setVisible(true);
 		}
@@ -121,17 +122,23 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			if (!model.getQuizing()) {
 			if (model.tutor < model.tutorialBg.length - 1) {
 				if (model.tutor == 0 && model instanceof NHModel) {
 					System.out.println("add element");
 					((NHModel) model).setNest(new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST));
-					model.getList().add(new CollectedItem((model.getFrameW()-model.imgW)/3, model.getFrameH()-model.imgH, ItemType.STICK));
+					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, 2*(model.getFrameH()-model.imgH)/3, ItemType.STICK));
 					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, (model.getFrameH()-model.imgH)/2, ItemType.RAT));
 				}
 				model.tutor++;
 				System.out.println(model.tutor);
 			}else {
 				switch(model.getCurState()) {
+				case TUTORIALOP:
+					curState = Type.OP;
+					model.setCurState(Type.OP);
+					model.setUpGame();
+					break;
 				case TUTORIALNH1:
 					((NHModel) model).setUpGame();
 					curState = Type.NH1;
@@ -147,6 +154,7 @@ public class Controller {
 			}
 			view.requestFocusInWindow();
 			
+		}
 		}
 		
 	}
@@ -198,8 +206,10 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if (model.delayTimer == null) {
+			if (model.delayTimer == null && model.getQuiz() != null) {
 				model.getQuiz().setChosenAnser(e.getActionCommand());
+				model.checkQuiz();
+			}else if (model.getCurState() == Type.TUTORIALOP) {
 				model.checkQuiz();
 			}
 			System.out.println(model.getCurState());
@@ -301,7 +311,6 @@ public class Controller {
 //				break;
 //			}
 			if (model.getBird() != null) {
-				System.out.println("key listener");
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0 - model.getBird().getyMove());
 				}
@@ -466,14 +475,18 @@ public class Controller {
     				System.out.println("here");
     				view.repaint();
     				break;
-    			case OP:
-    				//System.out.println("OP Controller");
-    				view.update(model);
+    			case TUTORIALOP:
     				if (((OPModel) model).getDrawNA()) {
-    					t.setDelay(30);
+    					t.setDelay(500);
     				}else {
     					t.setDelay(30);
     				}
+    				model.tutorial();
+    				view.update(model);
+    				break;
+    			case OP:
+    				//System.out.println("OP Controller");
+    				view.update(model);
     				if (!model.getQuizing()) {
     				model.updatePosition();
     				//view.animation();

@@ -98,7 +98,7 @@ public class View extends JPanel{
 		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
 				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow",
-				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton"};
+				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg"};
 
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -115,7 +115,7 @@ public class View extends JPanel{
 		opmap = imgs.get("opmapbg");
 		nhmap = imgs.get("nhmapbg");
 		nhmaps = new Image[]{imgs.get("nhmapbg"),imgs.get("nhmapbg2"),imgs.get("nhmapbg3"),imgs.get("nhmapbg4") };
-		opmaps = new Image[]{imgs.get("opmapbg"), imgs.get("opmapbg2"),imgs.get("opmapbg3"), imgs.get("opmapbg4"),imgs.get("opmapbg5")};
+		opmaps = new Image[]{imgs.get("opmapbg"),imgs.get("opmapbg") ,imgs.get("opmapbg2"),imgs.get("opmapbg3"), imgs.get("opmapbg4"),imgs.get("opmapbg5")};
 		
 		
 		setLayout(null);
@@ -224,16 +224,23 @@ public class View extends JPanel{
 		if (model.getCurState() == Type.MAINMENU) {
 			
 		}
-		else if (model.getCurState() == Type.OP) {
-			if (((OPModel) model).getDrawNA() && model.pic < 4) {
+		else if(model.getCurState() == Type.TUTORIALOP) {
+			if (((OPModel) model).getDrawNA()) {
+				if (model.pic < 5) {
 				model.pic = model.pic+1;
 				opmap = opmaps[model.pic];
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
+			}else {
+				next.setVisible(true);
 			}
+			if (curImg == imgs.get("osprey")) {
+				curImg = imgs.get("osprey2");
+			}
+			else {
+				curImg = imgs.get("osprey");
+			}
+		}
+		else if (model.getCurState() == Type.OP) {
 			
 			if (curImg == imgs.get("osprey")) {
 				curImg = imgs.get("osprey2");
@@ -304,6 +311,30 @@ public class View extends JPanel{
 					g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
 					g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 					break;
+				case TUTORIALOP:
+					if(((OPModel) model).getDrawNA()) {
+						g.drawImage(opmap,0, 0, Color.gray, this);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						g.setColor(Color.red);
+						//g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
+					}else {
+						g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
+						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+						g.setColor(Color.blue);
+						g.drawString("Energy Bar", scaleW(40), scaleH(70));
+						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+						//g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
+						if (model.getList().size() != 0) {
+							for(Element each: model.getList()) {
+								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+							}
+						}
+						g.setColor(Color.black);
+						g.drawRect(scaleW(10), scaleH(10), 50*scaleW(10), scaleH(20));
+						g.setColor(((OPModel) model).color);
+						g.fillRect(scaleW(10), scaleH(10), ((OPModel) model).getEnergy()*scaleW(10), scaleH(20));
+					}
+					break;
 				case OP:
 //					String s = "bgwater";
 //					if (model.timeCount == 55) {
@@ -314,7 +345,7 @@ public class View extends JPanel{
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.red);
 						//g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
-					} else {
+					} //else {
 						//if(model.getWaterbg()) {
 							g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
 							//System.out.println("first: " + model.groundX % frameWidth);
@@ -361,7 +392,7 @@ public class View extends JPanel{
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
-					}
+					//}
 					break;
 				case TUTORIALNH1:
 					if(drawDE) {
@@ -518,16 +549,11 @@ public class View extends JPanel{
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
 					g.setColor(Color.black);
 					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(220));
-					//Don't delete this, this is the front changing attempt
-					/*
-					String question = model.getQuiz().getQuestion();
-					String[] questions = question.split(".", -1);
-					for(int i = 0; i < questions.length; i++) {
-						if(i != (questions.length -1)) {
-							g.drawString(model.getQuiz().getQuestion(), frameWidth/2, 260);
-						}
+					if (model.getCurState() == Type.TUTORIALOP) {
+						g.drawString("Answer Quiz Correctly to Save Energy", frameWidth/3, scaleH(360));
+						g.drawString("Press Any Button Below to Continue", frameWidth/3, scaleH(520));
+						return;
 					}
-					*/
 					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(360));
 					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(400));
 					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(440));
@@ -660,6 +686,12 @@ public class View extends JPanel{
 			}
 			else if (x.equals("nextbutton")) {
 				bi = ImageIO.read(new File("imgs/nextbutton.png"));
+			}
+			else if (x.equals("OPtutorial1bg")) {
+				bi = ImageIO.read(new File("imgs/OPtutorial1.png"));
+			}
+			else if (x.equals("OPtutorial2bg")) {
+				bi = ImageIO.read(new File("imgs/OPtutorial2.png"));
 			}
 			else {
 				bi = null;
