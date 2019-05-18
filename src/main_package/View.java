@@ -392,7 +392,11 @@ public class View extends JPanel{
 						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+								if(model.timeCount < 15) {
+									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), Color.GREEN,this);
+								} else {
+									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+								}
 							}
 						}
 						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
