@@ -7,9 +7,13 @@ import java.util.Timer;
 
 import main_package.Type;
 
-public abstract class Model {
-	Timer myTimer;
-	Timer delayTimer;
+public abstract class Model implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	transient Timer myTimer;
+	transient Timer delayTimer;
 	static int defaultTime = 60;
 //	private static final long serialVersionUID = 1L;
 //	transient Timer myTimer;
