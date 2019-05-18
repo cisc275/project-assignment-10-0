@@ -2,6 +2,7 @@ package main_package;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class OPModel extends Model{
+public class OPModel extends Model implements Serializable{
 	private int energy;
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
