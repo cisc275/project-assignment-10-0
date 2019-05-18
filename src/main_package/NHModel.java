@@ -213,6 +213,7 @@ public class NHModel extends Model implements Serializable{
 						quizing = false;
 						if(eggs <=0) {
 							gameOver();
+							System.out.println("gameover");
 						} else {
 							curState = Type.NH2;
 							

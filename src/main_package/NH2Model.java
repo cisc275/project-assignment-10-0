@@ -108,7 +108,10 @@ public class NH2Model extends Model implements Serializable{
 					System.out.println("removeNH2");
 					eggs--;
 					System.out.println("remove eggs from lists");
-					eggList.remove(0);
+					System.out.println(eggList.size());
+					if(eggList.size()>0) {
+						eggList.remove(0);
+					}
 					if(eggs <= 0)
 						this.curState = Type.GAMEOVER;
 					iter.remove();
@@ -264,8 +267,8 @@ public class NH2Model extends Model implements Serializable{
 		int width = 0;
 		// Create vector in the right direction
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-		double vX = 5*(((frameW-imgW)/2)/unitVectorMag);
-		double vY = 5*(((frameH-imgH)/2)/unitVectorMag);
+		double vX = 3*(((frameW-imgW)/2)/unitVectorMag);
+		double vY = 3*(((frameH-imgH)/2)/unitVectorMag);
 		int vectorX = (int) vX;//scaleW((int) vX);
 		int vectorY = (int) vY;//scaleH((int) vY);
 		
@@ -275,7 +278,7 @@ public class NH2Model extends Model implements Serializable{
 			height = (frameH-imgH)/2;
 			width = 0;
 			//direction = 'e';
-			list.add(new HitItem(width, height, ItemType.FOX, 5, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, 3, 0));
 			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
 			System.out.println("move east");
 			// Moving East
@@ -284,7 +287,7 @@ public class NH2Model extends Model implements Serializable{
 			height = (frameH - imgH)/2;
 			width = frameW;
 			//direction = 'w';
-			list.add(new HitItem(width, height, ItemType.FOX, -5, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, -3, 0));
 //			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
 			System.out.println("move west");
 			// Moving West
@@ -305,7 +308,7 @@ public class NH2Model extends Model implements Serializable{
 
 			//direction = 'n';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -4));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -3));
 			System.out.println("move north");
 			// Moving North
 			break;
