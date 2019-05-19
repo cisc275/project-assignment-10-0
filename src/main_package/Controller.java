@@ -468,7 +468,7 @@ public class Controller {
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
     			//System.out.println(++count);
-    			//System.out.println(curState);
+    			System.out.println(curState);
     			switch(curState) {
     			case MAINMENU:
     				//view.update(model);
@@ -500,6 +500,7 @@ public class Controller {
     				}else {
     					t.setDelay(30);
     				}
+    				curState = model.curState;
     				view.update(model);
     				model.tutorial();
     				//curState = model.getCurState();
@@ -527,6 +528,7 @@ public class Controller {
     					model.updatePosition();
     				}
     				//System.out.println(model instanceof NH2Model );
+    				curState = model.getCurState();
     				view.update(model);
     				model.updatePosition();
     				break;
@@ -534,12 +536,15 @@ public class Controller {
     				view.update(model);
     				break;
     			case OPREVIEW:
+    				curState = model.getCurState();
     				view.update(model);
     				break;
     			case NHREVIEW:
+    				curState = model.getCurState();
     				view.update(model);
     				break;
     			case WIN:
+    				curState = model.getCurState();
     				view.update(model);
     				break;
 				default:

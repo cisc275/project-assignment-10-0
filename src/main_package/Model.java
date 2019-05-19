@@ -145,7 +145,8 @@ public abstract class Model implements Serializable{
 		
 	// set curState to be Win 
 	public void winGame() {
-		curState = Type.WIN;
+		//curState = Type.WIN;
+		curState = Type.MAINMENU;
 	}
 	
 	public Type getCurState() {

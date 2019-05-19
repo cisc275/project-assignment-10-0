@@ -67,7 +67,7 @@ public class View extends JPanel{
 		System.out.println("frame");
 //		frame.getContentPane().add(this);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setBackground(Color.gray);
+		frame.setBackground(Color.LIGHT_GRAY);
 		frame.setVisible(true);
 		frameWidth = frame.getWidth();
     	frameHeight = frame.getHeight()-40;
@@ -254,7 +254,9 @@ public class View extends JPanel{
 			choice4.setVisible(false);
 			backButton.setVisible(true);
 		if (model.getCurState() == Type.MAINMENU) {
-			
+			backButton.setVisible(false);
+			OPButton.setVisible(true);
+			NHButton.setVisible(true);
 		}
 		else if(model.getCurState() == Type.TUTORIALOP) {
 			if(timeCount == -1) {
@@ -472,7 +474,7 @@ public class View extends JPanel{
 						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-								if(model.timeCount < 15) {
+								if(model.timeCount < 20) {
 									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), Color.GREEN,this);
 								} else {
 									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
@@ -518,7 +520,7 @@ public class View extends JPanel{
 					for(CollectedItem each: ((NH2Model) model).eggList) {
 						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 					}
-					g.drawImage(imgs.get("arrow"), this.frameWidth/3, (3*this.frameHeight)/8, null,this);
+					g.drawImage(imgs.get("arrow"), 5*this.frameWidth/16, (3*this.frameHeight)/8, null,this);
 					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
 					break;
 				case NH2:
@@ -556,31 +558,32 @@ public class View extends JPanel{
 					break;
 				case OPREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(70));
+					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(140));
 					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
-					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(260));
-					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(300));
-					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(340));
-					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(380));
-					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(420));
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
 					g.setColor(Color.red);
-					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(200));
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
 					break;
 				case NHREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(70));
+					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(140));
 					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
-					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(260));
-					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(300));
-					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(340));
-					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(380));
-					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(420));
+					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
+					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
+					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
+					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
+					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
 					g.setColor(Color.red);
-					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(200));
+					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
 					break;
 				case WIN:
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("You finished the review quiz", this.frameWidth/3, this.frameHeight/2);
+					g.setColor(Color.blue);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+					g.drawString("Click back button to go to main ", 3*this.frameWidth/9, this.frameHeight/2);
 					break;
 				}
 		//	}
