@@ -27,6 +27,7 @@ public class NH2Model extends Model implements Serializable{
 		tutorialBg = new String[] {"NHtutorial3bg"};
 		eggList = new ArrayList<>();
 		Random r = new Random();
+		System.out.println("eggs: "+eggs);
 		for (int i = 0; i < eggs; i++) {
 			/*int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
 			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest10")[1]) - nest.getY()); 
@@ -59,7 +60,7 @@ public class NH2Model extends Model implements Serializable{
 		//nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
-		createTimer(30);
+		createTimer(20);
 	}
 
 	// This method creates a timer for 40 seconds for the NH1 game 
@@ -317,7 +318,7 @@ public class NH2Model extends Model implements Serializable{
 			//direction = 's';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
 
-			list.add(new HitItem(width, height, ItemType.FOX, 0, 3));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, 2));
 			System.out.println("move south");
 			// Moving South
 			break;
@@ -327,7 +328,7 @@ public class NH2Model extends Model implements Serializable{
 
 			//direction = 'n';
 			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -3));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -2));
 			System.out.println("move north");
 			// Moving North
 			break;
