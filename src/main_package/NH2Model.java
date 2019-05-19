@@ -111,7 +111,7 @@ public class NH2Model extends Model implements Serializable{
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
 				Element curE = iter.next();
-				System.out.println("fox move");
+				//System.out.println("fox move");
 				curE.move();
 				
 				int nestW = imgsSize.get(nest.getType().getName())[0], nestH = imgsSize.get(nest.getType().getName())[1]; 
