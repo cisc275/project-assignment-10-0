@@ -1,3 +1,3 @@
-What is Northern Harrier's Favorite food?;Small Mammales(rat);Insects;Fruits and Nuts;Fish;A;
+What is Northern Harrier's Favorite food?;Small Mammals(rat);Insects;Fruits and Nuts;Fish;A;
 What is Northern Harrier's Habitat?;Tundra (vast, flat, treeless Arctic region);Grasslands;Deserts;Urban and Suburban;B;
 Which is Northern Harrier's Nests Type?;Adherent Nests (stick to buildings, like Swallows's nests);Platform Nests (Very high, one the tree or cliff);Ground Nests (On the ground);Earth-hole nests (Inside the earth);C;
