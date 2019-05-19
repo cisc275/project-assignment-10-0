@@ -385,10 +385,10 @@ public class View extends JPanel{
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-//								if (each.getType().equals(ItemType.WINFLAG)) {
-//									System.out.println("land");
-//									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
-//								}
+								if (each.getType().equals(ItemType.WINFLAG)) {
+									System.out.println("land");
+									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
+								}
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
@@ -634,7 +634,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/bgland.png"));
 			}
 			else if (x.equals("bgwater")) {
-				bi = ImageIO.read(new File("imgs/bgwater.png"));
+				bi = ImageIO.read(new File("imgs/river.jpg"));
 			}
 			else if (x.equals("nhbg")) {
 				bi = ImageIO.read(new File("imgs/nhbg.png"));

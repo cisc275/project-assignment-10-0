@@ -72,6 +72,9 @@ public class NH2Model extends Model implements Serializable{
 			public void run() {
 				System.out.println("Time count : " + -- timeCount);
 				updateL = true;
+				if (eggs <= 0) {
+					myTimer.cancel();
+				}
 				if(timeCount == 0) {
 					myTimer.cancel();
 					curState = Type.NHREVIEW;
@@ -104,9 +107,11 @@ public class NH2Model extends Model implements Serializable{
 				updateList();
 			
 			// Iterate through all the elements in the game and check for collisions
+			//System.out.println("fox move");
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
 				Element curE = iter.next();
+				System.out.println("fox move");
 				curE.move();
 				
 				int nestW = imgsSize.get(nest.getType().getName())[0], nestH = imgsSize.get(nest.getType().getName())[1]; 

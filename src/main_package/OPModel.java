@@ -15,7 +15,7 @@ public class OPModel extends Model implements Serializable{
 	private int energy;
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
-	public static int xbg = -8;
+	public static int xbg = -6;
 	Color color;
 	
 	// create OPModel for osprey game

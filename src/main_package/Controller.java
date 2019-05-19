@@ -529,6 +529,7 @@ public class Controller {
     				//System.out.println(model instanceof NH2Model );
     				view.update(model);
     				model.updatePosition();
+    				curState = model.getCurState();
     				break;
     			case GAMEOVER:
     				view.update(model);
@@ -537,6 +538,7 @@ public class Controller {
     				view.update(model);
     				break;
     			case NHREVIEW:
+    				//System.out.println("final quiz");
     				view.update(model);
     				break;
     			case WIN:
