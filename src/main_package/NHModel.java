@@ -94,7 +94,7 @@ public class NHModel extends Model implements Serializable{
 			nestBuild = "nest5";
 		}
 		else if (bird.getItemsCollected() == 10) {
-			nestBuild = "nest10";
+			nestBuild = "nestgold";
 		}
 		
 		if (!outOfFrame()) {

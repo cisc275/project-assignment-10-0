@@ -91,6 +91,7 @@ public class View extends JPanel{
     	imgsSize.put("winflag", new int[] {scaleW(200), scaleH(150)});
     	imgsSize.put("collectedItem", new int[] {scaleW(100), scaleH(150)});
     	imgsSize.put("nest10", new int[] {scaleW(225), scaleH(150)});
+    	imgsSize.put("nestgold", new int[] {scaleW(225), scaleH(150)});
     	imgsSize.put("nest5", new int[] {scaleW(225), scaleH(150)});
     	imgsSize.put("nest1", new int[] {scaleW(225), scaleH(150)});
     	imgsSize.put("fox", new int[] {scaleW(100), scaleH(150)});
@@ -108,7 +109,7 @@ public class View extends JPanel{
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
 				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow",
 				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg", "reviewbg",
-				"info","overbg"};
+				"info","overbg", "nestgold"};
 
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -714,6 +715,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("nest10")) {
 				bi = ImageIO.read(new File("imgs/nest10.png"));
+			}
+			else if (x.equals("nestgold")) {
+				bi = ImageIO.read(new File("imgs/nestGold.png"));
 			}
 			else if (x.equals("bgland")) {
 				bi = ImageIO.read(new File("imgs/bgland.jpg"));

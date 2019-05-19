@@ -500,15 +500,17 @@ public class Controller {
     				//curState = model.getCurState();
     				break;
     			case NH1:
-    				view.update(model);
+    				
     				if (!model.getQuizing()) {
     					model.updatePosition();
     					if (model.quizCount > 2 && model.eggs > 0) {
         					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-        					curState = model.getCurState();
+        					
         					//System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         				}
     				}
+    				curState = model.getCurState();
+    				view.update(model);
     				break;
     			case TUTORIALNH2:
     				view.update(model);
