@@ -87,6 +87,7 @@ public class View extends JPanel{
     	imgsSize.put("osprey", new int[] {scaleW(150), scaleH(150)});
     	imgsSize.put("osprey2", new int[] {scaleW(150), scaleH(150)});
     	imgsSize.put("nh", new int[] {scaleW(150), scaleH(150)});
+    	imgsSize.put("nh2", new int[] {scaleW(150), scaleH(150)});
     	imgsSize.put("winflag", new int[] {scaleW(200), scaleH(150)});
     	imgsSize.put("collectedItem", new int[] {scaleW(100), scaleH(150)});
     	imgsSize.put("nest10", new int[] {scaleW(225), scaleH(150)});
@@ -103,7 +104,7 @@ public class View extends JPanel{
     	imgsSize.put("arrow", new int[] {scaleW(300), scaleH(150)});
     	imgsSize.put("info", new int[] {scaleW(300), scaleH(400)});
     	
-		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
+		String[] imgName = {"osprey", "osprey2", "nh","nh2" ,"airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
 				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow",
 				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg", "reviewbg",
@@ -222,7 +223,9 @@ public class View extends JPanel{
 			public void run() {
 				
 				System.out.println("time count :" + --timeCount);
-				if(model.getCurState() != Type.OP && model.getCurState() != Type.TUTORIALOP) {
+				//model.getCurState() != Type.OP && model.getCurState() != Type.TUTORIALOP
+				if(model.getCurState() == Type.MAINMENU || model.getCurState() == Type.OPREVIEW || 
+					model.getCurState() == Type.NHREVIEW || model.getCurState() == Type.GAMEOVER) {
 					myTimer.cancel();
 					timeCount = -1;
 				}
@@ -288,6 +291,9 @@ public class View extends JPanel{
 			backButton.setVisible(true);
 		}
 		else if(model.getCurState() == Type.TUTORIALNH1) {
+			if(timeCount == -1) {
+				createTimer(340);
+			}
 			drawDE = ((NHModel) model).drawDE();
 			if (drawDE) {
 				model.pic = (model.pic + 1)%fcNhmap;
@@ -295,14 +301,42 @@ public class View extends JPanel{
 			}else {
 				next.setVisible(true);
 			}
+			if (timeCount %2 == 0) {
+				System.out.println("time = 3");
+				curImg = imgs.get("nh");
+			}
+			else {
+				curImg = imgs.get("nh2");
+			}
 		}
 		else if (model.getCurState() == Type.NH1) {
+			if (timeCount %2 == 0) {
+				System.out.println("time = 3");
+				curImg = imgs.get("nh");
+			}
+			else {
+				curImg = imgs.get("nh2");
+			}
 		}
 		else if (model.getCurState() == Type.TUTORIALNH2) {
 			next.setVisible(true);
+			if (timeCount %2 == 0) {
+				System.out.println("time = 3");
+				curImg = imgs.get("nh");
+			}
+			else {
+				curImg = imgs.get("nh2");
+			}
 		}
 		else if (model.getCurState() == Type.NH2) {
 			backButton.setVisible(true);
+			if (timeCount %2 == 0) {
+				System.out.println("time = 3");
+				curImg = imgs.get("nh");
+			}
+			else {
+				curImg = imgs.get("nh2");
+			}
 		}
 		else if (model.getCurState() == Type.GAMEOVER) {
 			backButton.setVisible(true);
@@ -421,7 +455,7 @@ public class View extends JPanel{
 									System.out.println("land");
 									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
 									g.setColor(Color.black);
-									g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), 5, 300);
+									g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), scaleW(5), scaleH(300));
 									
 								}
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
@@ -451,7 +485,7 @@ public class View extends JPanel{
 						if (model.nest != null) {
 						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
 						}
-						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
+						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 					}
 					break;
 				case NH1:
@@ -485,8 +519,8 @@ public class View extends JPanel{
 						g.setColor(Color.red);
 						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 2*this.frameWidth/3, this.frameWidth/25);
 						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
-						
-						g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
+						//imgs.get(model.getBird().getBType().getName())
+						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 					
 						/*if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
@@ -519,7 +553,7 @@ public class View extends JPanel{
 						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 					}
 					g.drawImage(imgs.get("arrow"), this.frameWidth/3, (3*this.frameHeight)/8, null,this);
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
+					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 					break;
 				case NH2:
 					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
@@ -546,7 +580,7 @@ public class View extends JPanel{
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
-					g.drawImage(imgs.get(model.getBird().getBType().getName()), model.getBird().getX(), model.getBird().getY(), null, this);
+					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 					
 					break;
 				case GAMEOVER:
@@ -633,6 +667,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("nh")) {
 				bi = ImageIO.read(new File("imgs/nh1.png"));
+			}
+			else if (x.equals("nh2")) {
+				bi = ImageIO.read(new File("imgs/nh2.png"));
 			}
 			else if (x.equals("mainmenubg")) {
 				bi = ImageIO.read(new File("imgs/mainmenu.png"));
