@@ -108,7 +108,7 @@ public class View extends JPanel{
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
 				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow",
 				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg", "reviewbg",
-				"info"};
+				"info","overbg"};
 
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -586,6 +586,7 @@ public class View extends JPanel{
 					
 					break;
 				case GAMEOVER:
+					g.drawImage(imgs.get("overbg"), 0, 0, null, this);
 					g.setColor(Color.red);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
 					g.drawString("Game Over", 4*this.frameWidth/9, this.frameHeight/2);
@@ -781,6 +782,9 @@ public class View extends JPanel{
 			}
 			else if (x.equals("info")) {
 				bi = ImageIO.read(new File("imgs/info.png"));
+			}
+			else if (x.equals("overbg")) {
+				bi = ImageIO.read(new File("imgs/gameover.jpeg"));
 			}
 			else {
 				bi = null;
