@@ -68,7 +68,6 @@ public class Controller {
 			if(model.myTimer != null) {
 				model.myTimer.cancel();
 			}
-			System.out.println("mainmenu");
 			view.backButton.setVisible(false);
 			view.next.setVisible(false);
 			view.OPButton.setVisible(true);
@@ -86,7 +85,6 @@ public class Controller {
 			model = new NHModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
 			model.setCurState(Type.TUTORIALNH1);
 			curState = model.getCurState();
-			System.out.println(model.getCurState());
 			((NHModel) model).drawDE = true;
 			// Set the button views for the game
 			view.backButton.setVisible(true);
@@ -106,7 +104,6 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			model = new OPModel(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
 			curState = model.getCurState();
-				System.out.println(model.getCurState());
 				view.backButton.setVisible(true);
 				view.OPButton.setVisible(false);
 				view.NHButton.setVisible(false);
@@ -125,13 +122,12 @@ public class Controller {
 			if (!model.getQuizing()) {
 			if (model.tutor < model.tutorialBg.length - 1) {
 				if (model.tutor == 0 && model instanceof NHModel) {
-					System.out.println("add element");
+					//System.out.println("add element");
 					((NHModel) model).setNest(new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST));
 					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, 2*(model.getFrameH()-model.imgH)/3, ItemType.STICK));
 					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, (model.getFrameH()-model.imgH)/2, ItemType.RAT));
 				}
 				model.tutor++;
-				System.out.println(model.tutor);
 			}else {
 				switch(model.getCurState()) {
 				case TUTORIALOP:
@@ -190,7 +186,7 @@ public class Controller {
 //				
 //			}
 			model.checkQuiz();
-			System.out.println(model.getCurState());
+			//System.out.println(model.getCurState());
 //			view.submitButton.setVisible(false);
 //			view.choice1.setVisible(false);
 //			view.choice2.setVisible(false);
@@ -212,7 +208,7 @@ public class Controller {
 			}else if (model.getCurState() == Type.TUTORIALOP) {
 				model.checkQuiz();
 			}
-			System.out.println(model.getCurState());
+			//System.out.println(model.getCurState());
 			view.submitButton.setVisible(false);
 			view.choice1.setVisible(false);
 			view.choice2.setVisible(false);
@@ -468,11 +464,10 @@ public class Controller {
     		public void actionPerformed(ActionEvent e){
     			//System.out.println("draw");
     			//System.out.println(++count);
-    			System.out.println(curState);
+    			//System.out.println(curState);
     			switch(curState) {
     			case MAINMENU:
     				//view.update(model);
-    				System.out.println("here");
     				view.repaint();
     				break;
     			case TUTORIALOP:
@@ -485,7 +480,6 @@ public class Controller {
     				view.update(model);
     				break;
     			case OP:
-    				//System.out.println("OP Controller");
     				view.update(model);
     				if (!model.getQuizing()) {
     				model.updatePosition();
@@ -506,14 +500,13 @@ public class Controller {
     				//curState = model.getCurState();
     				break;
     			case NH1:
-    				//System.out.println("NH1 controlller");
     				view.update(model);
     				if (!model.getQuizing()) {
     					model.updatePosition();
     					if (model.quizCount > 2 && model.eggs > 0) {
         					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
         					curState = model.getCurState();
-        					System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        					//System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         				}
     				}
     				break;
@@ -586,7 +579,7 @@ public class Controller {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println(tmp == null);
+		//System.out.println(tmp == null);
 		model = tmp;
 	//	view.update(model);
 	}

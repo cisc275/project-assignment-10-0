@@ -71,7 +71,8 @@ public class NH2Model extends Model implements Serializable{
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("Time count : " + -- timeCount);
+				//System.out.println("Time count : " + -- timeCount);
+				-- timeCount;
 				updateL = true;
 				if (eggs <= 0) {
 					myTimer.cancel();
@@ -127,8 +128,8 @@ public class NH2Model extends Model implements Serializable{
 				if(xC1 && (yC1 || yC2) || xC2 && (yC1 ||yC2 )) {
 					System.out.println("removeNH2");
 					eggs--;
-					System.out.println("remove eggs from lists");
-					System.out.println(eggList.size());
+					//System.out.println("remove eggs from lists");
+					//System.out.println(eggList.size());
 					if(eggList.size()>0) {
 						eggList.remove(0);
 					}
@@ -137,7 +138,7 @@ public class NH2Model extends Model implements Serializable{
 					iter.remove();
 					// if the fox gets to the nest, it steals and egg
 				} else if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
-					System.out.println("remove");
+					//System.out.println("remove");
 					HitItem h = (HitItem)curE;
 					
 					if(!h.getDirectionChange()) {
@@ -198,7 +199,8 @@ public class NH2Model extends Model implements Serializable{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				System.out.println("delayCount: " + ++delayCount);
+				//System.out.println("delayCount: " + ++delayCount);
+				++delayCount;
 				if (delayCount >=2) {
 					if (quizCount < 3) {
 						quiz = quizzes.get(quizCount);
@@ -229,7 +231,7 @@ public class NH2Model extends Model implements Serializable{
 				curE.move();
 				
 				if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
-					System.out.println("remove");
+					//System.out.println("remove");
 					HitItem h = (HitItem)curE;
 					
 					if(!h.getDirectionChange()) {

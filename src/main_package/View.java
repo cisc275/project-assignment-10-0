@@ -64,7 +64,7 @@ public class View extends JPanel{
 	// add button to the JPanel
 	public View() {
 		frame = new JFrame();
-		System.out.println("frame");
+		//System.out.println("frame");
 //		frame.getContentPane().add(this);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -222,7 +222,8 @@ public class View extends JPanel{
 			@Override
 			public void run() {
 				
-				System.out.println("time count :" + --timeCount);
+				//System.out.println("time count :" + --timeCount);
+				--timeCount;
 				//model.getCurState() != Type.OP && model.getCurState() != Type.TUTORIALOP
 				if(model.getCurState() == Type.MAINMENU || model.getCurState() == Type.OPREVIEW || 
 					model.getCurState() == Type.NHREVIEW || model.getCurState() == Type.GAMEOVER) {
@@ -284,7 +285,7 @@ public class View extends JPanel{
 		}
 		else if (model.getCurState() == Type.OP) {
 			if (timeCount %2 == 0) {
-				System.out.println("time = 3");
+				//System.out.println("time = 3");
 				curImg = imgs.get("osprey2");
 			}
 			else {
@@ -304,7 +305,7 @@ public class View extends JPanel{
 				next.setVisible(true);
 			}
 			if (timeCount %2 == 0) {
-				System.out.println("time = 3");
+				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -313,7 +314,7 @@ public class View extends JPanel{
 		}
 		else if (model.getCurState() == Type.NH1) {
 			if (timeCount %2 == 0) {
-				System.out.println("time = 3");
+				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -323,7 +324,7 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.TUTORIALNH2) {
 			next.setVisible(true);
 			if (timeCount %2 == 0) {
-				System.out.println("time = 3");
+				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -333,7 +334,7 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.NH2) {
 			backButton.setVisible(true);
 			if (timeCount %2 == 0) {
-				System.out.println("time = 3");
+				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -361,7 +362,7 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		//System.out.println("paint");
 		if (model == null) {
-			System.out.println("null model");
+			//System.out.println("null model");
 //			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
 //			g.drawString("Time Remaining: ", 100, 20);
 			g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
@@ -454,7 +455,7 @@ public class View extends JPanel{
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
 								if (each.getType().equals(ItemType.WINFLAG)) {
-									System.out.println("land");
+									//System.out.println("land");
 									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
 									g.setColor(Color.black);
 									g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), scaleW(5), scaleH(300));

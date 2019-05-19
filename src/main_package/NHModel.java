@@ -72,7 +72,8 @@ public class NHModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				
-				System.out.println("time count :" + --timeCount);
+				//System.out.println("time count :" + --timeCount);
+				--timeCount;
 				if (timeCount == 0) {
 					myTimer.cancel();
 					//drawDE = false;
@@ -85,7 +86,7 @@ public class NHModel extends Model implements Serializable{
 	// This method updates the position of the bird based and controls the functionality of the game
 	@Override
 	public void updatePosition() {
-		System.out.println("Updating position");
+		//System.out.println("Updating position");
 		if(timeCount <= 0) {
 			gameOver();
 		}
@@ -149,7 +150,7 @@ public class NHModel extends Model implements Serializable{
 				bird.setItemsCollected(bird.getItemsCollected() + 1);
 				CollectedItem c = (CollectedItem)cur;
 				c.isCollected();
-				System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				//System.out.println("collected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				iter.remove();
 				collision = true;
 			}
@@ -205,7 +206,8 @@ public class NHModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				System.out.println("delayCount: " + ++delayCount);
+				//System.out.println("delayCount: " + ++delayCount);
+				++delayCount;
 				if (delayCount >=2) {
 					if (quizCount < 3) {
 						quiz = quizzes.get(quizCount);
@@ -215,7 +217,7 @@ public class NHModel extends Model implements Serializable{
 						quizing = false;
 						if(eggs <=0) {
 							gameOver();
-							System.out.println("gameover");
+							//System.out.println("gameover");
 						} else {
 							curState = Type.NH2;
 							

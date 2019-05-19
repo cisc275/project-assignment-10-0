@@ -73,10 +73,11 @@ public class OPModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				if (!quizing) {
-					System.out.println("time count :" + --timeCount);
+					//System.out.println("time count :" + --timeCount);
+					--timeCount;
 					energy --;
 				}
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				if (timeCount % 2 == 0) {
 					// every 4 second update list
 					updateL = true;
@@ -90,7 +91,7 @@ public class OPModel extends Model implements Serializable{
 				if (energy <= 0) {
 					// lose all energy game over
 					gameOver();
-					System.out.println(curState);
+					//System.out.println(curState);
 					myTimer.cancel();
 				}
 				if (timeCount < flagTime || curState == Type.OPREVIEW) {
@@ -137,12 +138,12 @@ public class OPModel extends Model implements Serializable{
 				//curE.setX(xDec);
 				curE.move();
 				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-					System.out.println("remove");
+					//System.out.println("remove");
 					iter.remove();
 					//updateL = true;
 				}
 				else if (checkCollision(curE)) {
-					System.out.println("remove");
+					//System.out.println("remove");
 					iter.remove();
 					//updateL = true;
 				}
@@ -161,14 +162,14 @@ public class OPModel extends Model implements Serializable{
 			list.add(new HitItem(frameW, ranH, ItemType.AIRPLANE, -10, 0));
 			updateL = false;
 			*/
-			System.out.println("update list");
+			//System.out.println("update list");
 			Random ran = new Random();
 			int ranType = ran.nextInt(3);
 			int ranSpeed = scaleW(ran.nextInt(14) + 10);
 			int ranPosition1 = scaleH(ran.nextInt(frameH/2));
 			int ranPosition2 = scaleH(ran.nextInt(frameH/2 - 200) + frameH/2);
-			System.out.println("random type: " + ranType);
-			System.out.println("random speed: " + ranSpeed);
+			//System.out.println("random type: " + ranType);
+			//System.out.println("random speed: " + ranSpeed);
 			switch(ranType) {
 			// 0 is airplane
 			case 0:
@@ -195,12 +196,12 @@ public class OPModel extends Model implements Serializable{
 	@Override
 	public boolean checkCollision(Element ht) {
 		if (collisionF(ht)) {
-			System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			if(ht instanceof HitItem) {
 				HitItem h = (HitItem)ht;
 				if(h.getType().equals(ItemType.FISH)) {
 					color = Color.green;
-					System.out.println(bird.getLife());
+					//System.out.println(bird.getLife());
 					bird.eat();
 					//get energy
 					if (defaultTime - 10 - energy <= 10) {
@@ -212,11 +213,11 @@ public class OPModel extends Model implements Serializable{
 					
 					
 				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX) || h.getType().equals(ItemType.SHIP)) {
-					System.out.println(bird.getLife());
+					//System.out.println(bird.getLife());
 					bird.collision();
 					startQuiz();
 				} else if(h.getType().equals(ItemType.WINFLAG)) {
-					System.out.println("hit flag");
+					//System.out.println("hit flag");
 					//winGame();
 					//review quiz
 					curState = Type.OPREVIEW;
@@ -252,12 +253,12 @@ public class OPModel extends Model implements Serializable{
 		switch(curState) {
 		case OP:
 		color = Color.red;
-		System.out.println("start quiz");
+		//System.out.println("start quiz");
 		this.quizing = true;
 		Random r = new Random();
 		if (quizzes.size() != 0) {
 			quiz = quizzes.get(r.nextInt(quizzes.size()));
-			System.out.println(quiz);
+			//System.out.println(quiz);
 		}
 		break;
 		case TUTORIALOP:
@@ -282,7 +283,7 @@ public class OPModel extends Model implements Serializable{
 	public void checkQuiz() {
 		switch(curState) {
 		case OP:
-		System.out.println("submit");
+		//System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
 			energy -= 20;
@@ -298,7 +299,8 @@ public class OPModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				System.out.println("delayCount: " + ++delayCount);
+				//System.out.println("delayCount: " + ++delayCount);
+				++delayCount;
 				if (delayCount >=3) {
 					quizing = false;
 					delayTimer.cancel();
@@ -324,7 +326,8 @@ public class OPModel extends Model implements Serializable{
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					System.out.println("delayCount: " + ++delayCount);
+					//System.out.println("delayCount: " + ++delayCount);
+					++delayCount;
 					if (delayCount >=2) {
 						if (quizCount < 3) {
 							quiz = quizzes.get(quizCount);
@@ -365,11 +368,11 @@ public class OPModel extends Model implements Serializable{
 				Element curE = iter.next();
 				curE.move();
 				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-					System.out.println("remove");
+					//System.out.println("remove");
 					iter.remove();
 				}
 				else if (checkCollision(curE)) {
-					System.out.println("remove");
+					//System.out.println("remove");
 					iter.remove();
 				}
 			}
