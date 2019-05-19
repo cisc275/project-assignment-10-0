@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+import java.util.Timer;
 
 import main_package.Controller.CustomKeyListener;
 // author Sicheng Tian
@@ -47,7 +50,11 @@ public class View extends JPanel{
 	int y;
 	boolean drawDE;
 	boolean first = true;
-	
+	BufferedImage[] OS;
+	int frameCount = 2;
+	int picNum = 0;
+	Timer myTimer;
+	int timeCount = -1;
 	
 	
 	
@@ -105,7 +112,12 @@ public class View extends JPanel{
 			BufferedImage img = createImage(imgName[i]);
 			if (imgName[i].contains("bg")) {
 				imgs.put(imgName[i], img.getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST));
-			}
+			} /*else if(imgName[i].contains("osprey") && !imgName[i].contains("Real") ) {
+				OS = new BufferedImage[2];
+				BufferedImage o2 = createImage("osprey2");
+				OS[0] = img;
+				OS[1] = o2;
+			}*/
 			else if(imgsSize.containsKey(imgName[i])){
 				imgs.put(imgName[i], img.getScaledInstance(imgsSize.get(imgName[i])[0], imgsSize.get(imgName[i])[1], Image.SCALE_FAST));
 			}
@@ -197,9 +209,29 @@ public class View extends JPanel{
 		
 		frame.setVisible(true);
     	
-    	
+    	//createTimer(340);
 	}
 	
+	public void createTimer(int time) {
+		myTimer = new Timer();
+		timeCount = time;
+		myTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				
+				System.out.println("time count :" + --timeCount);
+				if(model.getCurState() != Type.OP && model.getCurState() != Type.TUTORIALOP) {
+					myTimer.cancel();
+					timeCount = -1;
+				}
+				if (timeCount == 0) {
+					myTimer.cancel();
+					//drawDE = false;
+				} 
+			}
+			
+		}, 0, 500);
+	}
 	
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
@@ -225,6 +257,9 @@ public class View extends JPanel{
 			
 		}
 		else if(model.getCurState() == Type.TUTORIALOP) {
+			if(timeCount == -1) {
+				createTimer(340);
+			}
 			if (((OPModel) model).getDrawNA()) {
 				if (model.pic < 5) {
 				model.pic = model.pic+1;
@@ -233,7 +268,7 @@ public class View extends JPanel{
 			}else {
 				next.setVisible(true);
 			}
-			if (curImg == imgs.get("osprey")) {
+			if (timeCount %2 == 0) {
 				curImg = imgs.get("osprey2");
 			}
 			else {
@@ -241,8 +276,8 @@ public class View extends JPanel{
 			}
 		}
 		else if (model.getCurState() == Type.OP) {
-			
-			if (curImg == imgs.get("osprey")) {
+			if (timeCount %2 == 0) {
+				System.out.println("time = 3");
 				curImg = imgs.get("osprey2");
 			}
 			else {
@@ -322,6 +357,9 @@ public class View extends JPanel{
 						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 						g.setColor(Color.blue);
 						g.drawString("Energy Bar", scaleW(40), scaleH(70));
+						//picNum = (picNum + 1) % frameCount;
+						//System.out.println(picNum);
+						//g.drawImage(OS[picNum], model.getBird().getX(), model.getBird().getY(), null, this);
 						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 						//g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
 						if (model.getList().size() != 0) {
@@ -370,6 +408,7 @@ public class View extends JPanel{
 						//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
 						//System.out.println("first: " + model.groundX % frameWidth);
 						//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
+						//picNum = (picNum + 1) % frameCount;
 						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 						//life bar
 						g.setColor(Color.black);
@@ -511,8 +550,9 @@ public class View extends JPanel{
 					
 					break;
 				case GAMEOVER:
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Gameover", this.frameWidth/2, this.frameHeight/2);
+					g.setColor(Color.red);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+					g.drawString("Game Over", 4*this.frameWidth/9, this.frameHeight/2);
 					break;
 				case OPREVIEW:
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
@@ -583,6 +623,7 @@ public class View extends JPanel{
 		BufferedImage bi;
 		try {
 			if (x.equals("osprey")) {
+				
 				bi = ImageIO.read(new File("imgs/Osprey1.png"));
 			}
 			else if (x.equals("osprey2")) {
