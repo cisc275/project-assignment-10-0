@@ -15,7 +15,8 @@ public class OPModel extends Model implements Serializable{
 	private int energy;
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
-	public static int xbg = -8;
+	private final int flagTime = 30;
+	public static int xbg = -6;
 	Color color;
 	
 	// create OPModel for osprey game
@@ -92,7 +93,8 @@ public class OPModel extends Model implements Serializable{
 					System.out.println(curState);
 					myTimer.cancel();
 				}
-				if (timeCount < 0) {
+				if (timeCount < flagTime || curState == Type.OPREVIEW) {
+					updateL = false;
 					myTimer.cancel();
 				}
 			}
@@ -122,9 +124,9 @@ public class OPModel extends Model implements Serializable{
 				updateList();
 			}
 			// if timeCount(not energy) is out win flag
-			if (timeCount == 0 && winFlag) {
+			if (timeCount == flagTime && winFlag) {
 				// flag has same speed as background
-				list.add(new HitItem(frameW, frameH / 2, ItemType.WINFLAG, xbg,0));
+				list.add(new HitItem(frameW, frameH / 3, ItemType.WINFLAG, xbg,0));
 				winFlag = false;
 			}
 			

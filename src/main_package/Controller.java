@@ -531,6 +531,7 @@ public class Controller {
     				curState = model.getCurState();
     				view.update(model);
     				model.updatePosition();
+    				curState = model.getCurState();
     				break;
     			case GAMEOVER:
     				view.update(model);

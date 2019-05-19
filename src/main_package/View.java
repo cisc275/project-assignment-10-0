@@ -101,11 +101,13 @@ public class View extends JPanel{
     	imgsSize.put("quizpanel", new int[] {scaleW(1000), scaleH(600)});
     	imgsSize.put("nextbutton", new int[] {scaleW(150), scaleH(70)});
     	imgsSize.put("arrow", new int[] {scaleW(300), scaleH(150)});
+    	imgsSize.put("info", new int[] {scaleW(300), scaleH(400)});
     	
 		String[] imgName = {"osprey", "osprey2", "nh", "airplane", "fox","ship", "fish", "winflag", "rat", "nest1","nest5","nest10", 
 				"stick", "egg", "bgland", "bgwater", "nhbg", "ospreyReal", "NorthernHarrierReal", "opmapbg","opmapbg2"
 				,"opmapbg3","opmapbg4","opmapbg5" ,"nhmapbg","nhmapbg2","nhmapbg3","nhmapbg4" ,"mainmenubg", "quizpanel", "arrow",
-				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg"};
+				"NHtutorial1bg","NHtutorial2bg","NHtutorial3bg","nextbutton", "OPtutorial1bg", "OPtutorial2bg", "reviewbg",
+				"info"};
 
     	imgs = new HashMap<>();
 		for(int i = 0; i < imgName.length; i++) {
@@ -332,6 +334,7 @@ public class View extends JPanel{
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
 			g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
+			g.drawImage(imgs.get("info"), 0, scaleH(500), null, this);
 			//g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
 			//g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 			return;
@@ -347,6 +350,7 @@ public class View extends JPanel{
 					g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
 					g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
 					g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
+					g.drawImage(imgs.get("info"), 0, scaleH(500), null, this);
 					break;
 				case TUTORIALOP:
 					if(((OPModel) model).getDrawNA()) {
@@ -412,27 +416,23 @@ public class View extends JPanel{
 						//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
 						//picNum = (picNum + 1) % frameCount;
 						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-						//life bar
-						g.setColor(Color.black);
-						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
-//						if(model.getQuizing()) {
-//							g.setColor(Color.red);
-//						}
-//						else {
-//							g.setColor(Color.yellow);
-//						}
-						g.setColor(((OPModel) model).color);
-						g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
 				
 						if (model.getList().size() != 0) {
 							for(Element each: model.getList()) {
-//								if (each.getType().equals(ItemType.WINFLAG)) {
-//									System.out.println("land");
-//									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
-//								}
+								if (each.getType().equals(ItemType.WINFLAG)) {
+									System.out.println("land");
+									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
+									g.setColor(Color.black);
+									g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), 5, 300);
+									
+								}
 								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 							}
 						}
+						g.setColor(Color.black);
+						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
+						g.setColor(((OPModel) model).color);
+						g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
 					//}
 					break;
 				case TUTORIALNH1:
@@ -557,8 +557,9 @@ public class View extends JPanel{
 					g.drawString("Game Over", 4*this.frameWidth/9, this.frameHeight/2);
 					break;
 				case OPREVIEW:
+					g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(140));
+					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(170));
 					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
 					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
 					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
@@ -569,8 +570,9 @@ public class View extends JPanel{
 					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
 					break;
 				case NHREVIEW:
+					g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(140));
+					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(170));
 					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
 					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
 					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
@@ -654,7 +656,7 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/fish.png"));
 			}
 			else if (x.equals("winflag")) {
-				bi = ImageIO.read(new File("imgs/flag.png"));
+				bi = ImageIO.read(new File("imgs/winflag.png"));
 			}
 			else if (x.equals("rat")) {
 				bi = ImageIO.read(new File("imgs/rat.png"));
@@ -675,10 +677,10 @@ public class View extends JPanel{
 				bi = ImageIO.read(new File("imgs/nest10.png"));
 			}
 			else if (x.equals("bgland")) {
-				bi = ImageIO.read(new File("imgs/bgland.png"));
+				bi = ImageIO.read(new File("imgs/bgland.jpg"));
 			}
 			else if (x.equals("bgwater")) {
-				bi = ImageIO.read(new File("imgs/bgwater.png"));
+				bi = ImageIO.read(new File("imgs/river.jpg"));
 			}
 			else if (x.equals("nhbg")) {
 				bi = ImageIO.read(new File("imgs/nhbg.png"));
@@ -736,6 +738,12 @@ public class View extends JPanel{
 			}
 			else if (x.equals("OPtutorial2bg")) {
 				bi = ImageIO.read(new File("imgs/OPtutorial2.png"));
+			}
+			else if (x.equals("reviewbg")) {
+				bi = ImageIO.read(new File("imgs/reviewbg.png"));
+			}
+			else if (x.equals("info")) {
+				bi = ImageIO.read(new File("imgs/info.png"));
 			}
 			else {
 				bi = null;
