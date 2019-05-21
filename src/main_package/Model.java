@@ -15,9 +15,6 @@ public abstract class Model implements Serializable{
 	transient Timer myTimer;
 	transient Timer delayTimer;
 	static int defaultTime = 60;
-//	private static final long serialVersionUID = 1L;
-//	transient Timer myTimer;
-//	transient Timer delayTimer;
 	int timeCount;
 	int delayCount;
 	int pic, tutor;
@@ -82,27 +79,14 @@ public abstract class Model implements Serializable{
 	public boolean collisionF(Element e) {
 		int birdW = imgsSize.get(bird.getBType().getName())[0];
 		int birdH = imgsSize.get(bird.getBType().getName())[1];
-		//int elementW = imgsSize.get(e.getType().getName())[0];
-		//int elementH = imgsSize.get(e.getType().getName())[1];
 		int xhit1 = scaleW(e.getxHitSize1());
 		int xhit2 = scaleW(e.getxHitSize2());
 		int yhit1 = scaleH(e.getyHitSize1());
 		int yhit2 = scaleH(e.getyHitSize2());
-//		System.out.println(birdW + ", " + birdH + "; " + elementW + ", " + elementH
-//				);
 		
 		if (e.getType().equals(ItemType.WINFLAG)) {
 			return bird.getX() + birdW > e.getX();
 		}
-		
-//		boolean xC = e.getX() <= bird.getX() + birdW 
-//				&& e.getX() >= bird.getX();
-//		boolean xC2 = e.getX() + elementW <= bird.getX() + birdW 
-//				&& e.getX() + elementW >= bird.getX();
-//		boolean yC1 = e.getY() <= bird.getY() + birdH 
-//				&& e.getY() >= bird.getY();
-//		boolean yC2 = e.getY() + elementH <= bird.getY() + birdH 
-//				&& e.getY() + elementH >= bird.getY();
 		
 		boolean xC = e.getX() + xhit1<= bird.getX() + birdW 
 				&& e.getX() + xhit1 >= bird.getX();
@@ -114,15 +98,6 @@ public abstract class Model implements Serializable{
 				&& e.getY() + yhit2 >= bird.getY();
 				
 		boolean result1 = xC && yC1 || xC && yC2 || xC2 && yC1 || xC2 && yC2;
-		
-//		boolean x2C = bird.getX() <= e.getX() + elementW
-//				&& bird.getX() >= e.getX();
-//		boolean x2C2 = bird.getX() + birdW <=e.getX() + elementW
-//				&& bird.getX() + birdW >= e.getX();
-//		boolean y2C1 = bird.getY() <= e.getY() + elementH 
-//				&& bird.getY() >= e.getY();
-//		boolean y2C2 = bird.getY() + birdH <= e.getY() + elementH 
-//				&& bird.getY() + birdH >= e.getY();
 		
 		boolean x2C = bird.getX() <= e.getX() + xhit2
 				&& bird.getX() >= e.getX() + xhit1;

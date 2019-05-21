@@ -29,21 +29,15 @@ public class NH2Model extends Model implements Serializable{
 		Random r = new Random();
 		System.out.println("eggs: "+eggs);
 		for (int i = 0; i < eggs; i++) {
-			/*int ranX = r.nextInt((nest.getX() + imgsSize.get("nest10")[0]) - nest.getX());
-			int ranY = r.nextInt((nest.getY() + imgsSize.get("nest10")[1]) - nest.getY()); 
-			System.out.println(nest.getX() + ranX + ", " + nest.getY() + ranY);*/
 			switch(i) {
 			case 0:
 				eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
-				System.out.println("1 egg");
 				break;
 			case 1:
 				eggList.add(new CollectedItem(nest.getX() + 80, nest.getY() + 50, ItemType.EGG));
-				System.out.println("2 egg");
 				break;
 			case 2:
 				eggList.add(new CollectedItem(nest.getX() + 50, nest.getY() + 50, ItemType.EGG));
-				System.out.println("3 egg");
 				break;
 			}
 		}
@@ -57,7 +51,6 @@ public class NH2Model extends Model implements Serializable{
 	public void setUpGame() {
 		curState = Type.NH2;
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
-		//nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
 		createTimer(20);
@@ -71,7 +64,6 @@ public class NH2Model extends Model implements Serializable{
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				//System.out.println("Time count : " + -- timeCount);
 				-- timeCount;
 				updateL = true;
 				if (eggs <= 0) {
@@ -98,7 +90,6 @@ public class NH2Model extends Model implements Serializable{
 		// Check if user got all questions correct
 		// If the player has no eggs
 		if(eggs <= 0) {
-			//System.out.println("egg < 0  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
 			this.curState = Type.GAMEOVER;
 		}
 		// If player not out off the screen, run the game.
@@ -109,11 +100,9 @@ public class NH2Model extends Model implements Serializable{
 				updateList();
 			
 			// Iterate through all the elements in the game and check for collisions
-			//System.out.println("fox move");
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
 				Element curE = iter.next();
-				//System.out.println("fox move");
 				curE.move();
 				
 				int nestW = imgsSize.get(nest.getType().getName())[0], nestH = imgsSize.get(nest.getType().getName())[1]; 
@@ -128,8 +117,6 @@ public class NH2Model extends Model implements Serializable{
 				if(xC1 && (yC1 || yC2) || xC2 && (yC1 ||yC2 )) {
 					System.out.println("removeNH2");
 					eggs--;
-					//System.out.println("remove eggs from lists");
-					//System.out.println(eggList.size());
 					if(eggList.size()>0) {
 						eggList.remove(0);
 					}
@@ -138,7 +125,6 @@ public class NH2Model extends Model implements Serializable{
 					iter.remove();
 					// if the fox gets to the nest, it steals and egg
 				} else if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
-					//System.out.println("remove");
 					HitItem h = (HitItem)curE;
 					
 					if(!h.getDirectionChange()) {
@@ -156,8 +142,6 @@ public class NH2Model extends Model implements Serializable{
 	// This method checks for a collision in the main game
 	@Override
 	public boolean checkCollision(Element e) {
-//		int birdW = imgsSize.get(bird.getBType().getName())[0], birdH = imgsSize.get(bird.getBType().getName())[1];
-//		int itemW = imgsSize.get(e.getType().getName())[0], itemH = imgsSize.get(e.getType().getName())[1];
 		return collisionF(e);
 	}
 	
@@ -198,8 +182,6 @@ public class NH2Model extends Model implements Serializable{
 		delayTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				//System.out.println("delayCount: " + ++delayCount);
 				++delayCount;
 				if (delayCount >=2) {
 					if (quizCount < 3) {
@@ -222,8 +204,6 @@ public class NH2Model extends Model implements Serializable{
 	public void tutorial() {
 		if(!outOfFrame()) {
 			bird.move();
-			
-			
 			// Iterate through all the elements in the game and check for collisions
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
@@ -231,7 +211,6 @@ public class NH2Model extends Model implements Serializable{
 				curE.move();
 				
 				if (checkCollision(curE) && curE.getType() != ItemType.NEST) {
-					//System.out.println("remove");
 					HitItem h = (HitItem)curE;
 					
 					if(!h.getDirectionChange()) {
@@ -243,9 +222,6 @@ public class NH2Model extends Model implements Serializable{
 						
 					}
 				}
-//				if(this.foxoutOfFrame(curE)) {
-//					setUpGame();
-//				}
 			}
 		}
 	}
@@ -267,21 +243,6 @@ public class NH2Model extends Model implements Serializable{
 	// This method generate the random position for the foxes to spawn in NH2
 	// It also determines the direction each fox should travel in to steal and egg
 	public void updateList() {
-//		Random random = new Random();
-//		int ranNum = random.nextInt(8);
-//		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-//		double vX = 10*(((frameW-imgW)/2)/unitVectorMag), vY = 10*(((frameW-imgW)/2)/unitVectorMag);
-//		int vectorX =(int) vX, vectorY = (int) vY;
-//		int[][] direction = new int[][] {{10, 0, (frameH-imgH)/2, 0}, 
-//										{-10, 0, (frameH - imgH)/2, frameW}, 
-//										{0, 5, 0, (frameH - imgH)/2}, 
-//										{0, -10, frameH, (frameW - imgW)/2}, 
-//										{vectorX, vectorY, 0, 0}, 
-//										{vectorX, -vectorY, frameH-imgH, 0}, 
-//										{-vectorX, vectorY, 0, frameW}, 
-//										{-vectorX, -vectorY, frameH-imgH, frameW-imgW}};
-//		list.add(new HitItem(direction[ranNum][3], direction[ranNum][2], ItemType.FOX, direction[ranNum][0], direction[ranNum][1]));
-//		updateL = false;
 		// Generate random number
 		Random ran = new Random();
 		int ranSide = ran.nextInt(8);
@@ -299,27 +260,20 @@ public class NH2Model extends Model implements Serializable{
 		case 0:
 			height = (frameH-imgH)/2;
 			width = 0;
-			//direction = 'e';
 			list.add(new HitItem(width, height, ItemType.FOX, 3, 0));
-			//list.add(new HitItem(width, height, ItemType.FOX, 10, 0));
 			System.out.println("move east");
 			// Moving East
 			break;
 		case 1:
 			height = (frameH - imgH)/2;
 			width = frameW;
-			//direction = 'w';
 			list.add(new HitItem(width, height, ItemType.FOX, -3, 0));
-//			list.add(new HitItem(width, height, ItemType.FOX, -10, 0));
 			System.out.println("move west");
 			// Moving West
 			break;
 		case 2:
 			height = 0;
 			width = (frameW - imgW)/2;
-			//direction = 's';
-			//list.add(new HitItem(width, height, ItemType.FOX, 0, 10));
-
 			list.add(new HitItem(width, height, ItemType.FOX, 0, 2));
 			System.out.println("move south");
 			// Moving South
@@ -327,9 +281,6 @@ public class NH2Model extends Model implements Serializable{
 		case 3:
 			height = frameH;
 			width = (frameW - imgW)/2;
-
-			//direction = 'n';
-			//list.add(new HitItem(width, height, ItemType.FOX, 0, -10));
 			list.add(new HitItem(width, height, ItemType.FOX, 0, -2));
 			System.out.println("move north");
 			// Moving North
@@ -337,7 +288,6 @@ public class NH2Model extends Model implements Serializable{
 		case 4:
 			height = 0;
 			width = 0;
-			//list.add(new HitItem(width, height, ItemType.AIRPLANE, 19, 10));
 			list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
 			System.out.println("move southeast");
 			// Moving Southeast
@@ -347,7 +297,7 @@ public class NH2Model extends Model implements Serializable{
 			width = 0;
 			list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
 			System.out.println("move northeast");
-			// Moving Southeast
+			// Moving northeast
 			break;
 		case 6:
 			height = 0;
@@ -361,7 +311,7 @@ public class NH2Model extends Model implements Serializable{
 			width = frameW-imgW;
 			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
 			System.out.println("move Northwest");
-			// Moving Southeast
+			// Moving Northwest
 			break;
 		}
 		

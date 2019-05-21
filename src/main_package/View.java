@@ -39,7 +39,7 @@ public class View extends JPanel{
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
-	JButton OPButton, NHButton, backButton,submitButton, choice1, choice2, choice3, choice4, serialize, deserialize, next;
+	JButton OPButton, NHButton, backButton, choice1, choice2, choice3, choice4, serialize, deserialize, next;
 	Image curImg, opmap, nhmap;
 	int pic = 0;
 	int pic2 = 0;
@@ -56,16 +56,12 @@ public class View extends JPanel{
 	Timer myTimer;
 	int timeCount = -1;
 	
-	
-	
 	// initialize the frameHeight, frameWidth
 	// initialize the images by calling createImage method
 	// initialize the frame and button
 	// add button to the JPanel
 	public View() {
 		frame = new JFrame();
-		//System.out.println("frame");
-//		frame.getContentPane().add(this);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setBackground(Color.LIGHT_GRAY);
 		frame.setVisible(true);
@@ -73,9 +69,6 @@ public class View extends JPanel{
     	frameHeight = frame.getHeight()-40;
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
-    	
-    	//setLayout(null);
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  
     	frame.setVisible(false);
 		
@@ -116,13 +109,7 @@ public class View extends JPanel{
 			BufferedImage img = createImage(imgName[i]);
 			if (imgName[i].contains("bg")) {
 				imgs.put(imgName[i], img.getScaledInstance(frameWidth, frameHeight, Image.SCALE_FAST));
-			} /*else if(imgName[i].contains("osprey") && !imgName[i].contains("Real") ) {
-				OS = new BufferedImage[2];
-				BufferedImage o2 = createImage("osprey2");
-				OS[0] = img;
-				OS[1] = o2;
-			}*/
-			else if(imgsSize.containsKey(imgName[i])){
+			} else if(imgsSize.containsKey(imgName[i])){
 				imgs.put(imgName[i], img.getScaledInstance(imgsSize.get(imgName[i])[0], imgsSize.get(imgName[i])[1], Image.SCALE_FAST));
 			}
 		}
@@ -132,7 +119,6 @@ public class View extends JPanel{
 		nhmap = imgs.get("nhmapbg");
 		nhmaps = new Image[]{imgs.get("nhmapbg"),imgs.get("nhmapbg2"),imgs.get("nhmapbg3"),imgs.get("nhmapbg4") };
 		opmaps = new Image[]{imgs.get("opmapbg"),imgs.get("opmapbg") ,imgs.get("opmapbg2"),imgs.get("opmapbg3"), imgs.get("opmapbg4"),imgs.get("opmapbg5")};
-		
 		
 		setLayout(null);
 		OPButton = new JButton(new ImageIcon(imgs.get("ospreyReal")));
@@ -153,13 +139,12 @@ public class View extends JPanel{
 		backButton.setVisible(false);
 		add(backButton);
 		
-		submitButton = new JButton("submit");
+		/*submitButton = new JButton("submit");
 		submitButton.setOpaque(true);
 		submitButton.setBounds(scaleW(795), scaleH(600) , scaleW(100), scaleH(30));
 		submitButton.setVisible(false);
-		add(submitButton);
+		add(submitButton);*/
 		
-		//GridBagConstraints gbc = new GridBagConstraints();
 		choice1 = new JButton("A");
 		choice1.setOpaque(true);
 		choice1.setBounds(scaleW(730), scaleH(550), scaleW(50),scaleH(30));
@@ -197,14 +182,14 @@ public class View extends JPanel{
 		
 		serialize = new JButton("Serialize");
 		serialize.setOpaque(true);
-		serialize.setVisible(true);
+		serialize.setVisible(false);
 		serialize.setBounds(scaleW(1200), scaleH(5), scaleW(100), scaleH(30));
 		serialize.setActionCommand("s");
 		add(serialize);
 		
 		deserialize = new JButton("Deserialize");
 		deserialize.setOpaque(true);
-		deserialize.setVisible(true);
+		deserialize.setVisible(false);
 		deserialize.setBounds(scaleW(1300), scaleH(5), scaleW(100), scaleH(30));
 		deserialize.setActionCommand("d");
 		add(deserialize);
@@ -212,8 +197,6 @@ public class View extends JPanel{
 		frame.getContentPane().add(this);
 		
 		frame.setVisible(true);
-    	
-    	//createTimer(340);
 	}
 	
 	public void createTimer(int time) {
@@ -222,10 +205,7 @@ public class View extends JPanel{
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				
-				//System.out.println("time count :" + --timeCount);
 				--timeCount;
-				//model.getCurState() != Type.OP && model.getCurState() != Type.TUTORIALOP
 				if(model.getCurState() == Type.MAINMENU || model.getCurState() == Type.OPREVIEW || 
 					model.getCurState() == Type.NHREVIEW || model.getCurState() == Type.GAMEOVER) {
 					myTimer.cancel();
@@ -233,7 +213,6 @@ public class View extends JPanel{
 				}
 				if (timeCount == 0) {
 					myTimer.cancel();
-					//drawDE = false;
 				} 
 			}
 			
@@ -243,7 +222,6 @@ public class View extends JPanel{
 	// consume a Model and update the image according to the Model
 	// and call the repaint method
 	public void update(Model model) {
-		//System.out.println("update model");
 		if ((model.getQuizing() || model.getCurState().equals(Type.OPREVIEW) ||
 			model.getCurState().equals(Type.NHREVIEW))) {//&& model.delayTimer == null
 			//submitButton.setVisible(true);
@@ -254,7 +232,7 @@ public class View extends JPanel{
 			backButton.setVisible(false);
 		}
 		else {
-			submitButton.setVisible(false);
+			//submitButton.setVisible(false);
 			choice1.setVisible(false);
 			choice2.setVisible(false);
 			choice3.setVisible(false);
@@ -286,7 +264,6 @@ public class View extends JPanel{
 		}
 		else if (model.getCurState() == Type.OP) {
 			if (timeCount %2 == 0) {
-				//System.out.println("time = 3");
 				curImg = imgs.get("osprey2");
 			}
 			else {
@@ -306,7 +283,6 @@ public class View extends JPanel{
 				next.setVisible(true);
 			}
 			if (timeCount %2 == 0) {
-				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -315,7 +291,6 @@ public class View extends JPanel{
 		}
 		else if (model.getCurState() == Type.NH1) {
 			if (timeCount %2 == 0) {
-				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -325,7 +300,6 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.TUTORIALNH2) {
 			next.setVisible(true);
 			if (timeCount %2 == 0) {
-				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -335,7 +309,6 @@ public class View extends JPanel{
 		else if (model.getCurState() == Type.NH2) {
 			backButton.setVisible(true);
 			if (timeCount %2 == 0) {
-				//System.out.println("time = 3");
 				curImg = imgs.get("nh");
 			}
 			else {
@@ -352,307 +325,214 @@ public class View extends JPanel{
 		}
 		this.model = model;
 		frame.repaint();
-//		try {
-//			Thread.sleep(100);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	// draw image and game content on the panel according to model class
 	public void paintComponent(Graphics g) {
-		//System.out.println("paint");
 		if (model == null) {
-			//System.out.println("null model");
-//			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
-//			g.drawString("Time Remaining: ", 100, 20);
 			g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
 			g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
 			g.drawImage(imgs.get("info"), 0, scaleH(500), null, this);
-			//g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
-			//g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
 			return;
 		}
 		try {
-
-			//else {
-				switch (model.getCurState()) {
-				case MAINMENU:
-					g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
-					g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
-					g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
-					g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
-					g.drawImage(imgs.get("info"), 0, scaleH(500), null, this);
-					break;
-				case TUTORIALOP:
-					if(((OPModel) model).getDrawNA()) {
-						g.drawImage(opmap,0, 0, Color.gray, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.red);
-						//g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
-					}else {
-						g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.blue);
-						g.drawString("Energy Bar", scaleW(40), scaleH(70));
-						//picNum = (picNum + 1) % frameCount;
-						//System.out.println(picNum);
-						//g.drawImage(OS[picNum], model.getBird().getX(), model.getBird().getY(), null, this);
-						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-						//g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
-						if (model.getList().size() != 0) {
-							for(Element each: model.getList()) {
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-							}
-						}
-						g.setColor(Color.black);
-						g.drawRect(scaleW(10), scaleH(10), 50*scaleW(10), scaleH(20));
-						g.setColor(((OPModel) model).color);
-						g.fillRect(scaleW(10), scaleH(10), ((OPModel) model).getEnergy()*scaleW(10), scaleH(20));
-					}
-					break;
-				case OP:
-//					String s = "bgwater";
-//					if (model.timeCount == 55) {
-//						s ="bgland";
-//					}
-					if(((OPModel) model).getDrawNA()) {
-						g.drawImage(opmap,0, 0, Color.gray, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.red);
-						//g.drawString("The Osprey is a migratory bird that migrates from Delaware to Mexico.", frameWidth/7, frameHeight/3);
-					} //else {
-						//if(model.getWaterbg()) {
-							g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
-							//System.out.println("first: " + model.groundX % frameWidth);
-							g.drawImage(imgs.get("bgwater"), (model.getGroundX() % frameWidth) + frameWidth, model.getGroundY(), Color.gray, this);
-						/*} else if(!model.getWaterbg()) {
-							/*if(frameWidth >= 0 && first) {
-								if(frameWidth == 0) {
-									first = false;
-								}
-								g.drawImage(imgs.get("bgwater"), model.groundX % frameWidth, model.groundY, Color.gray, this);
-							//System.out.println("first: " + model.groundX % frameWidth);
-								g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
-							} else {
-								first = false;
-								g.drawImage(imgs.get("bgland"), model.groundX % frameWidth, model.groundY, Color.gray, this);
-								//System.out.println("first: " + model.groundX % frameWidth);
-								g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + frameWidth, model.groundY, Color.gray, this);
-							//}
-						}*/
-						//System.out.println("second: " + (model.groundX + frameWidth)% frameWidth);
-						
-						//g.drawImage(imgs.get("bgland"), (model.groundX % frameWidth) + 3 * frameWidth, model.groundY, Color.gray, this);
-						//System.out.println("first: " + model.groundX % frameWidth);
-						//g.drawImage(imgs.get("bgland"), (model.groundX % (2* frameWidth)) + 3 * frameWidth, model.groundY, Color.gray, this);
-						//picNum = (picNum + 1) % frameCount;
-						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-				
-						if (model.getList().size() != 0) {
-							for(Element each: model.getList()) {
-								if (each.getType().equals(ItemType.WINFLAG)) {
-									//System.out.println("land");
-									g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
-									g.setColor(Color.black);
-									g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), scaleW(5), scaleH(300));
-									
-								}
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-							}
-						}
-						g.setColor(Color.black);
-						g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
-						g.setColor(((OPModel) model).color);
-						g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
-					//}
-					break;
-				case TUTORIALNH1:
-					if(drawDE) {
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-						g.drawImage(nhmap,0, 0, Color.gray, this);
-						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					} else {
-						g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.red);
-						//g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
-						if (model.getList().size() != 0) {
-							for(Element each: model.getList()) {
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-							}
-						}
-						if (model.nest != null) {
-						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
-						}
-						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-					}
-					break;
-				case NH1:
-					
-//					
-//					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-//					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
-//					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-//					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);
-					/*g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
-					
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-					g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected()), 1000, 20);
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
-					g.drawImage(imgs.get("nest"), model.nest.getX(), model.nest.getY(), null,this);*/
-				
-//					g.drawImage(imgs.get(model.getBird().getBType().getName()), x, y, null, this);
-						g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
-						if (model.getList().size() != 0) {
-							for(Element each: model.getList()) {
-								if(model.timeCount < 20) {
-									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), Color.GREEN,this);
-								} else {
-									g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-								}
-							}
-						}
-						g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
-						//g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
-						g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-						g.setColor(Color.red);
-						g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 2*this.frameWidth/3, this.frameWidth/25);
-						g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
-						//imgs.get(model.getBird().getBType().getName())
-						g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-					
-						/*if (model.getList().size() != 0) {
-							for(Element each: model.getList()) {
-								g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-							}
-						}*/
-					//}
-//					if (model.getList().size() != 0) {
-//						//System.out.println("times drawn");
-//						for(Element each: model.getList()) {
-//							//System.out.println("drawing hit item"+ each.getX());
-//							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-//						}
-//					}
-					break;
-				case TUTORIALNH2:
-					g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
-					g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
+			switch (model.getCurState()) {
+			case MAINMENU:
+				g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+				g.drawString("Ospey:", this.frameWidth/5, this.frameHeight/9);
+				g.drawString("Northern Harrier:", this.frameWidth/2, this.frameHeight/9);
+				g.drawImage(imgs.get("ospreyReal"), this.frameWidth/5, this.frameHeight/8, Color.gray, this);
+				g.drawImage(imgs.get("NorthernHarrierReal"), this.frameWidth/2, this.frameHeight/8, Color.gray, this);
+				g.drawImage(imgs.get("info"), 0, scaleH(500), null, this);
+				break;
+			case TUTORIALOP:
+				if(((OPModel) model).getDrawNA()) {
+					g.drawImage(opmap,0, 0, Color.gray, this);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 					g.setColor(Color.red);
-					//g.drawString("Tutorial", this.frameWidth/2, (this.frameHeight)/4);
+				}else {
+					g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.blue);
+					g.drawString("Energy Bar", scaleW(40), scaleH(70));
+					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
 					if (model.getList().size() != 0) {
-						//System.out.println("times drawn");
 						for(Element each: model.getList()) {
-							//System.out.println("drawing hit item"+ each.getX());
 							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 						}
 					}
+					g.setColor(Color.black);
+					g.drawRect(scaleW(10), scaleH(10), 50*scaleW(10), scaleH(20));
+					g.setColor(((OPModel) model).color);
+					g.fillRect(scaleW(10), scaleH(10), ((OPModel) model).getEnergy()*scaleW(10), scaleH(20));
+				}
+				break;
+			case OP:
+				if(((OPModel) model).getDrawNA()) {
+					g.drawImage(opmap,0, 0, Color.gray, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.red);
+				} 
+				g.drawImage(imgs.get("bgwater"), model.getGroundX() % frameWidth, model.getGroundY(), Color.gray, this);
+				g.drawImage(imgs.get("bgwater"), (model.getGroundX() % frameWidth) + frameWidth, model.getGroundY(), Color.gray, this);
+				g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+		
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						if (each.getType().equals(ItemType.WINFLAG)) {
+							g.drawImage(imgs.get("bgland"), each.getX(), 0, null,this);
+							g.setColor(Color.black);
+							g.fillRect(each.getX() + imgsSize.get("winflag")[0], each.getY(), scaleW(5), scaleH(300));
+							
+						}
+						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+					}
+				}
+				g.setColor(Color.black);
+				g.drawRect(10, 2, (model.defaultTime - 10)*10, 20);
+				g.setColor(((OPModel) model).color);
+				g.fillRect(10, 2, ((OPModel) model).getEnergy()*10, 20);
+				break;
+			case TUTORIALNH1:
+				if(drawDE) {
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+					g.drawImage(nhmap,0, 0, Color.gray, this);
+					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), 100, 20);
+				} else {
+					g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+					g.setColor(Color.red);
+					if (model.getList().size() != 0) {
+						for(Element each: model.getList()) {
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+						}
+					}
+					if (model.nest != null) {
+					g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
+					}
+					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+				}
+				break;
+			case NH1:
+				g.drawImage(imgs.get("nhbg"), 0, 0, null, this);
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						if(model.timeCount < 20) {
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), Color.GREEN,this);
+						} else {
+							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+						}
+					}
+				}
+				g.drawImage(imgs.get(((NHModel) model).nestBuild), model.nest.getX(), model.nest.getY(), null,this);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				g.drawString("Items Collected: " + String.valueOf(model.getBird().getItemsCollected())+ "/10", 2*this.frameWidth/3, this.frameWidth/25);
+				g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
+				g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+				break;
+			case TUTORIALNH2:
+				g.drawImage(imgs.get(model.tutorialBg[model.tutor]), 0, 0, null, this);
+				g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+					}
+				}
+				for(CollectedItem each: ((NH2Model) model).eggList) {
+					g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+				}
+				g.drawImage(imgs.get("arrow"), 5*this.frameWidth/16, (3*this.frameHeight)/8, null,this);
+				g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+				break;
+			case NH2:
+				g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
+				
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
+				g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggList.size()), 3*this.frameWidth/4, this.frameWidth/25);
+				g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
+				if (model.getList().size() != 0) {
+					for(Element each: model.getList()) {
+						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
+					}
+				}
+				
+				if (((NH2Model) model).eggList.size() != 0) {
 					for(CollectedItem each: ((NH2Model) model).eggList) {
 						g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
 					}
-					g.drawImage(imgs.get("arrow"), 5*this.frameWidth/16, (3*this.frameHeight)/8, null,this);
-					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-					break;
-				case NH2:
-					g.drawImage(imgs.get("nhbg"), 0, 0, null, this);		
-					
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-					g.setColor(Color.red);
-					g.drawString("Time Remaining: " + String.valueOf(model.getTimeCount()), this.frameWidth/10, this.frameWidth/25);
-					g.drawString("Eggs: " + String.valueOf(((NH2Model) model).eggList.size()), 3*this.frameWidth/4, this.frameWidth/25);
-					//g.drawString("You Win NH1", 1000, 20);
-					g.drawImage(imgs.get("nest10"), (this.frameWidth-this.imageW)/2, (this.frameHeight-this.imageH)/2, null,this);
-					//System.out.println(model.getList().size());
-					
-					//g.drawImage(imgs.get("osprey"), model.getBird().getX(), model.getBird().getY(), null, this);
-					if (model.getList().size() != 0) {
-						//System.out.println("times drawn");
-						for(Element each: model.getList()) {
-							//System.out.println("drawing hit item"+ each.getX());
-							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-						}
-					}
-					
-					if (((NH2Model) model).eggList.size() != 0) {
-						for(CollectedItem each: ((NH2Model) model).eggList) {
-							g.drawImage(imgs.get(each.getType().getName()), each.getX(), each.getY(), null,this);
-						}
-					}
-					g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
-					
-					break;
-				case GAMEOVER:
-					g.drawImage(imgs.get("overbg"), 0, 0, null, this);
-					g.setColor(Color.red);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-					g.drawString("Game Over", 4*this.frameWidth/9, this.frameHeight/2);
-					break;
-				case OPREVIEW:
-					g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(170));
-					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
-					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
-					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
-					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
-					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
-					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
-					g.setColor(Color.red);
-					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
-					break;
-				case NHREVIEW:
-					g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-					g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(170));
-					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(100));
-					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
-					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
-					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
-					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
-					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
-					g.setColor(Color.red);
-					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
-					break;
-				case WIN:
-					g.setColor(Color.blue);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-					g.drawString("Click back button to go to main ", 3*this.frameWidth/9, this.frameHeight/2);
-					break;
 				}
-		//	}
-				if (model.getQuizing()) {
-					g.drawImage(imgs.get("quizpanel"), frameWidth/4, frameHeight * 100/838, null,this);
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
-					g.setColor(Color.black);
-					//g.drawString("" + model.getQuiz().getChosenAnswer(), frameWidth/3, scaleH(220));
-					if (model.getCurState() == Type.TUTORIALOP) {
-						g.drawString("Answer Quiz Correctly to Save Energy", frameWidth/3, scaleH(360));
-						g.drawString("Press Any Button Below to Continue", frameWidth/3, scaleH(520));
-						return;
-					}
-					g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(360));
-					g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(400));
-					g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(440));
-					g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(480));
-					g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(520));
-					if (model.getCurState() == Type.NH1) {
-						//g.drawString(model.quizCount + "/" + 3 + " Quizs", frameWidth * 30 / 1550, frameHeight * 30/838);
-						//g.drawString(model.quizCount + "/" + 3 + " Quizzes", 30, 30);
-						g.drawString(model.quizCount + "/" + 3 + " Quizzes", scaleW(1000), scaleH(600));
+				g.drawImage(curImg, model.getBird().getX(), model.getBird().getY(), null, this);
+				
+				break;
+			case GAMEOVER:
+				g.drawImage(imgs.get("overbg"), 0, 0, null, this);
+				g.setColor(Color.red);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+				g.drawString("Game Over", 4*this.frameWidth/9, this.frameHeight/2);
+				break;
+			case OPREVIEW:
+				g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+				g.drawString("You Win the osprey game, Review what you learned", frameWidth/3, scaleH(170));
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
+				g.setColor(Color.red);
+				g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
+				break;
+			case NHREVIEW:
+				g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+				g.drawString("You Win the Northern Harrier game, Review what you learned", frameWidth/3, scaleH(170));
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(330));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(370));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(410));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(450));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(490));
+				g.setColor(Color.red);
+				g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(270));
+				break;
+			case WIN:
+				g.setColor(Color.blue);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+				g.drawString("Click back button to go to main ", 3*this.frameWidth/9, this.frameHeight/2);
+				break;
+			}
+			
+			if (model.getQuizing()) {
+				g.drawImage(imgs.get("quizpanel"), frameWidth/4, frameHeight * 100/838, null,this);
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
+				g.setColor(Color.black);
+				if (model.getCurState() == Type.TUTORIALOP) {
+					g.drawString("Answer Quiz Correctly to Save Energy", frameWidth/3, scaleH(360));
+					g.drawString("Press Any Button Below to Continue", frameWidth/3, scaleH(520));
+					return;
+				}
+				g.drawString(model.getQuiz().getQuestion(), frameWidth/3, scaleH(360));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], frameWidth/3, scaleH(400));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], frameWidth/3, scaleH(440));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], frameWidth/3, scaleH(480));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], frameWidth/3, scaleH(520));
+				if (model.getCurState() == Type.NH1) {
+					g.drawString(model.quizCount + "/" + 3 + " Quizzes", scaleW(1000), scaleH(600));
 
-					}
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-					g.setColor(Color.red);
-					g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(300));
-					
-					
 				}
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+				g.setColor(Color.red);
+				g.drawString(model.quizOutcomeInfo, frameWidth/3, scaleH(300));
+				
+				
+			}
 		}catch(NullPointerException n) {
 			n.printStackTrace();
 		}
