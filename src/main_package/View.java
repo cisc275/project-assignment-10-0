@@ -139,12 +139,6 @@ public class View extends JPanel{
 		backButton.setVisible(false);
 		add(backButton);
 		
-		/*submitButton = new JButton("submit");
-		submitButton.setOpaque(true);
-		submitButton.setBounds(scaleW(795), scaleH(600) , scaleW(100), scaleH(30));
-		submitButton.setVisible(false);
-		add(submitButton);*/
-		
 		choice1 = new JButton("A");
 		choice1.setOpaque(true);
 		choice1.setBounds(scaleW(730), scaleH(550), scaleW(50),scaleH(30));
@@ -223,8 +217,7 @@ public class View extends JPanel{
 	// and call the repaint method
 	public void update(Model model) {
 		if ((model.getQuizing() || model.getCurState().equals(Type.OPREVIEW) ||
-			model.getCurState().equals(Type.NHREVIEW))) {//&& model.delayTimer == null
-			//submitButton.setVisible(true);
+			model.getCurState().equals(Type.NHREVIEW))) {
 			choice1.setVisible(true);
 			choice2.setVisible(true);
 			choice3.setVisible(true);
@@ -232,7 +225,6 @@ public class View extends JPanel{
 			backButton.setVisible(false);
 		}
 		else {
-			//submitButton.setVisible(false);
 			choice1.setVisible(false);
 			choice2.setVisible(false);
 			choice3.setVisible(false);

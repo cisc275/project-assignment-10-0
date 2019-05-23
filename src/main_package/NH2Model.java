@@ -11,13 +11,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NH2Model extends Model implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	// Instantiate Variables
+	private static final long serialVersionUID = 1L;
+	final int gameTime = 20;
+	final int foxSpeed1 = 3;
+	final int foxSpeed2 = 2;
+	final int foxSpeed3 = -5;
 	ArrayList<CollectedItem> eggList;
 	boolean drawDE;
+	final int nestCenterX = 100;
+	final int nestCenterY = 50;
+	final int spawnLocations = 8;
 	
 	// Constructor sets up the NH2 game and determines the locations of all elements in the game
 	public NH2Model(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
@@ -26,34 +31,36 @@ public class NH2Model extends Model implements Serializable{
 		curState = Type.TUTORIALNH2;
 		tutorialBg = new String[] {"NHtutorial3bg"};
 		eggList = new ArrayList<>();
-		Random r = new Random();
-		System.out.println("eggs: "+eggs);
+		//Random r = new Random();
+		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		for (int i = 0; i < eggs; i++) {
 			switch(i) {
 			case 0:
-				eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
+				//eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
+				eggList.add(new CollectedItem(nest.getX()+nestCenterX, nest.getY()+nestCenterY, ItemType.EGG));
 				break;
 			case 1:
-				eggList.add(new CollectedItem(nest.getX() + 80, nest.getY() + 50, ItemType.EGG));
+				eggList.add(new CollectedItem(nest.getX() + nestCenterX-gameTime, nest.getY() + nestCenterY, ItemType.EGG));
 				break;
 			case 2:
-				eggList.add(new CollectedItem(nest.getX() + 50, nest.getY() + 50, ItemType.EGG));
+				eggList.add(new CollectedItem(nest.getX() + nestCenterX/2, nest.getY() + nestCenterY, ItemType.EGG));
 				break;
 			}
 		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
-		nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
+		//nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
 		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));	
 	}
 	
+	// This method is called after the tutorial is over to reset the model
 	public void setUpGame() {
 		curState = Type.NH2;
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		setList(new ArrayList<>());
 		setUpdateL();
-		createTimer(20);
+		createTimer(gameTime);
 	}
 
 	// This method creates a timer for 40 seconds for the NH1 game 
@@ -199,7 +206,8 @@ public class NH2Model extends Model implements Serializable{
 			
 		}, 0, 1000);
 	}
-
+	
+	// This method runs the tutorial of the game and manages the position of the bird.
 	@Override
 	public void tutorial() {
 		if(!outOfFrame()) {
@@ -214,7 +222,7 @@ public class NH2Model extends Model implements Serializable{
 					HitItem h = (HitItem)curE;
 					
 					if(!h.getDirectionChange()) {
-						int newX = -5;
+						int newX = foxSpeed3;
 						int newY = 0;
 						h.setyVector(newY);
 						h.setxVector(newX);
@@ -245,13 +253,13 @@ public class NH2Model extends Model implements Serializable{
 	public void updateList() {
 		// Generate random number
 		Random ran = new Random();
-		int ranSide = ran.nextInt(8);
+		int ranSide = ran.nextInt(spawnLocations);
 		int height = 0;
 		int width = 0;
 		// Create vector in the right direction
 		double unitVectorMag = this.calculateUnitVectorMag((frameW-imgW)/2, (frameH-imgH)/2);
-		double vX = 3*(((frameW-imgW)/2)/unitVectorMag);
-		double vY = 3*(((frameH-imgH)/2)/unitVectorMag);
+		double vX = foxSpeed1*(((frameW-imgW)/2)/unitVectorMag);
+		double vY = foxSpeed1*(((frameH-imgH)/2)/unitVectorMag);
 		int vectorX = (int) vX;//scaleW((int) vX);
 		int vectorY = (int) vY;//scaleH((int) vY);
 		
@@ -260,28 +268,28 @@ public class NH2Model extends Model implements Serializable{
 		case 0:
 			height = (frameH-imgH)/2;
 			width = 0;
-			list.add(new HitItem(width, height, ItemType.FOX, 3, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, foxSpeed1, 0));
 			System.out.println("move east");
 			// Moving East
 			break;
 		case 1:
 			height = (frameH - imgH)/2;
 			width = frameW;
-			list.add(new HitItem(width, height, ItemType.FOX, -3, 0));
+			list.add(new HitItem(width, height, ItemType.FOX, -foxSpeed1, 0));
 			System.out.println("move west");
 			// Moving West
 			break;
 		case 2:
 			height = 0;
 			width = (frameW - imgW)/2;
-			list.add(new HitItem(width, height, ItemType.FOX, 0, 2));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, foxSpeed2));
 			System.out.println("move south");
 			// Moving South
 			break;
 		case 3:
 			height = frameH;
 			width = (frameW - imgW)/2;
-			list.add(new HitItem(width, height, ItemType.FOX, 0, -2));
+			list.add(new HitItem(width, height, ItemType.FOX, 0, -foxSpeed2));
 			System.out.println("move north");
 			// Moving North
 			break;

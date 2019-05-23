@@ -19,6 +19,10 @@ public class NHModel extends Model implements Serializable{
 	boolean drawDE;
 	Random rand = new Random(); 
 	String nestBuild;
+	final int mapTime = 5;
+	final int gameTime = 40;
+	final int numCollectedItems = 5;
+	final int totalItems = 10;
 	
 	// Constructor sets up the NH1 game and determines the locations of all elements in the game
 	public NHModel(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
@@ -28,26 +32,28 @@ public class NHModel extends Model implements Serializable{
 		tutorialBg = new String[] {"NHtutorial1bg","NHtutorial2bg"};
 		tutor = 0;
 		setList(new ArrayList<>());
-		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
-		createTimer(5);
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
+		createTimer(mapTime);
 	}
 	
+	// This method is called after the tutorial is over to reset the model
 	public void setUpGame() {
 		nestBuild = "nest1";
 		setList(new ArrayList<>());
 		setNest(new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST));
-		createCollectedItems(5, ItemType.STICK);
-		createCollectedItems(5, ItemType.RAT);
-		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,3,BirdType.NH));
+		createCollectedItems(numCollectedItems, ItemType.STICK);
+		createCollectedItems(numCollectedItems, ItemType.RAT);
+		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
 		
 		try {
 			createQuizzes();
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		createTimer(40);
+		createTimer(gameTime);
 	}
 	
+	// This method adds collected items to the ArrayList of items
 	public void createCollectedItems(int num, ItemType it) {
 		for(int i = 0; i<num; i++) {
 			getList().add(new CollectedItem(rand.nextInt(getFrameW()-imgW), rand.nextInt(getFrameH()-imgH), it));
@@ -77,10 +83,10 @@ public class NHModel extends Model implements Serializable{
 		if(timeCount <= 0) {
 			gameOver();
 		}
-		if (bird.getItemsCollected() == 5) {
+		if (bird.getItemsCollected() == numCollectedItems) {
 			nestBuild = "nest5";
 		}
-		else if (bird.getItemsCollected() == 10) {
+		else if (bird.getItemsCollected() == totalItems) {
 			nestBuild = "nestgold";
 		}
 		
@@ -217,7 +223,7 @@ public class NHModel extends Model implements Serializable{
 	public void setNest(CollectedItem n) {
 		nest  = n;
 	}
-	
+	// getting for drawDE map variable
 	public boolean drawDE() {
 		return drawDE;
 	}
