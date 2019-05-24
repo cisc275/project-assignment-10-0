@@ -248,7 +248,9 @@ public class OPModel extends Model implements Serializable{
 				++delayCount;
 				if (delayCount >=3) {
 					quizing = false;
+					try {
 					delayTimer.cancel();
+					}catch(Exception e) {}
 					delayTimer = null;
 					quizOutcomeInfo = "";
 				}
@@ -279,7 +281,9 @@ public class OPModel extends Model implements Serializable{
 							winGame();
 						}
 						quizOutcomeInfo = "";
+						try {
 						delayTimer.cancel();
+						}catch(Exception e) {}
 						delayTimer = null;
 					}
 				}

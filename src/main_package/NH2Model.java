@@ -199,7 +199,9 @@ public class NH2Model extends Model implements Serializable{
 						winGame();
 					}
 					quizOutcomeInfo = "";
+					try {
 					delayTimer.cancel();
+					}catch(Exception e) {}
 					delayTimer = null;
 				}
 			}

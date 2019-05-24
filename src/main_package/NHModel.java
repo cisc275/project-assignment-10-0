@@ -183,7 +183,9 @@ public class NHModel extends Model implements Serializable{
 						}
 					}
 					quizOutcomeInfo = "";
+					try {
 					delayTimer.cancel();
+					}catch(Exception e) {}
 					delayTimer = null;
 				}
 			}
