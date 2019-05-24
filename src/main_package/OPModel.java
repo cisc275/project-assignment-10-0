@@ -30,15 +30,6 @@ public class OPModel extends Model implements Serializable{
 		energy = 50;
 		setBird(new Bird(0,250,3,BirdType.OSPREY));
 		setList(new ArrayList<>());
-//		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
-//		model.getList().add(new HitItem(model.getFrameW(), 300, ItemType.AIRPLANE, -10, 0));
-//		setUpdateL();
-		//winFlag = true;
-//		try {
-//			createQuizzes();
-//		}catch(Exception ex) {
-//			ex.printStackTrace();
-//		}
 		createTimer(5);
 		color = Color.yellow;
 		
@@ -47,7 +38,6 @@ public class OPModel extends Model implements Serializable{
 	// set a timer and task on osprey game from 60 to 0, every second count one
 	@Override
 	public void createTimer(int time) {
-		// TODO Auto-generated method stub
 		if (drawNA) {
 			timeCount = time;
 			myTimer = new Timer();
@@ -55,10 +45,8 @@ public class OPModel extends Model implements Serializable{
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					--timeCount;
 					if (timeCount <= 0) {
-						//drawNA = false;
 						myTimer.cancel();
 						myTimer = null;
 					}
@@ -73,25 +61,16 @@ public class OPModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				if (!quizing) {
-					//System.out.println("time count :" + --timeCount);
 					--timeCount;
 					energy --;
 				}
-				//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				if (timeCount % 2 == 0) {
 					// every 4 second update list
 					updateL = true;
 				}
-				
-				/*if(timeCount < 40 && timeCount > 25) {
-					waterbg = false;
-				} else {
-					waterbg = true;
-				}*/
 				if (energy <= 0) {
 					// lose all energy game over
 					gameOver();
-					//System.out.println(curState);
 					myTimer.cancel();
 				}
 				if (timeCount < flagTime || curState == Type.OPREVIEW) {
@@ -113,14 +92,8 @@ public class OPModel extends Model implements Serializable{
 		if (!(outOfFrame())) {
 			bird.move();
 		}
-		// for background
-//		if(timeCount > 55) {
-//			drawNA = true;
-//		}else{
-			//drawNA = false;
 			setGroundX(getGroundX() + xbg);
 			// for element
-			//System.out.println(updateL + "!!!!!!!!!!!!!!!!!!!!!!!");
 			if (updateL) {
 				updateList();
 			}
@@ -135,41 +108,24 @@ public class OPModel extends Model implements Serializable{
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
 				Element curE = iter.next();
-				//curE.setX(xDec);
 				curE.move();
-				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-					//System.out.println("remove");
+				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { 
 					iter.remove();
-					//updateL = true;
 				}
 				else if (checkCollision(curE)) {
-					//System.out.println("remove");
 					iter.remove();
-					//updateL = true;
 				}
 			}
-		//}
 		
 	}
 	
 	//helper for updatePosition() to update the list by adding obiect in it 
 		public void updateList() {
-		//	System.out.println("update list called");
-			/*
-			Random ran = new Random();
-			int ranH = ran.nextInt(frameH - imgH / 2);
-			//System.out.println(ranH);
-			list.add(new HitItem(frameW, ranH, ItemType.AIRPLANE, -10, 0));
-			updateL = false;
-			*/
-			//System.out.println("update list");
 			Random ran = new Random();
 			int ranType = ran.nextInt(3);
 			int ranSpeed = scaleW(ran.nextInt(14) + 10);
 			int ranPosition1 = scaleH(ran.nextInt(frameH/2));
 			int ranPosition2 = scaleH(ran.nextInt(frameH/2 - 200) + frameH/2);
-			//System.out.println("random type: " + ranType);
-			//System.out.println("random speed: " + ranSpeed);
 			switch(ranType) {
 			// 0 is airplane
 			case 0:
@@ -196,12 +152,10 @@ public class OPModel extends Model implements Serializable{
 	@Override
 	public boolean checkCollision(Element ht) {
 		if (collisionF(ht)) {
-			//System.out.println("collsion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			if(ht instanceof HitItem) {
 				HitItem h = (HitItem)ht;
 				if(h.getType().equals(ItemType.FISH)) {
 					color = Color.green;
-					//System.out.println(bird.getLife());
 					bird.eat();
 					//get energy
 					if (defaultTime - 10 - energy <= 10) {
@@ -213,13 +167,9 @@ public class OPModel extends Model implements Serializable{
 					
 					
 				} else if(h.getType().equals(ItemType.AIRPLANE) || h.getType().equals(ItemType.FOX) || h.getType().equals(ItemType.SHIP)) {
-					//System.out.println(bird.getLife());
 					bird.collision();
 					startQuiz();
 				} else if(h.getType().equals(ItemType.WINFLAG)) {
-					//System.out.println("hit flag");
-					//winGame();
-					//review quiz
 					curState = Type.OPREVIEW;
 					try {
 					createQuizzes();
@@ -229,7 +179,6 @@ public class OPModel extends Model implements Serializable{
 					}
 				}
 			}
-			//gameOver();
 			return true;
 		}
 		return false;
@@ -238,7 +187,6 @@ public class OPModel extends Model implements Serializable{
 	// check if the bird go out of the frame
 	@Override
 	public boolean outOfFrame() {
-		// TODO Auto-generated method stub
 		if (bird.getY() + bird.getYVector() < 0|| bird.getY() + imgH + bird.getYVector() > frameH) {
 			return true;
 		}
@@ -253,12 +201,10 @@ public class OPModel extends Model implements Serializable{
 		switch(curState) {
 		case OP:
 		color = Color.red;
-		//System.out.println("start quiz");
 		this.quizing = true;
 		Random r = new Random();
 		if (quizzes.size() != 0) {
 			quiz = quizzes.get(r.nextInt(quizzes.size()));
-			//System.out.println(quiz);
 		}
 		break;
 		case TUTORIALOP:
@@ -283,7 +229,6 @@ public class OPModel extends Model implements Serializable{
 	public void checkQuiz() {
 		switch(curState) {
 		case OP:
-		//System.out.println("submit");
 		if(!quiz.checkAnswer()) {
 			bird.collision();
 			energy -= 20;
@@ -298,8 +243,6 @@ public class OPModel extends Model implements Serializable{
 		delayTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				//System.out.println("delayCount: " + ++delayCount);
 				++delayCount;
 				if (delayCount >=3) {
 					quizing = false;
@@ -313,7 +256,6 @@ public class OPModel extends Model implements Serializable{
 		break;
 		case OPREVIEW:
 			if(!quiz.checkAnswer()) {
-				// here represent reduce number of egg in NH2
 				quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
 			}
 			else {
@@ -325,8 +267,6 @@ public class OPModel extends Model implements Serializable{
 			delayTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
-					//System.out.println("delayCount: " + ++delayCount);
 					++delayCount;
 					if (delayCount >=2) {
 						if (quizCount < 3) {
@@ -353,7 +293,6 @@ public class OPModel extends Model implements Serializable{
 	// create a tutorial for player to learn how to paly the game
 	@Override
 	public void tutorial() {
-		// TODO Auto-generated method stub
 		if (!outOfFrame() && timeCount == 0) {
 			drawNA = false;
 			bird.move();
@@ -367,17 +306,14 @@ public class OPModel extends Model implements Serializable{
 			while(iter.hasNext()) {
 				Element curE = iter.next();
 				curE.move();
-				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) { // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-					//System.out.println("remove");
+				if (curE.getX() + imgsSize.get(curE.getType().getName())[0] <= 0 ) {
 					iter.remove();
 				}
 				else if (checkCollision(curE)) {
-					//System.out.println("remove");
 					iter.remove();
 				}
 			}
 		}
-		//System.out.println();
 	}
 	
 	public void setUpGame() {
@@ -412,10 +348,6 @@ public class OPModel extends Model implements Serializable{
 		scan = new Scanner(file);
 		while(scan.hasNextLine()) {
 			String[] infos = scan.nextLine().split(";", -1);
-//			System.out.println(infos.length);
-//			for(int i = 0; i < infos.length; i++) {
-//				System.out.println(infos[i]);
-//			}
 			String[] choices = {infos[1],infos[2],infos[3],infos[4]};
 			quizzes.add(new Quiz(infos[0], infos[5], choices));
 		}

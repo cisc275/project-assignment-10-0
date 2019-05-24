@@ -30,19 +30,12 @@ public class Controller {
 	
 	// initialize the model and view
 	public Controller() {
-		//System.out.println("controll");
 		
 		view = new View();
 		curState = Type.MAINMENU;
-		//model = new Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-		//System.out.println("model constructed");
-		//view.setModel(model);
-		//view.frame.setVisible(true);
-		//
 		view.OPButton.addActionListener(new OPButtonListener());
 		view.NHButton.addActionListener(new NHButtonListener());
 		view.backButton.addActionListener(new RestartButtonListener());
-		view.submitButton.addActionListener(new QuizButtonListener());
 		view.choice1.addActionListener(new ChoiceButtonListener());
 		view.choice2.addActionListener(new ChoiceButtonListener());
 		view.choice3.addActionListener(new ChoiceButtonListener());
@@ -122,7 +115,6 @@ public class Controller {
 			if (!model.getQuizing()) {
 			if (model.tutor < model.tutorialBg.length - 1) {
 				if (model.tutor == 0 && model instanceof NHModel) {
-					//System.out.println("add element");
 					((NHModel) model).setNest(new CollectedItem((model.getFrameW()-model.imgW)/2, (model.getFrameH()-model.imgH)/2, ItemType.NEST));
 					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, 2*(model.getFrameH()-model.imgH)/3, ItemType.STICK));
 					model.getList().add(new CollectedItem(4*(model.getFrameW()-model.imgW)/5, (model.getFrameH()-model.imgH)/2, ItemType.RAT));
@@ -160,38 +152,9 @@ public class Controller {
 	// if the curState is OP, call the method chechQuiz() in the model
 	// if the curState is NH1, call the method submitQuiz() in model
 	class QuizButtonListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-//			switch (model.getCurState()) {
-//			case OP:
-//				// call checkQuiz
-//				model.checkQuiz();
-//				//model.quizing = false;
-//				view.submitButton.setVisible(false);
-//				break;
-//			case NH1:
-//				// call submitQuiz
-//				//model.quizing = false;
-//				//model.curState = Type.NH2;
-//				model.checkQuiz();
-//				System.out.println(model.getCurState());
-//				view.submitButton.setVisible(false);
-//				break;
-//			case OPREVIEW:
-//				break;
-//			case NHREVIEW:
-//				break;
-//				
-//			}
 			model.checkQuiz();
-			//System.out.println(model.getCurState());
-//			view.submitButton.setVisible(false);
-//			view.choice1.setVisible(false);
-//			view.choice2.setVisible(false);
-//			view.choice3.setVisible(false);
-//			view.choice4.setVisible(false);
 			view.requestFocusInWindow();
 		}
 		
@@ -201,15 +164,12 @@ public class Controller {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			if (model.delayTimer == null && model.getQuiz() != null) {
 				model.getQuiz().setChosenAnser(e.getActionCommand());
 				model.checkQuiz();
 			}else if (model.getCurState() == Type.TUTORIALOP) {
 				model.checkQuiz();
 			}
-			//System.out.println(model.getCurState());
-			view.submitButton.setVisible(false);
 			view.choice1.setVisible(false);
 			view.choice2.setVisible(false);
 			view.choice3.setVisible(false);
@@ -228,84 +188,6 @@ public class Controller {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-//			switch (model.getCurState()) {
-//			case OP:
-//				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//					model.getBird().setYVector(-10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					//model.updateBirdPosition(-10, 0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					//model.updateBirdPosition(10, 0);
-//				}
-//				break;
-//			case TUTORIALNH1:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(-10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(-10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(10);
-//				}
-//				break;
-//			case NH1:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(-7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(-7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(7);
-//				}
-//				break;
-//			case TUTORIALNH2:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(-10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(-10);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(10);
-//				}
-//				break;
-//			case NH2:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(-7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(-7);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(7);
-//				}
-//				break;
-//			default:
-//				break;
-//			}
 			if (model.getBird() != null) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0 - model.getBird().getyMove());
@@ -325,7 +207,6 @@ public class Controller {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if (model.getBird() != null) {
 				if (e.getKeyCode() == KeyEvent.VK_UP) {
 					model.getBird().setYVector(0);
@@ -340,87 +221,11 @@ public class Controller {
 					model.getBird().setXVector(0);
 				}
 			}
-//			switch (model.getCurState()) {
-//			case OP:
-//				//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					//model.updateBirdPosition(-10, 0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					//model.updateBirdPosition(10, 0);
-//				}
-//				break;
-//			case TUTORIALNH1:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(0);
-//				}
-//				break;
-//			case NH1:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(0);
-//				}
-//				break;
-//			case TUTORIALNH2:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(0);
-//				}
-//				break;
-//			case NH2:
-//				if (e.getKeyCode() == KeyEvent.VK_UP) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//					model.getBird().setYVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//					model.getBird().setXVector(0);
-//				}
-//				else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//					model.getBird().setXVector(0);
-//				}
-//				break;
-//			default:
-//				break;
-//			}
+
 		}
 
 		@Override
 		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -429,7 +234,6 @@ public class Controller {
 	class SerializeButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			switch(e.getActionCommand()) {
 			case "s":
 				serialize();
@@ -459,12 +263,8 @@ public class Controller {
 				
 			}
 		});
-		//System.out.println("drawAction");
 		drawAction = new AbstractAction(){
     		public void actionPerformed(ActionEvent e){
-    			//System.out.println("draw");
-    			//System.out.println(++count);
-    			//System.out.println(curState);
     			switch(curState) {
     			case MAINMENU:
     				//view.update(model);
@@ -505,8 +305,6 @@ public class Controller {
     					model.updatePosition();
     					if (model.quizCount > 2 && model.eggs > 0) {
         					model = new NH2Model(view.frameWidth, view.frameHeight, view.imageW, view.imageH, view.imgsSize);
-        					
-        					//System.out.println(curState + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         				}
     				}
     				curState = model.getCurState();
@@ -518,11 +316,9 @@ public class Controller {
     				curState = model.getCurState();
     				break;
     			case NH2:
-    				//System.out.println("NH2 controller");
     				if (!model.getQuizing()) {
     					model.updatePosition();
     				}
-    				//System.out.println(model instanceof NH2Model );
     				curState = model.getCurState();
     				view.update(model);
     				model.updatePosition();
@@ -547,13 +343,10 @@ public class Controller {
 					break;
     				
     			}
-    			
-    			
     				
     		}
     	};
 	}
-	
 	
 	public void serialize() {
 		try {
@@ -581,16 +374,11 @@ public class Controller {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		//System.out.println(tmp == null);
 		model = tmp;
-	//	view.update(model);
 	}
 	
 	public static void main(String[] args) {
 		Controller c = new Controller();
-		
-		//System.out.println("call start");
 		c.start();
-		//System.out.println("hello");
 	}
 }
