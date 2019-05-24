@@ -3,6 +3,7 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,23 +14,40 @@ import main_package.Element;
 import main_package.HitItem;
 import main_package.ItemType;
 import main_package.Model;
+import main_package.OPModel;
 import main_package.Type;
 
 class ModelTest {
 
-//	@Test
-//	void testWinGame() {
-//		Model m = new Model(600, 500, 32, 32, null);
-//		m.winGame();
-//		assertEquals(m.getCurState(), Type.WIN);
-//	}
-//
-//	@Test
-//	void testGameOver() {
-//		Model m = new Model(600, 500, 32, 32, null);
-//		m.gameOver();
-//		assertEquals(m.getCurState(), Type.GAMEOVER);
-//	}
+	@Test
+	void testWinGame() {
+		Model m = new OPModel(600, 500, 32, 32, null);
+		m.winGame();
+		assertEquals(m.getCurState(), Type.MAINMENU);
+	}
+
+	@Test
+	void testGameOver() {
+		Model m = new OPModel(600, 500, 32, 32, null);
+		m.gameOver();
+		assertEquals(m.getCurState(), Type.GAMEOVER);
+	}
+	
+	@Test
+	void testCollision() {
+		HashMap<String, int[]> size = new HashMap<>();
+		size.put("osprey", new int[] {150,150});
+		size.put("airplane", new int[] {300,200});
+		Model m = new OPModel(1550, 838, 150,150, size);
+		m.setBird(new Bird(450,450, 3, BirdType.OSPREY));
+		assertEquals(true, m.collisionF(new HitItem(500,500, ItemType.AIRPLANE,0,0)));
+		assertEquals(true, m.collisionF(new HitItem(400,450, ItemType.WINFLAG,0,0)));
+		assertEquals(false, m.collisionF(new HitItem(600,350, ItemType.AIRPLANE,0,0)));
+		assertEquals(true, m.collisionF(new HitItem(300,350, ItemType.AIRPLANE,0,0)));
+		
+		
+		
+	}
 //
 //	@Test
 //	void testUpdatePositionOP() {

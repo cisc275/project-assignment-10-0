@@ -16,6 +16,8 @@ public class OPModel extends Model implements Serializable{
 	private boolean waterbg;
 	private boolean drawNA, winFlag;
 	private final int flagTime = 30;
+	private int delayT = 0;
+	
 	public static int xbg = -6;
 	Color color;
 	
@@ -97,13 +99,13 @@ public class OPModel extends Model implements Serializable{
 			if (updateL) {
 				updateList();
 			}
+			
 			// if timeCount(not energy) is out win flag
 			if (timeCount == flagTime && winFlag) {
 				// flag has same speed as background
 				list.add(new HitItem(frameW, frameH / 3, ItemType.WINFLAG, xbg,0));
 				winFlag = false;
 			}
-			
 			
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
@@ -239,7 +241,7 @@ public class OPModel extends Model implements Serializable{
 			quizOutcomeInfo = "Congratulations! You Saved the Bird!!";
 		}
 		delayTimer = new Timer();
-		delayCount = 0;
+		delayCount = delayT;
 		delayTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -263,7 +265,7 @@ public class OPModel extends Model implements Serializable{
 			}
 			quizCount++;
 			delayTimer = new Timer();
-			delayCount = 0;
+			delayCount = delayT;
 			delayTimer.schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -345,6 +347,7 @@ public class OPModel extends Model implements Serializable{
 			file = new File("OPquiz.txt");
 			break;
 		}
+		
 		scan = new Scanner(file);
 		while(scan.hasNextLine()) {
 			String[] infos = scan.nextLine().split(";", -1);
@@ -378,4 +381,22 @@ public class OPModel extends Model implements Serializable{
 	public boolean getDrawNA() {
 		return drawNA;
 	}
+
+	public int getFlagTime() {
+		return flagTime;
+	}
+
+	public void setDrawNA(boolean drawNA) {
+		this.drawNA = drawNA;
+	}
+
+	public void setWinFlag(boolean winFlag) {
+		this.winFlag = winFlag;
+	}
+
+	public void setDelayT(int delayT) {
+		this.delayT = delayT;
+	}
+	
+	
 }

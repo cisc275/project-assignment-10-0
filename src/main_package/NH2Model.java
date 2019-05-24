@@ -332,5 +332,13 @@ public class NH2Model extends Model implements Serializable{
 		return Math.sqrt(x * x + y * y);
 	}
 	
+	public void setNest(CollectedItem n) {
+		nest  = n;
+	}
+
+	public ArrayList<CollectedItem> getEggList() {
+		return eggList;
+	}
+	
 	
 }

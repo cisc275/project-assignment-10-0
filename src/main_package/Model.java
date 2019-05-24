@@ -208,5 +208,61 @@ public abstract class Model implements Serializable{
 	public int scaleH(int size) {
 		return frameH * size / scaleHeight;
 	}
+
+	public ArrayList<Quiz> getQuizzes() {
+		return quizzes;
+	}
+
+	public void setQuizzes(ArrayList<Quiz> quizzes) {
+		this.quizzes = quizzes;
+	}
+	
+
+	public void setQuizing(boolean quizing) {
+		this.quizing = quizing;
+	}
+
+	public void setTimeCount(int timeCount) {
+		this.timeCount = timeCount;
+	}
+
+	public static int getEggs() {
+		return eggs;
+	}
+
+	public static void setEggs(int eggs) {
+		Model.eggs = eggs;
+	}
+
+	public int getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(int tutor) {
+		this.tutor = tutor;
+	}
+	
+	public void setUpdateL(boolean b) {
+		updateL = b;
+	}
+
+	public static int getDefaultTime() {
+		return defaultTime;
+	}
+
+	public static void setDefaultTime(int defaultTime) {
+		Model.defaultTime = defaultTime;
+	}
+
+	public int getQuizCount() {
+		return quizCount;
+	}
+
+	public void setDelayCount(int delayCount) {
+		this.delayCount = delayCount;
+	}
+
+
+	
 	
 }

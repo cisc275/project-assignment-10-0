@@ -34,7 +34,7 @@ public class View extends JPanel{
 	int frameHeight = 643;    //500
 	int frameWidth = 1024;     //600
 	final int imageH = 150;
-	final int imageW = 100;
+	final int imageW = 150;
 	HashMap<String, int[]> imgsSize;
 	JFrame frame;
 	ArrayList<Button> list;

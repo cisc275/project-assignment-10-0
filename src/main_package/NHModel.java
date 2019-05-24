@@ -93,9 +93,8 @@ public class NHModel extends Model implements Serializable{
 		if (!outOfFrame()) {
 			bird.move();
 			if (curState == Type.NH1) {
-				bird.move();
+				//bird.move();
 				checkCollision(bird);
-				
 				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
 					System.out.println("NH1 Complete");
 					myTimer.cancel();
@@ -109,6 +108,7 @@ public class NHModel extends Model implements Serializable{
 	// This method checks to see if the bird has collided with a collected item
 	@Override
 	public boolean checkCollision(Element e) {
+		System.out.println("call");
 		boolean collision = false;
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
@@ -127,6 +127,8 @@ public class NHModel extends Model implements Serializable{
 				moreCollectedItems = true;
 			}
 		}
+		System.out.println(list.size());
+		System.out.println(moreCollectedItems);
 		return collision;
 	}
 
@@ -226,6 +228,10 @@ public class NHModel extends Model implements Serializable{
 	// getting for drawDE map variable
 	public boolean drawDE() {
 		return drawDE;
+	}
+	
+	public String getNestBuild() {
+		return nestBuild;
 	}
 
 }
