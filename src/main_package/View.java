@@ -197,14 +197,14 @@ public class View extends JPanel{
 		
 		serialize = new JButton("Serialize");
 		serialize.setOpaque(true);
-		serialize.setVisible(true);
+		serialize.setVisible(false);
 		serialize.setBounds(scaleW(1200), scaleH(5), scaleW(100), scaleH(30));
 		serialize.setActionCommand("s");
 		add(serialize);
 		
 		deserialize = new JButton("Deserialize");
 		deserialize.setOpaque(true);
-		deserialize.setVisible(true);
+		deserialize.setVisible(false);
 		deserialize.setBounds(scaleW(1300), scaleH(5), scaleW(100), scaleH(30));
 		deserialize.setActionCommand("d");
 		add(deserialize);
