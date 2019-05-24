@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 // author Sicheng Tian, Yixiong Wu
 public class Element implements Serializable{
-	// everything exists in the game besides the background is an element
-	
 	/**
 	 * 
 	 */
+	// everything exists in the game besides the background is an element
+	
 	private static final long serialVersionUID = 1L;
 	// x-axis location
 	int x;
@@ -38,7 +38,7 @@ public class Element implements Serializable{
 	public void setY(int yChange) {
 		y+= yChange;
 	}
-
+	// some element can move
 	public void move() {
 		
 	}
@@ -46,19 +46,21 @@ public class Element implements Serializable{
 	public ItemType getType() {
 		return it;
 	}
-
+	
+	//xHitSize1 getter
 	public int getxHitSize1() {
 		return xHitSize1;
 	}
-
+	
+	//xHitSize2 getter
 	public int getxHitSize2() {
 		return xHitSize2;
 	}
-
+	//yHitSize1 getter
 	public int getyHitSize1() {
 		return yHitSize1;
 	}
-
+	//xHitSize2 getter
 	public int getyHitSize2() {
 		return yHitSize2;
 	}
