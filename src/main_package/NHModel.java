@@ -154,6 +154,9 @@ public class NHModel extends Model implements Serializable{
 	// If the user gets at least one question right, then they move on to the NH2 game
 	@Override
 	public void checkQuiz() {
+		int dLimit = 2;
+		int qLimit = 3;
+		int thousand =1000;
 		if(!quiz.checkAnswer()) {
 			bird.collision();
 			quizOutcomeInfo = "You Lose a Northern Harrier Egg";
@@ -170,8 +173,8 @@ public class NHModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				++delayCount;
-				if (delayCount >=2) {
-					if (quizCount < 3) {
+				if (delayCount >= dLimit) {
+					if (quizCount < qLimit) {
 						quiz = quizzes.get(quizCount);
 					}
 					else {
@@ -188,7 +191,7 @@ public class NHModel extends Model implements Serializable{
 				}
 			}
 			
-		}, 0, 1000);
+		}, 0, thousand);
 		
 	}
 	

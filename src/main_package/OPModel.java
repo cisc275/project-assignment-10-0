@@ -17,7 +17,8 @@ public class OPModel extends Model implements Serializable{
 	private boolean drawNA, winFlag;
 	private final int flagTime = 30;
 	private int delayT = 0;
-	
+	final int hFrameH = frameH /2;
+	final int tFframeH = 3*frameH/4;
 	public static int xbg = -6;
 	Color color;
 	
@@ -40,6 +41,7 @@ public class OPModel extends Model implements Serializable{
 	// set a timer and task on osprey game from 60 to 0, every second count one
 	@Override
 	public void createTimer(int time) {
+		int thousand = 1000;
 		if (drawNA) {
 			timeCount = time;
 			myTimer = new Timer();
@@ -54,7 +56,7 @@ public class OPModel extends Model implements Serializable{
 					}
 				}
 				
-			}, 0,1000);
+			}, 0,thousand);
 		}else {
 		timeCount = defaultTime;
 		energy = defaultTime - 10;
@@ -81,7 +83,7 @@ public class OPModel extends Model implements Serializable{
 				}
 			}
 			
-		}, 0, 1000);
+		}, 0, thousand);
 		}
 	}
 	
@@ -123,11 +125,16 @@ public class OPModel extends Model implements Serializable{
 	
 	//helper for updatePosition() to update the list by adding obiect in it 
 		public void updateList() {
+			int rangeTL = 3;
+			int rangeL = 14;
+			int rangeHelper = 10;
+			int frameHelper = 200;
+			
 			Random ran = new Random();
-			int ranType = ran.nextInt(3);
-			int ranSpeed = scaleW(ran.nextInt(14) + 10);
-			int ranPosition1 = scaleH(ran.nextInt(frameH/2));
-			int ranPosition2 = scaleH(ran.nextInt(frameH/2 - 200) + frameH/2);
+			int ranType = ran.nextInt(rangeTL);
+			int ranSpeed = scaleW(ran.nextInt(rangeL) + rangeHelper);
+			int ranPosition1 = scaleH(ran.nextInt(hFrameH));
+			int ranPosition2 = scaleH(ran.nextInt(hFrameH - frameHelper) + hFrameH);
 			switch(ranType) {
 			// 0 is airplane
 			case 0:
@@ -153,6 +160,7 @@ public class OPModel extends Model implements Serializable{
 	// if it is call winGame()
 	@Override
 	public boolean checkCollision(Element ht) {
+		int cHelper = 10;
 		if (collisionF(ht)) {
 			if(ht instanceof HitItem) {
 				HitItem h = (HitItem)ht;
@@ -160,11 +168,11 @@ public class OPModel extends Model implements Serializable{
 					color = Color.green;
 					bird.eat();
 					//get energy
-					if (defaultTime - 10 - energy <= 10) {
-						energy = defaultTime - 10;
+					if (defaultTime - cHelper - energy <= cHelper) {
+						energy = defaultTime - cHelper;
 					}
 					else {
-						energy += 10;
+						energy += cHelper;
 					}
 					
 					
@@ -200,6 +208,7 @@ public class OPModel extends Model implements Serializable{
 	// start quiz set quizzing to be true 
 	@Override
 	public void startQuiz() {
+		int sQuizHelper = 20;
 		switch(curState) {
 		case OP:
 		color = Color.red;
@@ -212,8 +221,8 @@ public class OPModel extends Model implements Serializable{
 		case TUTORIALOP:
 			quizing = true;
 			color = Color.red;
-			if (energy - 20 >=0) {
-				energy -= 20;
+			if (energy - sQuizHelper >=0) {
+				energy -= sQuizHelper;
 			}else {
 				energy = 0;
 			}
@@ -229,11 +238,15 @@ public class OPModel extends Model implements Serializable{
 	// and give a message
 	@Override
 	public void checkQuiz() {
+		int cQuizHelper = 20;
+		int dLimit = 3;
+		int qLimit = 2;
+		int thousand = 1000;
 		switch(curState) {
 		case OP:
 		if(!quiz.checkAnswer()) {
 			bird.collision();
-			energy -= 20;
+			energy -= cQuizHelper;
 			quizOutcomeInfo = "You Are Wrong, Lose Energy!!";
 		}
 		else {
@@ -246,7 +259,7 @@ public class OPModel extends Model implements Serializable{
 			@Override
 			public void run() {
 				++delayCount;
-				if (delayCount >=3) {
+				if (delayCount >= dLimit) {
 					quizing = false;
 					delayTimer.cancel();
 					delayTimer = null;
@@ -254,7 +267,7 @@ public class OPModel extends Model implements Serializable{
 				}
 			}
 			
-		}, 0, 1000);
+		}, 0, thousand);
 		break;
 		case OPREVIEW:
 			if(!quiz.checkAnswer()) {
@@ -270,8 +283,8 @@ public class OPModel extends Model implements Serializable{
 				@Override
 				public void run() {
 					++delayCount;
-					if (delayCount >=2) {
-						if (quizCount < 3) {
+					if (delayCount >= qLimit) {
+						if (quizCount < dLimit) {
 							quiz = quizzes.get(quizCount);
 							
 						}
@@ -284,7 +297,7 @@ public class OPModel extends Model implements Serializable{
 					}
 				}
 				
-			}, 0, 1000);
+			}, 0, thousand);
 			break;
 		case TUTORIALOP:
 			quizing = false;
@@ -295,14 +308,17 @@ public class OPModel extends Model implements Serializable{
 	// create a tutorial for player to learn how to paly the game
 	@Override
 	public void tutorial() {
+		int ten = 10;
+		int yibai = 100;
+		int sanbaier = 320;
 		if (!outOfFrame() && timeCount == 0) {
 			drawNA = false;
 			bird.move();
 			if (list.isEmpty() && tutor == 1 && !quizing) {
 				color = Color.yellow;
-				list.add(new HitItem(frameW, scaleH(100), ItemType.AIRPLANE, 0 - 10,0));
-				list.add(new HitItem(frameW, scaleH(320), ItemType.SHIP, 0 - 10,0));
-				list.add(new HitItem(frameW, 3*frameH/4, ItemType.FISH, 0 - 10,0));
+				list.add(new HitItem(frameW, scaleH(yibai), ItemType.AIRPLANE, 0 - ten,0));
+				list.add(new HitItem(frameW, scaleH(sanbaier), ItemType.SHIP, 0 - ten,0));
+				list.add(new HitItem(frameW, tFframeH, ItemType.FISH, 0 - ten,0));
 			}
 			Iterator<Element> iter = list.iterator();
 			while(iter.hasNext()) {
@@ -319,9 +335,13 @@ public class OPModel extends Model implements Serializable{
 	}
 	
 	public void setUpGame() {
-		setBird(new Bird(0,250,3,BirdType.OSPREY));
+		int erbaiwu = 250;
+		int san = 3;
+		int yibai = 100;
+		int shi = 10;
+		setBird(new Bird(0,erbaiwu,san,BirdType.OSPREY));
 		setList(new ArrayList<>());
-		getList().add(new HitItem(getFrameW(), 100, ItemType.AIRPLANE, -10, 0));
+		getList().add(new HitItem(getFrameW(), yibai, ItemType.AIRPLANE, -shi, 0));
 		setUpdateL();
 		winFlag = true;
 		try {

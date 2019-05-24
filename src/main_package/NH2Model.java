@@ -23,6 +23,8 @@ public class NH2Model extends Model implements Serializable{
 	final int nestCenterX = 100;
 	final int nestCenterY = 50;
 	final int spawnLocations = 8;
+	final int qFrameW = frameW / 4;
+	final int hFH_IH = (frameH - imgH)/2;
 	
 	// Constructor sets up the NH2 game and determines the locations of all elements in the game
 	public NH2Model(int fW, int fH, int iW, int iH, HashMap<String, int[]> map) {
@@ -36,7 +38,6 @@ public class NH2Model extends Model implements Serializable{
 		for (int i = 0; i < eggs; i++) {
 			switch(i) {
 			case 0:
-				//eggList.add(new CollectedItem(nest.getX() + 100, nest.getY() + 50, ItemType.EGG));
 				eggList.add(new CollectedItem(nest.getX()+nestCenterX, nest.getY()+nestCenterY, ItemType.EGG));
 				break;
 			case 1:
@@ -48,10 +49,9 @@ public class NH2Model extends Model implements Serializable{
 			}
 		}
 		setBird(new Bird((getFrameW()-imgW)/2, (getFrameH()-imgH)/2,0,BirdType.NH));
-		//nest = new CollectedItem((getFrameW()-imgW)/2, (getFrameH()-imgH)/2, ItemType.NEST);
 		setList(new ArrayList<>());
 		setUpdateL();
-		list.add(new HitItem(frameW/4, (frameH - imgH)/2, ItemType.FOX, 0, 0));	
+		list.add(new HitItem(qFrameW, hFH_IH , ItemType.FOX, 0, 0));	
 	}
 	
 	// This method is called after the tutorial is over to reset the model
@@ -176,6 +176,9 @@ public class NH2Model extends Model implements Serializable{
 	// If the user gets at least one question right, then they move on to the NH2 game
 	@Override
 	public void checkQuiz() {
+		int dLimit = 2;
+		int qLimit = 3;
+		int timeScaler = 1000;
 		if(!quiz.checkAnswer()) {
 			// here represent reduce number of egg in NH2
 			quizOutcomeInfo = "Oh No!!!  The Answer is: " + quiz.getAnswer();
@@ -190,8 +193,8 @@ public class NH2Model extends Model implements Serializable{
 			@Override
 			public void run() {
 				++delayCount;
-				if (delayCount >=2) {
-					if (quizCount < 3) {
+				if (delayCount >= dLimit) {
+					if (quizCount < qLimit) {
 						quiz = quizzes.get(quizCount);
 						
 					}
@@ -204,7 +207,7 @@ public class NH2Model extends Model implements Serializable{
 				}
 			}
 			
-		}, 0, 1000);
+		}, 0, timeScaler);
 	}
 	
 	// This method runs the tutorial of the game and manages the position of the bird.
