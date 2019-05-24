@@ -8,11 +8,15 @@ import main_package.CollectedItem;
 import main_package.ItemType;
 
 class CollectedItemTest {
-
+	CollectedItem a = new CollectedItem(0,0,ItemType.EGG);
+	CollectedItem b = new CollectedItem(0,0,ItemType.STICK);
+	CollectedItem c = new CollectedItem(0,0,ItemType.RAT);
+	CollectedItem d = new CollectedItem(0,0,ItemType.NEST);
+	
 	@Test
 	void test() {
-		CollectedItem c = new CollectedItem(0,0,ItemType.EGG);
-		c.isCollected();
-		assertTrue(c.getCollected());
+		a.isCollected();
+		assertTrue(a.getCollected());
+		assertEquals(ItemType.EGG,a.getType());
 	}
 }

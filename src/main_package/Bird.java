@@ -44,15 +44,15 @@ public class Bird extends Element implements Serializable{
 			break;
 		}
 	}
-	
+	//getter for xmove
 	public int getxMove() {
 		return xMove;
 	}
-
+	//getter for ymove
 	public int getyMove() {
 		return yMove;
 	}
-
+	//getter for bird type
 	public BirdType getBType() {
 		return bt;
 	}
@@ -64,17 +64,15 @@ public class Bird extends Element implements Serializable{
 	//getter for life;
 	public int getLife() {return this.life;};
 	
+	//setter for life
 	public void setLife(int l) {
 		life = l;
 	}
 	
 	// move the bird, change x and y by adding incX and incY on x and y
 	public void move() {
-		//System.out.println(x + " + " + xVector);
-		//System.out.println(y + " + " + yVector);
 		 x += xVector;
 		 y += yVector;
-		 //System.out.println("Bird Position(" + x + ", " + y + ")");
 	}
 	
 	/// losing life after collision with planes, fox
@@ -87,27 +85,27 @@ public class Bird extends Element implements Serializable{
 	public void eat() {
 		life++;
 	}
-	
+	// getter for itemsCollected
 	public int getItemsCollected() {
 		return itemsCollected;
 	}
-	
+	// setter for itemsCollected
 	public void setItemsCollected(int ic) {
 		this.itemsCollected = ic;
 	}
-	
+	// getter for XVector
 	public int getXVector() {
 		return xVector;
 	}
-	
+	// getter for YVector
 	public int getYVector() {
 		return yVector;
 	}
-	
+	// setter for XVector
 	public void setXVector(int x) {
 		xVector = x;
 	}
-	
+	// setter for YVector
 	public void setYVector(int y) {
 		yVector = y;
 	}

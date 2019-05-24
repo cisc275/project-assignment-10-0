@@ -94,7 +94,7 @@ public class HitItem extends Element implements Serializable{
 	public void changeDirection() {
 		directionChange = !directionChange;
 	}
-	// directionchange getter
+	// direction change getter
 	public boolean getDirectionChange() {
 		return directionChange;
 	}
