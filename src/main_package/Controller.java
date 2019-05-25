@@ -347,7 +347,7 @@ public class Controller {
     		}
     	};
 	}
-	
+	// serialize
 	public void serialize() {
 		try {
 			FileOutputStream file = new FileOutputStream(backUpFile);
@@ -360,7 +360,7 @@ public class Controller {
 		}
 		view.requestFocusInWindow();
 	}
-	
+	//deserialize
 	public static void deserialize() {
 		Model tmp = null;
 		try {
@@ -460,14 +460,14 @@ public class Controller {
 			break;
 		}
 	}
-	
+	// use to hide the choice button
 	public static void hideChoiceButtons() {
 		view.choice1.setVisible(false);
 		view.choice2.setVisible(false);
 		view.choice3.setVisible(false);
 		view.choice4.setVisible(false);
 	}
-	
+	// use to show the choice button
 	public static void showChoiceButtons() {
 		view.choice1.setVisible(true);
 		view.choice2.setVisible(true);
