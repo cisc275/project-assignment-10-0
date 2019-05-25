@@ -277,7 +277,7 @@ public class View extends JPanel{
 	public void paintComponent(Graphics g) {
 		//System.out.println("paint");
 		if (model == null) {
-			System.out.println("null model");
+//			System.out.println("null model");
 //			System.out.println(g.drawImage(imgs.get("ospreyReal"), 400, 400, Color.gray, this));
 //			g.drawString("Time Remaining: ", 100, 20);
 			g.drawImage(imgs.get("mainmenubg"), 0, 0, null, this);

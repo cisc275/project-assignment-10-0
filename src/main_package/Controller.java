@@ -24,7 +24,7 @@ public class Controller {
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
-	Type curState;
+	static Type curState;
 	static int count = 0;
 	static final String backUpFile = "backup.ser";
 	
@@ -38,7 +38,6 @@ public class Controller {
 		//System.out.println("model constructed");
 		//view.setModel(model);
 		//view.frame.setVisible(true);
-		//
 		view.OPButton.addActionListener(new OPButtonListener());
 		view.NHButton.addActionListener(new NHButtonListener());
 		view.backButton.addActionListener(new RestartButtonListener());
@@ -424,7 +423,7 @@ public class Controller {
     			switch(curState) {
     			case MAINMENU:
     				//view.update(model);
-    				System.out.println("here");
+    				//System.out.println("here");
     				view.repaint();
     				break;
     			case OP:
@@ -502,15 +501,20 @@ public class Controller {
 	
 	
 	public void serialize() {
-		try {
-			FileOutputStream file = new FileOutputStream(backUpFile);
-			ObjectOutputStream out = new ObjectOutputStream(file);
-			out.writeObject(Controller.model);
-			out.close();
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	//	EventQueue.invokeLater(new Runnable(){
+	//		public void run() {
+				try {
+					FileOutputStream file = new FileOutputStream(backUpFile);
+					ObjectOutputStream out = new ObjectOutputStream(file);
+					out.writeObject(Controller.model);
+					out.close();
+					file.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				view.requestFocusInWindow();
+	//		}
+	//	});
 	}
 	
 	public static void deserialize() {
@@ -527,9 +531,21 @@ public class Controller {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println(tmp == null);
+	//	System.out.println(tmp instanceof OPModel);
 		model = tmp;
+	//	model.recreateTimer();
+		view.requestFocusInWindow();
+	//	System.out.println(tmp.getCurState());
+		curState = tmp.getCurState(); //TODO:: FIX THIS
+		switch (curState) {
+		case OP:
+			view.backButton.setVisible(true);
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			break;
+		}
 	//	view.update(model);
+		
 	}
 	
 	public static void main(String[] args) {

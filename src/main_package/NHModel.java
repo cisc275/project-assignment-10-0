@@ -80,6 +80,10 @@ public class NHModel extends Model implements Serializable{
 		}, 0, 1000);
 	}
 	
+	public void recreateTimer() {
+		
+	}
+	
 	// This method updates the position of the bird based and controls the functionality of the game
 	@Override
 	public void updatePosition() {

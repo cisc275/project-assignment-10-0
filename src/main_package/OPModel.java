@@ -76,7 +76,39 @@ public class OPModel extends Model implements Serializable{
 			
 		}, 0, 1000);
 	}
-	
+	public void recreateTimer() {
+		myTimer = new Timer();
+		myTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				
+				if (!quizing) {
+					System.out.println("time count :" + --timeCount);
+					energy --;
+				}
+				if (timeCount % 1 == 0) {
+					// every 4 second update list
+					updateL = true;
+				}
+				
+				/*if(timeCount < 40 && timeCount > 25) {
+					waterbg = false;
+				} else {
+					waterbg = true;
+				}*/
+				if (energy <= 0) {
+					// lose all energy game over
+					gameOver();
+					System.out.println(curState);
+					myTimer.cancel();
+				}
+				if (timeCount < 0) {
+					myTimer.cancel();
+				}
+			}
+			
+		}, 0, 1000);
+	}
 	// loop through the collection list update their position by calling the move method
 	// call checkCollision
 	@Override

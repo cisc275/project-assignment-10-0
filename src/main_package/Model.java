@@ -73,6 +73,8 @@ public abstract class Model implements Serializable{
 	public abstract void tutorial();
 	public abstract void createQuizzes() throws Exception;
 	
+	public abstract void recreateTimer();
+	
 	//
 	// check if collision
 	public boolean collisionF(Element e) {
