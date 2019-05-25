@@ -32,11 +32,11 @@ public class View extends JPanel{
 	final int scaleHeight = 838;    //500
 	final int scaleWidth = 1550;     //600
 	int frameHeight = 643;    //500
-	int frameWidth = 1024;     //600
+	static int frameWidth = 1024;     //600
 	final int imageH = 150;
 	final int imageW = 150;
 	HashMap<String, int[]> imgsSize;
-	JFrame frame;
+	static JFrame frame;
 	ArrayList<Button> list;
 	// for operation
 	JButton OPButton, NHButton, backButton, next, choice1, choice2, choice3, choice4, serialize, deserialize;
@@ -58,7 +58,7 @@ public class View extends JPanel{
 	final int CHOICE_Y = 550;
 	final int CHOICE_W = 50;
 	final int CHOICE_H = 30;
-	final int ONE_THIRD_FRAMEHEIGHT = frameWidth / 3;
+	static int ONE_THIRD_FRAMEWIDTH = frameWidth / 3;
 	
 			
 	
@@ -72,6 +72,7 @@ public class View extends JPanel{
 		frame.setBackground(Color.LIGHT_GRAY);
 		frame.setVisible(true);
 		frameWidth = frame.getWidth();
+		ONE_THIRD_FRAMEWIDTH = frameWidth / 3;
     	frameHeight = frame.getHeight()-40;
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	System.out.printf("%d, %d\n", frame.getWidth(), frame.getHeight());
@@ -479,26 +480,26 @@ public class View extends JPanel{
 			case OPREVIEW:
 				g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("You Win the osprey game, Review what you learned", ONE_THIRD_FRAMEHEIGHT, scaleH(170));
-				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEHEIGHT, scaleH(330));
-				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEHEIGHT, scaleH(370));
-				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEHEIGHT, scaleH(410));
-				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEHEIGHT, scaleH(450));
-				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEHEIGHT, scaleH(490));
+				g.drawString("You Win the osprey game, Review what you learned", ONE_THIRD_FRAMEWIDTH, scaleH(170));
+				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEWIDTH, scaleH(330));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEWIDTH, scaleH(370));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEWIDTH, scaleH(410));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEWIDTH, scaleH(450));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEWIDTH, scaleH(490));
 				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEHEIGHT, scaleH(270));
+				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEWIDTH, scaleH(270));
 				break;
 			case NHREVIEW:
 				g.drawImage(imgs.get("reviewbg"), 0, 0, null, this);	
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-				g.drawString("You Win the Northern Harrier game, Review what you learned", ONE_THIRD_FRAMEHEIGHT, scaleH(170));
-				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEHEIGHT, scaleH(330));
-				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEHEIGHT, scaleH(370));
-				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEHEIGHT, scaleH(410));
-				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEHEIGHT, scaleH(450));
-				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEHEIGHT, scaleH(490));
+				g.drawString("You Win the Northern Harrier game, Review what you learned", ONE_THIRD_FRAMEWIDTH, scaleH(170));
+				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEWIDTH, scaleH(330));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEWIDTH, scaleH(370));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEWIDTH, scaleH(410));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEWIDTH, scaleH(450));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEWIDTH, scaleH(490));
 				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEHEIGHT, scaleH(270));
+				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEWIDTH, scaleH(270));
 				break;
 			case WIN:
 				g.setColor(Color.blue);
@@ -512,22 +513,22 @@ public class View extends JPanel{
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 29));
 				g.setColor(Color.black);
 				if (model.getCurState() == Type.TUTORIALOP) {
-					g.drawString("Answer Quiz Correctly to Save Energy", ONE_THIRD_FRAMEHEIGHT, scaleH(360));
-					g.drawString("Press Any Button Below to Continue", ONE_THIRD_FRAMEHEIGHT, scaleH(520));
+					g.drawString("Answer Quiz Correctly to Save Energy", ONE_THIRD_FRAMEWIDTH, scaleH(360));
+					g.drawString("Press Any Button Below to Continue", ONE_THIRD_FRAMEWIDTH, scaleH(520));
 					return;
 				}
-				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEHEIGHT, scaleH(360));
-				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEHEIGHT, scaleH(400));
-				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEHEIGHT, scaleH(440));
-				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEHEIGHT, scaleH(480));
-				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEHEIGHT, scaleH(520));
+				g.drawString(model.getQuiz().getQuestion(), ONE_THIRD_FRAMEWIDTH, scaleH(360));
+				g.drawString("A: " + model.getQuiz().getChoice()[0], ONE_THIRD_FRAMEWIDTH, scaleH(400));
+				g.drawString("B: " + model.getQuiz().getChoice()[1], ONE_THIRD_FRAMEWIDTH, scaleH(440));
+				g.drawString("C: " + model.getQuiz().getChoice()[2], ONE_THIRD_FRAMEWIDTH, scaleH(480));
+				g.drawString("D: " + model.getQuiz().getChoice()[3], ONE_THIRD_FRAMEWIDTH, scaleH(520));
 				if (model.getCurState() == Type.NH1) {
 					g.drawString(model.quizCount + "/" + 3 + " Quizzes", scaleW(1000), scaleH(600));
 
 				}
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 				g.setColor(Color.red);
-				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEHEIGHT, scaleH(300));
+				g.drawString(model.quizOutcomeInfo, ONE_THIRD_FRAMEWIDTH, scaleH(300));
 				
 				
 			}
