@@ -39,7 +39,7 @@ public class View extends JPanel{
 	JFrame frame;
 	ArrayList<Button> list;
 	// for operation
-	JButton OPButton, NHButton, backButton, choice1, choice2, choice3, choice4, serialize, deserialize, next;
+	JButton OPButton, NHButton, backButton, next, choice1, choice2, choice3, choice4, serialize, deserialize;
 	Image curImg, opmap, nhmap;
 	int pic = 0;
 	int pic2 = 0;

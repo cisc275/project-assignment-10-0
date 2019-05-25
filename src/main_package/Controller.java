@@ -24,7 +24,7 @@ public class Controller {
 	int drawDelay = 30;
 	Action drawAction;
 	Timer t;
-	Type curState;
+	static Type curState;
 	static int count = 0;
 	static final String backUpFile = "backup.ser";
 	
@@ -358,6 +358,7 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		view.requestFocusInWindow();
 	}
 	
 	public static void deserialize() {
@@ -375,6 +376,103 @@ public class Controller {
 			e.printStackTrace();
 		}
 		model = tmp;
+		view.requestFocusInWindow();
+		curState = tmp.getCurState();
+		switch (curState) {
+		case OP:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		case GAMEOVER:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		case MAINMENU:
+			view.OPButton.setVisible(true);
+			view.NHButton.setVisible(true);
+			view.backButton.setVisible(false);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		case NH1:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		case NH2:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		case NHREVIEW:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(false);
+			view.next.setVisible(false);
+			showChoiceButtons();
+			break;
+		case OPREVIEW:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(false);
+			view.next.setVisible(false);
+			showChoiceButtons();
+			break;
+		case TUTORIALNH1:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(true);
+			hideChoiceButtons();
+			break;
+		case TUTORIALNH2:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(true);
+			hideChoiceButtons();
+			break;
+		case TUTORIALOP:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(true);
+			hideChoiceButtons();
+			break;
+		case WIN:
+			view.OPButton.setVisible(false);
+			view.NHButton.setVisible(false);
+			view.backButton.setVisible(true);
+			view.next.setVisible(false);
+			hideChoiceButtons();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public static void hideChoiceButtons() {
+		view.choice1.setVisible(false);
+		view.choice2.setVisible(false);
+		view.choice3.setVisible(false);
+		view.choice4.setVisible(false);
+	}
+	
+	public static void showChoiceButtons() {
+		view.choice1.setVisible(true);
+		view.choice2.setVisible(true);
+		view.choice3.setVisible(true);
+		view.choice4.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
