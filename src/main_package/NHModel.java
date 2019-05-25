@@ -96,7 +96,7 @@ public class NHModel extends Model implements Serializable{
 				//bird.move();
 				checkCollision(bird);
 				if (!moreCollectedItems && collisionF(nest) && curState == Type.NH1) {
-					System.out.println("NH1 Complete");
+				//	System.out.println("NH1 Complete");
 					myTimer.cancel();
 					startQuiz();
 				}
@@ -108,7 +108,7 @@ public class NHModel extends Model implements Serializable{
 	// This method checks to see if the bird has collided with a collected item
 	@Override
 	public boolean checkCollision(Element e) {
-		System.out.println("call");
+	//	System.out.println("call");
 		boolean collision = false;
 		Iterator<Element> iter = list.iterator();
 		while(iter.hasNext()) {
@@ -127,8 +127,8 @@ public class NHModel extends Model implements Serializable{
 				moreCollectedItems = true;
 			}
 		}
-		System.out.println(list.size());
-		System.out.println(moreCollectedItems);
+	//	System.out.println(list.size());
+	//	System.out.println(moreCollectedItems);
 		return collision;
 	}
 
@@ -165,7 +165,7 @@ public class NHModel extends Model implements Serializable{
 			quizOutcomeInfo = "Correct!!! ";
 			eggs++;
 		}
-		System.out.println("Eggs: " + eggs);
+	//	System.out.println("Eggs: " + eggs);
 		quizCount++;
 		delayTimer = new Timer();
 		delayCount = 0;
@@ -205,7 +205,7 @@ public class NHModel extends Model implements Serializable{
 			drawDE = false;
 			bird.move();
 			if(this.checkCollision(bird)) {
-				System.out.println("No more");
+			//	System.out.println("No more");
 			}
 		}
 	}

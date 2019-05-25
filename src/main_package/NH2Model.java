@@ -122,7 +122,7 @@ public class NH2Model extends Model implements Serializable{
 				
 				// if the bird collide with a fox, the fox changes direction
 				if(xC1 && (yC1 || yC2) || xC2 && (yC1 ||yC2 )) {
-					System.out.println("removeNH2");
+				//	System.out.println("removeNH2");
 					eggs--;
 					if(eggList.size()>0) {
 						eggList.remove(0);
@@ -274,56 +274,56 @@ public class NH2Model extends Model implements Serializable{
 			height = (frameH-imgH)/2;
 			width = 0;
 			list.add(new HitItem(width, height, ItemType.FOX, foxSpeed1, 0));
-			System.out.println("move east");
+		//	System.out.println("move east");
 			// Moving East
 			break;
 		case 1:
 			height = (frameH - imgH)/2;
 			width = frameW;
 			list.add(new HitItem(width, height, ItemType.FOX, -foxSpeed1, 0));
-			System.out.println("move west");
+		//	System.out.println("move west");
 			// Moving West
 			break;
 		case 2:
 			height = 0;
 			width = (frameW - imgW)/2;
 			list.add(new HitItem(width, height, ItemType.FOX, 0, foxSpeed2));
-			System.out.println("move south");
+		//	System.out.println("move south");
 			// Moving South
 			break;
 		case 3:
 			height = frameH;
 			width = (frameW - imgW)/2;
 			list.add(new HitItem(width, height, ItemType.FOX, 0, -foxSpeed2));
-			System.out.println("move north");
+		//	System.out.println("move north");
 			// Moving North
 			break;
 		case 4:
 			height = 0;
 			width = 0;
 			list.add(new HitItem(width, height, ItemType.FOX, vectorX, vectorY));
-			System.out.println("move southeast");
+		//	System.out.println("move southeast");
 			// Moving Southeast
 			break;
 		case 5:
 			height = frameH-imgH;
 			width = 0;
 			list.add(new HitItem(width, height, ItemType.FOX, vectorX, -vectorY));
-			System.out.println("move northeast");
+		//	System.out.println("move northeast");
 			// Moving northeast
 			break;
 		case 6:
 			height = 0;
 			width = frameW;
 			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, vectorY));
-			System.out.println("move Southwest");
+		//	System.out.println("move Southwest");
 			// Moving Southwest
 			break;
 		case 7:
 			height = frameH-imgH;
 			width = frameW-imgW;
 			list.add(new HitItem(width, height, ItemType.FOX, -vectorX, -vectorY));
-			System.out.println("move Northwest");
+		//	System.out.println("move Northwest");
 			// Moving Northwest
 			break;
 		}
